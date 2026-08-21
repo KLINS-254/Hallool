@@ -6,11 +6,14 @@
 <title>KenyaSurvey - Verified Research Platform · Kenya</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>body{font-family:Inter,sans-serif;background:#0a110c}</style>
+<style>
+html{scroll-behavior:smooth}
+body{font-family:Inter,sans-serif;background:#0a110c}
+</style>
 </head>
 <body class="bg-[#0a110c] text-zinc-200">
 
-<!-- TOAST KSH 0 -->
+<!-- TOAST -->
 <div id="toast" class="fixed top-4 left-1/2 -translate-x-1/2 bg-[#142316] border border-[#1e331f] text-white px-4 py-2.5 rounded-full text-[12px] font-bold shadow-xl z-[100] flex items-center gap-2">
 <span class="bg-[#0f9d58] text-black w-5 h-5 rounded-full grid place-items-center text-[10px]">✓</span> +KSh 0 <span class="text-white/60 font-normal">Compensation Added!</span>
 </div>
@@ -18,95 +21,15 @@
 <!-- NAV -->
 <header class="sticky top-0 z-40 bg-[#0a110c] border-b border-white/[0.06]">
 <div class="max-w-[1200px] mx-auto px-6 lg:px-10 h-[64px] flex items-center justify-between">
-<div class="flex items-center gap-2.5 font-bold"><div class="w-8 h-8 bg-[#0f9d58] rounded-lg grid place-items-center">🎓</div><span class="text-white">Kenya</span><span class="text-[#0f9d58]">Survey</span></div>
-<div class="hidden lg:flex gap-2"><button class="px-4 py-2 rounded-full border border-white/10 text-[11px]">Sign In</button><button class="px-4 py-2 rounded-full bg-[#0f9d58] text-black text-[11px] font-bold">Become a Participant</button></div>
+<div class="flex items-center gap-10">
+<div class="flex items-center gap-2.5 font-bold text-[15px]"><div class="w-8 h-8 bg-[#0f9d58] rounded-lg grid place-items-center">🎓</div><span class="text-white">Kenya</span><span class="text-[#0f9d58]">Survey</span></div>
+<nav class="hidden lg:flex gap-6 text-[11px] text-white/60 font-medium">
+<a href="#about" class="hover:text-white">About Us</a>
+<a href="#howitworks" class="hover:text-white">How It Works</a>
+<a href="#research" class="hover:text-white">Research Areas</a>
+<a href="#faq" class="hover:text-white">FAQ</a>
+<a href="#contact" class="hover:text-white">Contact</a>
+</nav>
 </div>
-</header>
-
-<!-- HERO -->
-<section class="max-w-[1200px] mx-auto px-6 lg:px-10 py-12 lg:py-16 grid lg:grid-cols-[1.1fr_0.9fr] gap-8">
-<div>
-<div class="inline-flex px-3 py-1 rounded-full bg-[#0f9d58]/10 border border-[#0f9d58]/20 text-[#0f9d58] text-[11px] font-bold">🛡️ Verified Research Platform · Kenya</div>
-<h1 class="mt-5 text-[36px] lg:text-[52px] font-black leading-[0.95]"><span class="text-white">Research That Connects</span><br><span class="text-[#0f9d58]">Kenya's Voices</span></h1>
-<p class="mt-4 text-[13px] text-white/60 max-w-[460px] leading-6">KenyaSurvey connects eligible Kenyan participants with academic, market research and public opinion studies. Participants who qualify may receive compensation based on project requirements.</p>
-<div class="mt-6 flex gap-3"><button class="px-6 py-3 rounded-full bg-[#0f9d58] text-white font-bold text-[13px]">Become a Participant</button><button class="px-6 py-3 rounded-full border border-white/15 text-[13px] font-bold">How It Works</button></div>
-</div>
-<div class="bg-[#142316] border border-[#1e331f] rounded-2xl p-5">
-<div class="py-3 border-b border-white/5 flex gap-3 items-center"><div class="w-9 h-9 bg-[#1a2e1c] rounded-lg grid place-items-center">📋</div><div><p class="text-[11px] text-white/40">Active Research Projects</p><p class="font-bold text-[12px]">120+ Surveys</p></div></div>
-<div class="py-3 border-b border-white/5 flex gap-3 items-center"><div class="w-9 h-9 bg-[#1a2e1c] rounded-lg grid place-items-center">👥</div><div><p class="text-[11px] text-white/40">Verified Participants</p><p class="font-bold text-[12px]">Across 47 Counties</p></div></div>
-<div class="py-3 flex gap-3 items-center"><div class="w-9 h-9 bg-[#1a2e1c] rounded-lg grid place-items-center">📊</div><div><p class="text-[11px] text-white/40">Research Categories</p><p class="font-bold text-[12px]">Consumer · Health · Education</p></div></div>
-</div>
-</section>
-
-<!-- RESEARCH AREAS -->
-<section class="max-w-[1200px] mx-auto px-6 lg:px-10 py-12 border-t border-white/5">
-<p class="text-[10px] tracking-[0.2em] text-[#0f9d58] font-bold">RESEARCH AREAS</p>
-<h2 class="text-[20px] font-bold mt-2">Research Projects May Include</h2>
-<div class="grid md:grid-cols-3 gap-4 mt-6">
-<div class="bg-[#142316] border border-[#1e331f] rounded-xl p-5"><h4 class="font-bold text-[12px]">Consumer Products</h4><p class="text-[11px] text-white/50 mt-2">Product feedback, brand perception, and consumer behaviour studies.</p></div>
-<div class="bg-[#142316] border border-[#1e331f] rounded-xl p-5"><h4 class="font-bold text-[12px]">Healthcare Research</h4><p class="text-[11px] text-white/50 mt-2">Public health surveys, patient experience studies.</p></div>
-<div class="bg-[#142316] border border-[#1e331f] rounded-xl p-5"><h4 class="font-bold text-[12px]">Education Studies</h4><p class="text-[11px] text-white/50 mt-2">Academic research, student experience surveys.</p></div>
-<div class="bg-[#142316] border border-[#1e331f] rounded-xl p-5"><h4 class="font-bold text-[12px]">Technology Research</h4><p class="text-[11px] text-white/50 mt-2">App usability, digital adoption studies.</p></div>
-<div class="bg-[#142316] border border-[#1e331f] rounded-xl p-5"><h4 class="font-bold text-[12px]">Public Opinion</h4><p class="text-[11px] text-white/50 mt-2">Community sentiment, policy awareness research.</p></div>
-<div class="bg-[#142316] border border-[#1e331f] rounded-xl p-5"><h4 class="font-bold text-[12px]">NGO Research</h4><p class="text-[11px] text-white/50 mt-2">Impact assessments, beneficiary feedback.</p></div>
-</div>
-</section>
-
-<!-- ABOUT -->
-<section class="max-w-[1200px] mx-auto px-6 lg:px-10 py-12 border-t border-white/5 grid lg:grid-cols-2 gap-10">
-<div>
-<h2 class="text-[20px] font-bold">We Connect Organisations with Verified Kenyan Participants</h2>
-<p class="text-[12px] text-white/60 mt-3 leading-6">Demographic profiling is a core part of our platform. Research projects often require specific participant profiles — particular counties, age groups, or occupations. By collecting verified demographic data, we ensure your survey reaches the right audience.</p>
-<div class="grid grid-cols-3 gap-4 mt-6">
-<div class="bg-[#142316] border border-[#1e331f] rounded-xl p-4 text-center"><p class="text-[20px] font-black text-[#0f9d58]">47</p><p class="text-[10px] text-white/50">Counties Covered</p></div>
-<div class="bg-[#142316] border border-[#1e331f] rounded-xl p-4 text-center"><p class="text-[20px] font-black text-[#0f9d58]">6+</p><p class="text-[10px] text-white/50">Research Categories</p></div>
-<div class="bg-[#142316] border border-[#1e331f] rounded-xl p-4 text-center"><p class="text-[20px] font-black text-[#0f9d58]">M-Pesa</p><p class="text-[10px] text-white/50">Compensation Method</p></div>
-</div>
-</div>
-<div class="bg-[#142316] border border-[#1e331f] rounded-xl p-6">
-<h4 class="font-bold text-[13px]">Our Mission</h4><p class="text-[11px] text-white/50 mt-2">To make research participation accessible to all Kenyans while ensuring organisations receive accurate, demographically representative data.</p>
-<h4 class="font-bold text-[13px] mt-5">Our Vision</h4><p class="text-[11px] text-white/50 mt-2">A Kenya where every citizen can contribute meaningfully to research that shapes policy, business and community outcomes.</p>
-</div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="max-w-[1200px] mx-auto px-6 lg:px-10 py-12 border-t border-white/5">
-<p class="text-[10px] tracking-[0.2em] text-[#0f9d58] font-bold">PROCESS</p>
-<h2 class="text-[20px] font-bold mt-2">How It Works</h2>
-<div class="grid md:grid-cols-3 gap-4 mt-6">
-<div class="bg-[#142316] border border-[#1e331f] rounded-xl p-5"><span class="text-[#0f9d58] font-black">1</span><h4 class="font-bold text-[12px] mt-2">Create a Participant Account</h4><p class="text-[11px] text-white/50 mt-1">Register with your Kenyan mobile number and set a secure PIN.</p></div>
-<div class="bg-[#142316] border border-[#1e331f] rounded-xl p-5"><span class="text-[#0f9d58] font-black">2</span><h4 class="font-bold text-[12px] mt-2">Complete Your Participant Profile</h4><p class="text-[11px] text-white/50 mt-1">Provide demographic info — county, occupation, and education level.</p></div>
-<div class="bg-[#142316] border border-[#1e331f] rounded-xl p-5"><span class="text-[#0f9d58] font-black">3</span><h4 class="font-bold text-[12px] mt-2">Participate in Available Research Surveys</h4><p class="text-[11px] text-white/50 mt-1">Access surveys relevant to your demographic profile.</p></div>
-<div class="bg-[#142316] border border-[#1e331f] rounded-xl p-5"><span class="text-[#0f9d58] font-black">4</span><h4 class="font-bold text-[12px] mt-2">Compensation is Calculated Per Eligible Response</h4><p class="text-[11px] text-white/50 mt-1">Compensation varies by project, survey length and eligibility.</p></div>
-<div class="bg-[#142316] border border-[#1e331f] rounded-xl p-5"><span class="text-[#0f9d58] font-black">5</span><h4 class="font-bold text-[12px] mt-2">Complete Account Verification</h4><p class="text-[11px] text-white/50 mt-1">One-time verification confirms your mobile number and activates M-Pesa payouts.</p></div>
-<div class="bg-[#142316] border border-[#1e331f] rounded-xl p-5"><span class="text-[#0f9d58] font-black">6</span><h4 class="font-bold text-[12px] mt-2">Submit a Payment Request</h4><p class="text-[11px] text-white/50 mt-1">Once verified, request payment to M-Pesa. 4% fee applies. Up to 24 hours.</p></div>
-</div>
-</section>
-
-<!-- TRUST -->
-<section class="max-w-[1200px] mx-auto px-6 lg:px-10 py-12 border-t border-white/5">
-<h2 class="text-[18px] font-bold">Trust & Security - Built for Participant Trust</h2>
-<div class="grid md:grid-cols-3 gap-4 mt-6 text-[11px] text-white/60">
-<div class="bg-[#142316] border border-[#1e331f] rounded-xl p-5"><h4 class="font-bold text-white text-[12px]">Secure Platform</h4><p class="mt-2">All connections use HTTPS encryption. PINs are hashed and never stored in plain text.</p></div>
-<div class="bg-[#142316] border border-[#1e331f] rounded-xl p-5"><h4 class="font-bold text-white text-[12px]">Privacy Protected</h4><p class="mt-2">Your personal data is never sold to third parties. Responses are shared in aggregate, anonymised form only.</p></div>
-<div class="bg-[#142316] border border-[#1e331f] rounded-xl p-5"><h4 class="font-bold text-white text-[12px]">M-Pesa Integration</h4><p class="mt-2">Compensation is paid directly to your Safaricom M-Pesa number. We do not handle or store your M-Pesa PIN.</p></div>
-</div>
-</section>
-
-<!-- CTA -->
-<section class="text-center py-16 border-t border-white/5">
-<h2 class="text-[22px] font-bold">Ready to Participate in Research?</h2>
-<p class="text-[11px] text-white/50 mt-2">Join verified Kenyan participants contributing to academic, market and public opinion research.</p>
-<button class="mt-5 px-8 py-3 rounded-full bg-[#0f9d58] text-white font-bold text-[12px]">Create Free Account</button>
-<p class="text-[10px] text-white/30 mt-3">By registering you confirm you are 18+ and a Kenyan resident. A 4% fee applies to payment requests.</p>
-</section>
-
-<footer class="border-t border-white/5 py-8 text-center text-[10px] text-white/30">
-<p>© 2025 KenyaSurvey. support@kenyasurvey.com - premium-surveys-kenya.vercel.app</p>
-</footer>
-
-<script>
-setTimeout(()=>{document.getElementById('toast').style.display='none'},4000)
-</script>
-</body>
-                                                                                                                                                                                            </html>
+<div class="flex items-center gap-2">
+<button onclick="document.getElementById('signup').scrollIntoView({behavior:'smooth'})" class="hidden lg:block px-4 py-2 rounded-full border border-white/10 text
