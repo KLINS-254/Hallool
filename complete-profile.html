@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>KenyaSurvey - Create Account</title>
+<title>Complete Your Profile - KenyaSurvey</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -16,20 +16,19 @@ body {
     background: #000;
 }
 
-input::-webkit-inner-spin-button,
-input::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+select option {
+    background: #0a160e;
+    color: white;
 }
 </style>
 </head>
 
-<body class="bg-black min-h-screen flex items-center justify-center p-4">
+<body class="bg-black min-h-screen flex items-center justify-center p-0 lg:p-4">
 
-<div class="w-full max-w-[380px] bg-[#101f15] border border-[#1a2e1e] rounded-[24px] p-6">
+<div class="w-full max-w-[420px] bg-[#121f16] lg:border border-[#1c3320] lg:rounded-[24px] min-h-screen lg:min-h-0 p-6">
 
     <!-- BACK BUTTON -->
-    <a href="index.html"
+    <a href="register.html"
        class="inline-flex items-center gap-2 px-3 py-2 rounded-lg
               border border-[#1e3a24] bg-[#0a160e]
               text-[12px] font-semibold text-white/60
@@ -37,348 +36,389 @@ input::-webkit-outer-spin-button {
               transition">
 
         <span class="text-[16px] leading-none">←</span>
-        Back to Home
+        Back
 
     </a>
 
 
-    <!-- LOGO -->
-    <div class="flex flex-col items-center mt-6">
+    <!-- ICON -->
+    <div class="flex justify-center mt-4">
 
-        <div class="w-[56px] h-[56px] bg-[#0f9d58] rounded-[14px] grid place-items-center text-[28px] shadow-[0_0_20px_rgba(15,157,88,0.3)]">
-            🎓
-        </div>
+        <div class="w-[52px] h-[52px] bg-[#0f9d58] rounded-[14px] grid place-items-center text-white">
 
-        <h1 class="text-[24px] font-black mt-3 tracking-tight">
-            <span class="text-white">Kenya</span><span class="text-[#0f9d58]">Survey</span>
-        </h1>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
 
-        <p class="text-[12px] text-white/50 mt-0.5">
-            Research Participation Platform
-        </p>
+                <circle cx="9" cy="7" r="4"/>
 
-    </div>
+                <path d="M3 19c0-2.7 2.7-5 6-5s6 2.3 6 5v1H3v-1z"/>
 
+                <path
+                    d="M16 10l2 2 4-4"
+                    stroke="white"
+                    stroke-width="2.2"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
 
-    <!-- TABS -->
-    <div class="mt-6 bg-black/50 rounded-[12px] p-1 flex">
-
-        <button
-            type="button"
-            id="registerTab"
-            onclick="showRegister()"
-            class="flex-1 h-[36px] rounded-[8px] bg-[#0f9d58] text-white text-[13px] font-bold">
-
-            Create Account
-
-        </button>
-
-
-        <button
-            type="button"
-            id="loginTab"
-            onclick="showLogin()"
-            class="flex-1 h-[36px] rounded-[8px] text-white/60 text-[13px] font-semibold">
-
-            Log In
-
-        </button>
-
-    </div>
-
-
-    <!-- MESSAGE -->
-    <div
-        id="message"
-        class="hidden mt-4 rounded-[10px] px-3 py-2.5 text-[11px] font-medium">
-    </div>
-
-
-    <!-- CREATE ACCOUNT SECTION -->
-    <div id="registerSection">
-
-        <h2 class="text-center font-bold text-[15px] text-white mt-5">
-            Become a KenyaSurvey Participant
-        </h2>
-
-
-        <!-- CONFIRMATION BOX -->
-        <div class="mt-4 bg-[#142b1a] border border-[#1e3a24] rounded-[12px] p-3.5">
-
-            <p class="text-[10px] font-bold tracking-widest text-white/40">
-                BY REGISTERING YOU CONFIRM:
-            </p>
-
-
-            <div class="mt-2 space-y-1.5 text-[11px] text-white/70 leading-4">
-
-                <p class="flex gap-2">
-                    <span class="text-[#0f9d58]">✓</span>
-                    You are at least 18 years old
-                </p>
-
-                <p class="flex gap-2">
-                    <span class="text-[#0f9d58]">✓</span>
-                    Information provided is accurate
-                </p>
-
-                <p class="flex gap-2">
-                    <span class="text-[#0f9d58]">✓</span>
-                    Survey eligibility is not guaranteed
-                </p>
-
-                <p class="flex gap-2">
-                    <span class="text-[#0f9d58]">✓</span>
-                    Compensation depends on project completion
-                </p>
-
-            </div>
+            </svg>
 
         </div>
 
-
-        <!-- REGISTER FORM -->
-        <form id="registerForm" class="mt-5 space-y-4">
-
-            <!-- PHONE NUMBER -->
-            <div>
-
-                <label class="text-[12px] font-semibold text-white/80">
-                    Phone Number
-                </label>
-
-                <div class="mt-1.5 relative">
-
-                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 text-[13px]">
-                        📞
-                    </span>
-
-                    <input
-                        id="registerPhone"
-                        type="tel"
-                        inputmode="numeric"
-                        autocomplete="tel"
-                        placeholder="Enter phone number"
-                        class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white placeholder:text-white/40 outline-none focus:border-[#0f9d58]"
-                        required
-                    >
-
-                </div>
-
-            </div>
-
-
-            <!-- CREATE PIN -->
-            <div>
-
-                <label class="text-[12px] font-semibold text-white/80">
-                    Create 4-Digit PIN
-                </label>
-
-                <div class="mt-1.5 relative">
-
-                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 text-[12px]">
-                        🔒
-                    </span>
-
-                    <input
-                        id="registerPin"
-                        type="password"
-                        maxlength="4"
-                        inputmode="numeric"
-                        autocomplete="new-password"
-                        placeholder="••••"
-                        class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white outline-none focus:border-[#0f9d58]"
-                        required
-                    >
-
-                </div>
-
-            </div>
-
-
-            <!-- CONFIRM PIN -->
-            <div>
-
-                <label class="text-[12px] font-semibold text-white/80">
-                    Confirm PIN
-                </label>
-
-                <div class="mt-1.5 relative">
-
-                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 text-[12px]">
-                        🔒
-                    </span>
-
-                    <input
-                        id="confirmPin"
-                        type="password"
-                        maxlength="4"
-                        inputmode="numeric"
-                        autocomplete="new-password"
-                        placeholder="••••"
-                        class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white outline-none focus:border-[#0f9d58]"
-                        required
-                    >
-
-                </div>
-
-            </div>
-
-
-            <!-- CREATE ACCOUNT BUTTON -->
-            <button
-                type="submit"
-                class="w-full h-[48px] bg-[#0f9d58] hover:bg-[#0c854a] rounded-[12px] text-white font-bold text-[13px] mt-2 transition">
-
-                Create Account
-
-            </button>
-
-        </form>
-
     </div>
 
 
-    <!-- LOGIN SECTION -->
-    <div id="loginSection" class="hidden">
-
-        <h2 class="text-center font-bold text-[15px] text-white mt-5">
-            Welcome Back
-        </h2>
-
-        <p class="text-center text-[11px] text-white/50 mt-1">
-            Log in to your KenyaSurvey account
-        </p>
+    <!-- TITLE -->
+    <h1 class="text-center text-[22px] font-extrabold text-white mt-4">
+        Complete Your Profile
+    </h1>
 
 
-        <form id="loginForm" class="mt-6 space-y-4">
+    <p class="text-center text-[12px] text-white/50 leading-5 mt-2 px-4">
 
-            <!-- LOGIN PHONE -->
-            <div>
-
-                <label class="text-[12px] font-semibold text-white/80">
-                    Phone Number
-                </label>
-
-                <div class="mt-1.5 relative">
-
-                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 text-[13px]">
-                        📞
-                    </span>
-
-                    <input
-                        id="loginPhone"
-                        type="tel"
-                        inputmode="numeric"
-                        autocomplete="tel"
-                        placeholder="Enter phone number"
-                        class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white placeholder:text-white/40 outline-none focus:border-[#0f9d58]"
-                        required
-                    >
-
-                </div>
-
-            </div>
-
-
-            <!-- LOGIN PIN -->
-            <div>
-
-                <label class="text-[12px] font-semibold text-white/80">
-                    Enter PIN
-                </label>
-
-                <div class="mt-1.5 relative">
-
-                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 text-[12px]">
-                        🔒
-                    </span>
-
-                    <input
-                        id="loginPin"
-                        type="password"
-                        maxlength="4"
-                        inputmode="numeric"
-                        autocomplete="current-password"
-                        placeholder="••••"
-                        class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white outline-none focus:border-[#0f9d58]"
-                        required
-                    >
-
-                </div>
-
-            </div>
-
-
-            <!-- LOGIN BUTTON -->
-            <button
-                type="submit"
-                class="w-full h-[48px] bg-[#0f9d58] hover:bg-[#0c854a] rounded-[12px] text-white font-bold text-[13px] transition">
-
-                Log In
-
-            </button>
-
-        </form>
-
-
-        <p class="text-center text-[11px] text-white/50 mt-5">
-
-            New to KenyaSurvey?
-
-            <button
-                type="button"
-                onclick="showRegister()"
-                class="text-[#0f9d58] font-semibold">
-
-                Create an account
-
-            </button>
-
-        </p>
-
-    </div>
-
-
-    <!-- TERMS -->
-    <p class="text-[11px] text-center text-white/40 leading-4 mt-5 px-2">
-
-        By registering, you agree to our
-
-        <a href="#" class="text-[#0f9d58] underline">
-            Terms of Service
-        </a>
-
-        and
+        We use demographic information to match you with relevant research opportunities.
+        All data is handled in accordance with our
 
         <a href="#" class="text-[#0f9d58] underline">
             Privacy Policy
         </a>.
 
-        Participation in surveys does not guarantee compensation.
-
     </p>
 
 
-    <!-- FOOTER LINKS -->
-    <div class="flex justify-center gap-3 mt-4 text-[13px] font-medium">
+    <!-- MESSAGE -->
+    <div
+        id="message"
+        class="hidden mt-5 rounded-[12px] px-4 py-3 text-[12px] font-medium">
+    </div>
 
-        <a href="#" class="text-[#0f9d58] underline">
-            About Us
-        </a>
 
-        <a href="#" class="text-[#0f9d58] underline">
-            Terms
-        </a>
+    <!-- FORM -->
+    <div class="mt-6 space-y-4">
 
-        <a href="#" class="text-[#0f9d58] underline">
-            Privacy
-        </a>
 
-        <a href="#" class="text-[#0f9d58] underline">
-            Contact
-        </a>
+        <!-- FULL NAME -->
+        <div>
+
+            <label class="text-[12px] font-semibold text-white/70">
+                Full Name
+            </label>
+
+            <div class="mt-1.5 relative">
+
+                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30">
+                    👤
+                </span>
+
+                <input
+                    id="fullName"
+                    type="text"
+                    placeholder="Enter your full name"
+                    autocomplete="name"
+                    class="w-full h-[46px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[13px] text-white placeholder:text-white/40 outline-none focus:border-[#0f9d58]"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- COUNTY -->
+        <div>
+
+            <label class="text-[12px] font-semibold text-white/70">
+                County
+            </label>
+
+            <div class="mt-1.5 relative">
+
+                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30">
+                    📍
+                </span>
+
+                <select
+                    id="county"
+                    class="w-full h-[46px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[13px] text-white outline-none focus:border-[#0f9d58]"
+                >
+
+                    <option value="">Select your county</option>
+
+                    <!-- 47 KENYAN COUNTIES -->
+                    <option value="Nairobi">Nairobi</option>
+                    <option value="Mombasa">Mombasa</option>
+                    <option value="Kisumu">Kisumu</option>
+                    <option value="Nakuru">Nakuru</option>
+                    <option value="Eldoret">Uasin Gishu</option>
+
+                    <option value="Kiambu">Kiambu</option>
+                    <option value="Machakos">Machakos</option>
+                    <option value="Kakamega">Kakamega</option>
+                    <option value="Bungoma">Bungoma</option>
+                    <option value="Meru">Meru</option>
+
+                    <option value="Kilifi">Kilifi</option>
+                    <option value="Kisii">Kisii</option>
+                    <option value="Narok">Narok</option>
+                    <option value="Kajiado">Kajiado</option>
+                    <option value="Migori">Migori</option>
+
+                    <option value="Nyeri">Nyeri</option>
+                    <option value="Nyandarua">Nyandarua</option>
+                    <option value="Murang'a">Murang'a</option>
+                    <option value="Homa Bay">Homa Bay</option>
+                    <option value="Kericho">Kericho</option>
+
+                    <option value="Bomet">Bomet</option>
+                    <option value="Embu">Embu</option>
+                    <option value="Kitui">Kitui</option>
+                    <option value="Makueni">Makueni</option>
+                    <option value="Tharaka-Nithi">Tharaka-Nithi</option>
+
+                    <option value="Kirinyaga">Kirinyaga</option>
+                    <option value="Laikipia">Laikipia</option>
+                    <option value="Nandi">Nandi</option>
+                    <option value="Trans Nzoia">Trans Nzoia</option>
+                    <option value="Vihiga">Vihiga</option>
+
+                    <option value="Busia">Busia</option>
+                    <option value="Siaya">Siaya</option>
+                    <option value="Elgeyo-Marakwet">Elgeyo-Marakwet</option>
+                    <option value="West Pokot">West Pokot</option>
+                    <option value="Baringo">Baringo</option>
+
+                    <option value="Turkana">Turkana</option>
+                    <option value="Samburu">Samburu</option>
+                    <option value="Marsabit">Marsabit</option>
+                    <option value="Isiolo">Isiolo</option>
+                    <option value="Garissa">Garissa</option>
+
+                    <option value="Wajir">Wajir</option>
+                    <option value="Mandera">Mandera</option>
+                    <option value="Tana River">Tana River</option>
+                    <option value="Lamu">Lamu</option>
+                    <option value="Taita-Taveta">Taita-Taveta</option>
+
+                    <option value="Kwale">Kwale</option>
+                    <option value="Nyamira">Nyamira</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- OCCUPATION -->
+        <div>
+
+            <label class="text-[12px] font-semibold text-white/70">
+                Occupation
+            </label>
+
+            <div class="mt-1.5 relative">
+
+                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30">
+                    💼
+                </span>
+
+                <select
+                    id="occupation"
+                    class="w-full h-[46px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[13px] text-white outline-none focus:border-[#0f9d58]"
+                >
+
+                    <option value="">Select occupation</option>
+                    <option value="Student">Student</option>
+                    <option value="Employed">Employed</option>
+                    <option value="Self-Employed">Self-Employed</option>
+                    <option value="Farmer">Farmer</option>
+                    <option value="Teacher">Teacher</option>
+                    <option value="Other">Other</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- EDUCATION -->
+        <div>
+
+            <label class="text-[12px] font-semibold text-white/70">
+                Highest Education Level
+            </label>
+
+            <div
+                onclick="openSheet()"
+                class="mt-1.5 relative h-[46px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] flex items-center pl-9 pr-4 cursor-pointer"
+            >
+
+                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30">
+                    🎓
+                </span>
+
+                <span
+                    id="eduValue"
+                    class="text-[13px] text-white/40"
+                >
+                    Select education level
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- SAVE BUTTON -->
+        <button
+            type="button"
+            onclick="saveProfile()"
+            class="w-full h-[50px] bg-[#0f9d58] hover:bg-[#0c854a] rounded-[12px] font-bold text-white text-[14px] mt-2 flex items-center justify-center gap-2 transition"
+        >
+            ✓ Save Profile and Continue
+        </button>
+
+
+    </div>
+
+</div>
+
+
+<!-- OVERLAY -->
+<div
+    id="sheetOverlay"
+    onclick="closeSheet()"
+    class="fixed inset-0 bg-black/60 z-50 hidden">
+</div>
+
+
+<!-- EDUCATION BOTTOM SHEET -->
+<div
+    id="eduSheet"
+    class="fixed bottom-0 left-0 right-0 z-[60] bg-[#2b2b2b] rounded-t-[28px] max-w-[420px] mx-auto translate-y-full transition-transform duration-300 ease-out"
+>
+
+    <div class="p-1">
+
+        <div class="px-5 py-4 border-b border-white/10">
+
+            <span class="text-[17px] text-white/90">
+                Select education level
+            </span>
+
+        </div>
+
+
+        <label class="flex items-center justify-between px-5 py-4 border-b border-white/10 cursor-pointer">
+
+            <span class="text-[16px] text-white/90">
+                Primary School
+            </span>
+
+            <input
+                type="radio"
+                name="edu"
+                value="Primary School"
+                class="accent-[#0f9d58] w-5 h-5"
+            >
+
+        </label>
+
+
+        <label class="flex items-center justify-between px-5 py-4 border-b border-white/10 cursor-pointer">
+
+            <span class="text-[16px] text-white/90">
+                Secondary School (KCSE)
+            </span>
+
+            <input
+                type="radio"
+                name="edu"
+                value="Secondary School (KCSE)"
+                class="accent-[#0f9d58] w-5 h-5"
+            >
+
+        </label>
+
+
+        <label class="flex items-center justify-between px-5 py-4 border-b border-white/10 cursor-pointer">
+
+            <span class="text-[16px] text-white/90">
+                Certificate / Diploma
+            </span>
+
+            <input
+                type="radio"
+                name="edu"
+                value="Certificate / Diploma"
+                class="accent-[#0f9d58] w-5 h-5"
+            >
+
+        </label>
+
+
+        <label class="flex items-center justify-between px-5 py-4 border-b border-white/10 cursor-pointer">
+
+            <span class="text-[16px] text-white/90">
+                Bachelor's Degree
+            </span>
+
+            <input
+                type="radio"
+                name="edu"
+                value="Bachelor's Degree"
+                class="accent-[#0f9d58] w-5 h-5"
+            >
+
+        </label>
+
+
+        <label class="flex items-center justify-between px-5 py-4 border-b border-white/10 cursor-pointer">
+
+            <span class="text-[16px] text-white/90">
+                Master's Degree
+            </span>
+
+            <input
+                type="radio"
+                name="edu"
+                value="Master's Degree"
+                class="accent-[#0f9d58] w-5 h-5"
+            >
+
+        </label>
+
+
+        <label class="flex items-center justify-between px-5 py-4 border-b border-white/10 cursor-pointer">
+
+            <span class="text-[16px] text-white/90">
+                PhD
+            </span>
+
+            <input
+                type="radio"
+                name="edu"
+                value="PhD"
+                class="accent-[#0f9d58] w-5 h-5"
+            >
+
+        </label>
+
+
+        <label class="flex items-center justify-between px-5 py-4 cursor-pointer">
+
+            <span class="text-[16px] text-white/90">
+                Other
+            </span>
+
+            <input
+                type="radio"
+                name="edu"
+                value="Other"
+                class="accent-[#0f9d58] w-5 h-5"
+            >
+
+        </label>
 
     </div>
 
@@ -387,7 +427,107 @@ input::-webkit-outer-spin-button {
 
 <script>
 
-/* SHOW MESSAGE */
+/* =========================
+   CHECK ACTIVE USER
+========================= */
+
+const currentUser = localStorage.getItem("kenyaSurveyCurrentUser");
+
+
+if (!currentUser) {
+
+    window.location.href = "register.html";
+
+}
+
+
+/* =========================
+   OPEN EDUCATION SHEET
+========================= */
+
+function openSheet() {
+
+    document
+        .getElementById("sheetOverlay")
+        .classList
+        .remove("hidden");
+
+
+    setTimeout(() => {
+
+        document
+            .getElementById("eduSheet")
+            .classList
+            .remove("translate-y-full");
+
+    }, 10);
+
+}
+
+
+/* =========================
+   CLOSE EDUCATION SHEET
+========================= */
+
+function closeSheet() {
+
+    document
+        .getElementById("eduSheet")
+        .classList
+        .add("translate-y-full");
+
+
+    setTimeout(() => {
+
+        document
+            .getElementById("sheetOverlay")
+            .classList
+            .add("hidden");
+
+    }, 300);
+
+}
+
+
+/* =========================
+   SELECT EDUCATION
+========================= */
+
+document
+.querySelectorAll('input[name="edu"]')
+.forEach(radio => {
+
+    radio.addEventListener("change", function(event) {
+
+        const value = event.target.value;
+
+        document
+            .getElementById("eduValue")
+            .textContent = value;
+
+
+        document
+            .getElementById("eduValue")
+            .classList
+            .remove("text-white/40");
+
+
+        document
+            .getElementById("eduValue")
+            .classList
+            .add("text-white");
+
+
+        closeSheet();
+
+    });
+
+});
+
+
+/* =========================
+   SHOW MESSAGE
+========================= */
 
 function showMessage(text, type) {
 
@@ -397,269 +537,173 @@ function showMessage(text, type) {
 
     message.classList.remove("hidden");
 
+
     if (type === "success") {
 
         message.className =
-            "mt-4 rounded-[10px] px-3 py-2.5 text-[11px] font-medium bg-green-500/10 border border-green-500/30 text-green-400";
+            "mt-5 rounded-[12px] px-4 py-3 text-[12px] font-medium bg-green-500/10 border border-green-500/30 text-green-400";
 
     } else {
 
         message.className =
-            "mt-4 rounded-[10px] px-3 py-2.5 text-[11px] font-medium bg-red-500/10 border border-red-500/30 text-red-400";
+            "mt-5 rounded-[12px] px-4 py-3 text-[12px] font-medium bg-red-500/10 border border-red-500/30 text-red-400";
 
     }
 
 }
 
 
-/* HIDE MESSAGE */
+/* =========================
+   SAVE PROFILE
+========================= */
 
-function hideMessage() {
+function saveProfile() {
 
-    document.getElementById("message").classList.add("hidden");
-
-}
-
-
-/* SHOW REGISTER */
-
-function showRegister() {
-
-    document.getElementById("registerSection").classList.remove("hidden");
-
-    document.getElementById("loginSection").classList.add("hidden");
-
-    document.getElementById("registerTab").className =
-        "flex-1 h-[36px] rounded-[8px] bg-[#0f9d58] text-white text-[13px] font-bold";
-
-    document.getElementById("loginTab").className =
-        "flex-1 h-[36px] rounded-[8px] text-white/60 text-[13px] font-semibold";
-
-    hideMessage();
-
-}
+    const currentUser =
+        localStorage.getItem("kenyaSurveyCurrentUser");
 
 
-/* SHOW LOGIN */
+    if (!currentUser) {
 
-function showLogin() {
+        showMessage(
+            "No active account found. Please create an account first.",
+            "error"
+        );
 
-    document.getElementById("registerSection").classList.add("hidden");
+        return;
 
-    document.getElementById("loginSection").classList.remove("hidden");
-
-    document.getElementById("loginTab").className =
-        "flex-1 h-[36px] rounded-[8px] bg-[#0f9d58] text-white text-[13px] font-bold";
-
-    document.getElementById("registerTab").className =
-        "flex-1 h-[36px] rounded-[8px] text-white/60 text-[13px] font-semibold";
-
-    hideMessage();
-
-}
+    }
 
 
-/* GET MEMBERS */
-
-function getMembers() {
-
-    return JSON.parse(
-        localStorage.getItem("kenyaSurveyMembers")
-    ) || {};
-
-}
+    const fullName =
+        document.getElementById("fullName").value.trim();
 
 
-/* SAVE MEMBERS */
+    const county =
+        document.getElementById("county").value;
 
-function saveMembers(members) {
+
+    const occupation =
+        document.getElementById("occupation").value;
+
+
+    const education =
+        document.getElementById("eduValue").textContent.trim();
+
+
+    /* VALIDATION */
+
+    if (!fullName) {
+
+        showMessage(
+            "Please enter your full name.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if (!county) {
+
+        showMessage(
+            "Please select your county.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if (!occupation) {
+
+        showMessage(
+            "Please select your occupation.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if (education === "Select education level") {
+
+        showMessage(
+            "Please select your highest education level.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    /* GET MEMBERS */
+
+    const members =
+        JSON.parse(
+            localStorage.getItem("kenyaSurveyMembers")
+        ) || {};
+
+
+    /* CHECK ACCOUNT */
+
+    if (!members[currentUser]) {
+
+        showMessage(
+            "Your account could not be found.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    /* SAVE PROFILE */
+
+    members[currentUser].fullName = fullName;
+
+    members[currentUser].county = county;
+
+    members[currentUser].occupation = occupation;
+
+    members[currentUser].education = education;
+
+    members[currentUser].profileCompleted = true;
+
+    members[currentUser].profileCompletedAt =
+        new Date().toISOString();
+
+
+    /* UPDATE STORAGE */
 
     localStorage.setItem(
         "kenyaSurveyMembers",
         JSON.stringify(members)
     );
 
+
+    /* SUCCESS */
+
+    showMessage(
+        "Profile completed successfully!",
+        "success"
+    );
+
+
+    /* REDIRECT */
+
+    setTimeout(() => {
+
+        window.location.href = "dashboard.html";
+
+    }, 1000);
+
 }
-
-
-/* CREATE ACCOUNT */
-
-document.getElementById("registerForm")
-.addEventListener("submit", function(event) {
-
-    event.preventDefault();
-
-    const phone =
-        document.getElementById("registerPhone").value.trim();
-
-    const pin =
-        document.getElementById("registerPin").value.trim();
-
-    const confirmPin =
-        document.getElementById("confirmPin").value.trim();
-
-
-    if (!/^0\d{9}$/.test(phone)) {
-
-        showMessage(
-            "Enter a valid Kenyan phone number, for example 0712345678.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    if (!/^\d{4}$/.test(pin)) {
-
-        showMessage(
-            "PIN must contain exactly 4 digits.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    if (pin !== confirmPin) {
-
-        showMessage(
-            "The PINs do not match.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    const members = getMembers();
-
-
-    if (members[phone]) {
-
-        showMessage(
-            "This phone number is already registered. Please log in instead.",
-            "error"
-        );
-
-
-        setTimeout(() => {
-
-            showLogin();
-
-            document.getElementById("loginPhone").value = phone;
-
-        }, 1500);
-
-        return;
-
-    }
-
-
-    members[phone] = {
-
-        phone: phone,
-        pin: pin,
-        createdAt: new Date().toISOString(),
-        profileCompleted: false
-
-    };
-
-
-    saveMembers(members);
-
-
-    localStorage.setItem(
-        "kenyaSurveyCurrentUser",
-        phone
-    );
-
-
-    showMessage(
-        "Account created successfully. Complete your profile to continue.",
-        "success"
-    );
-
-
-    setTimeout(() => {
-
-        window.location.href = "complete-profile.html";
-
-    }, 1000);
-
-});
-
-
-/* LOGIN */
-
-document.getElementById("loginForm")
-.addEventListener("submit", function(event) {
-
-    event.preventDefault();
-
-    const phone =
-        document.getElementById("loginPhone").value.trim();
-
-    const pin =
-        document.getElementById("loginPin").value.trim();
-
-    const members = getMembers();
-
-
-    if (!members[phone]) {
-
-        showMessage(
-            "No account was found with this phone number. Please create an account.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    if (members[phone].pin !== pin) {
-
-        showMessage(
-            "Incorrect PIN. Please try again.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    localStorage.setItem(
-        "kenyaSurveyCurrentUser",
-        phone
-    );
-
-
-    showMessage(
-        "Login successful. Welcome back!",
-        "success"
-    );
-
-
-    setTimeout(() => {
-
-        if (members[phone].profileCompleted) {
-
-            window.location.href = "dashboard.html";
-
-        } else {
-
-            window.location.href = "complete-profile.html";
-
-        }
-
-    }, 1000);
-
-});
 
 </script>
 
