@@ -46,8 +46,7 @@ input::-webkit-outer-spin-button {
         </div>
 
         <h1 class="text-[24px] font-black mt-3 tracking-tight">
-            <span class="text-white">Kenya</span>
-            <span class="text-[#0f9d58]">Survey</span>
+            <span class="text-white">Kenya</span><span class="text-[#0f9d58]">Survey</span>
         </h1>
 
         <p class="text-[12px] text-white/50 mt-0.5">
@@ -61,6 +60,7 @@ input::-webkit-outer-spin-button {
     <div class="mt-6 bg-black/50 rounded-[12px] p-1 flex">
 
         <button
+            type="button"
             id="registerTab"
             onclick="showRegister()"
             class="flex-1 h-[36px] rounded-[8px] bg-[#0f9d58] text-white text-[13px] font-bold">
@@ -71,6 +71,7 @@ input::-webkit-outer-spin-button {
 
 
         <button
+            type="button"
             id="loginTab"
             onclick="showLogin()"
             class="flex-1 h-[36px] rounded-[8px] text-white/60 text-[13px] font-semibold">
@@ -89,9 +90,9 @@ input::-webkit-outer-spin-button {
     </div>
 
 
-    <!-- ========================= -->
-    <!-- REGISTER SECTION -->
-    <!-- ========================= -->
+    <!-- ================================= -->
+    <!-- CREATE ACCOUNT SECTION -->
+    <!-- ================================= -->
 
     <div id="registerSection">
 
@@ -139,7 +140,7 @@ input::-webkit-outer-spin-button {
         <form id="registerForm" class="mt-5 space-y-4">
 
 
-            <!-- PHONE -->
+            <!-- PHONE NUMBER -->
             <div>
 
                 <label class="text-[12px] font-semibold text-white/80">
@@ -158,8 +159,9 @@ input::-webkit-outer-spin-button {
                         id="registerPhone"
                         type="tel"
                         inputmode="numeric"
+                        autocomplete="tel"
                         placeholder="Enter phone number"
-                        class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white outline-none focus:border-[#0f9d58]"
+                        class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white placeholder:text-white/40 outline-none focus:border-[#0f9d58]"
                         required
                     />
 
@@ -168,7 +170,7 @@ input::-webkit-outer-spin-button {
             </div>
 
 
-            <!-- PIN -->
+            <!-- CREATE PIN -->
             <div>
 
                 <label class="text-[12px] font-semibold text-white/80">
@@ -188,6 +190,7 @@ input::-webkit-outer-spin-button {
                         type="password"
                         maxlength="4"
                         inputmode="numeric"
+                        autocomplete="new-password"
                         placeholder="••••"
                         class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white outline-none focus:border-[#0f9d58]"
                         required
@@ -218,6 +221,7 @@ input::-webkit-outer-spin-button {
                         type="password"
                         maxlength="4"
                         inputmode="numeric"
+                        autocomplete="new-password"
                         placeholder="••••"
                         class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white outline-none focus:border-[#0f9d58]"
                         required
@@ -228,7 +232,7 @@ input::-webkit-outer-spin-button {
             </div>
 
 
-            <!-- REGISTER BUTTON -->
+            <!-- CREATE ACCOUNT BUTTON -->
             <button
                 type="submit"
                 class="w-full h-[48px] bg-[#0f9d58] hover:bg-[#0c854a] rounded-[12px] text-white font-bold text-[13px] mt-2 transition">
@@ -242,9 +246,9 @@ input::-webkit-outer-spin-button {
     </div>
 
 
-    <!-- ========================= -->
+    <!-- ================================= -->
     <!-- LOGIN SECTION -->
-    <!-- ========================= -->
+    <!-- ================================= -->
 
     <div id="loginSection" class="hidden">
 
@@ -257,11 +261,10 @@ input::-webkit-outer-spin-button {
         </p>
 
 
-        <!-- LOGIN FORM -->
         <form id="loginForm" class="mt-6 space-y-4">
 
 
-            <!-- PHONE -->
+            <!-- LOGIN PHONE -->
             <div>
 
                 <label class="text-[12px] font-semibold text-white/80">
@@ -280,8 +283,9 @@ input::-webkit-outer-spin-button {
                         id="loginPhone"
                         type="tel"
                         inputmode="numeric"
+                        autocomplete="tel"
                         placeholder="Enter phone number"
-                        class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white outline-none focus:border-[#0f9d58]"
+                        class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white placeholder:text-white/40 outline-none focus:border-[#0f9d58]"
                         required
                     />
 
@@ -290,7 +294,7 @@ input::-webkit-outer-spin-button {
             </div>
 
 
-            <!-- PIN -->
+            <!-- LOGIN PIN -->
             <div>
 
                 <label class="text-[12px] font-semibold text-white/80">
@@ -310,6 +314,7 @@ input::-webkit-outer-spin-button {
                         type="password"
                         maxlength="4"
                         inputmode="numeric"
+                        autocomplete="current-password"
                         placeholder="••••"
                         class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white outline-none focus:border-[#0f9d58]"
                         required
@@ -337,6 +342,7 @@ input::-webkit-outer-spin-button {
             New to KenyaSurvey?
 
             <button
+                type="button"
                 onclick="showRegister()"
                 class="text-[#0f9d58] font-semibold">
 
@@ -395,17 +401,18 @@ input::-webkit-outer-spin-button {
 
 <script>
 
-/* =========================
+/* =================================
    SHOW MESSAGE
-========================= */
+================================= */
 
 function showMessage(text, type) {
 
     const message = document.getElementById("message");
 
-    message.innerText = text;
+    message.textContent = text;
 
     message.classList.remove("hidden");
+
 
     if (type === "success") {
 
@@ -422,9 +429,9 @@ function showMessage(text, type) {
 }
 
 
-/* =========================
+/* =================================
    HIDE MESSAGE
-========================= */
+================================= */
 
 function hideMessage() {
 
@@ -436,9 +443,9 @@ function hideMessage() {
 }
 
 
-/* =========================
-   SHOW REGISTER
-========================= */
+/* =================================
+   SHOW CREATE ACCOUNT
+================================= */
 
 function showRegister() {
 
@@ -471,9 +478,9 @@ function showRegister() {
 }
 
 
-/* =========================
+/* =================================
    SHOW LOGIN
-========================= */
+================================= */
 
 function showLogin() {
 
@@ -506,9 +513,9 @@ function showLogin() {
 }
 
 
-/* =========================
-   GET MEMBERS
-========================= */
+/* =================================
+   GET ALL MEMBERS
+================================= */
 
 function getMembers() {
 
@@ -519,9 +526,9 @@ function getMembers() {
 }
 
 
-/* =========================
-   SAVE MEMBERS
-========================= */
+/* =================================
+   SAVE ALL MEMBERS
+================================= */
 
 function saveMembers(members) {
 
@@ -533,9 +540,9 @@ function saveMembers(members) {
 }
 
 
-/* =========================
-   REGISTER NEW MEMBER
-========================= */
+/* =================================
+   CREATE ACCOUNT
+================================= */
 
 document
 .getElementById("registerForm")
@@ -565,7 +572,7 @@ document
         .trim();
 
 
-    /* CHECK PHONE */
+    /* VALIDATE PHONE */
 
     if (!/^0\d{9}$/.test(phone)) {
 
@@ -579,7 +586,7 @@ document
     }
 
 
-    /* CHECK PIN */
+    /* VALIDATE PIN */
 
     if (!/^\d{4}$/.test(pin)) {
 
@@ -607,10 +614,12 @@ document
     }
 
 
+    /* GET MEMBERS */
+
     const members = getMembers();
 
 
-    /* PRIMARY KEY CHECK */
+    /* CHECK IF PHONE ALREADY EXISTS */
 
     if (members[phone]) {
 
@@ -619,22 +628,24 @@ document
             "error"
         );
 
+
         setTimeout(() => {
 
             showLogin();
 
             document
-            .getElementById("loginPhone")
-            .value = phone;
+                .getElementById("loginPhone")
+                .value = phone;
 
         }, 1500);
+
 
         return;
 
     }
 
 
-    /* SAVE MEMBER */
+    /* CREATE NEW MEMBER */
 
     members[phone] = {
 
@@ -642,42 +653,49 @@ document
 
         pin: pin,
 
-        createdAt:
-            new Date().toISOString()
+        createdAt: new Date().toISOString(),
+
+        profileCompleted: false
 
     };
 
 
+    /* SAVE MEMBER */
+
     saveMembers(members);
 
 
+    /* SET CURRENT USER */
+
+    localStorage.setItem(
+        "kenyaSurveyCurrentUser",
+        phone
+    );
+
+
+    /* SUCCESS MESSAGE */
+
     showMessage(
-        "Account created successfully. You can now log in.",
+        "Account created successfully. Complete your profile to continue.",
         "success"
     );
 
 
-    document
-    .getElementById("registerForm")
-    .reset();
-
+    /* REDIRECT TO COMPLETE PROFILE */
 
     setTimeout(() => {
 
-        showLogin();
+        window.location.href =
+            "complete-profile.html";
 
-        document
-        .getElementById("loginPhone")
-        .value = phone;
-
-    }, 1500);
+    }, 1000);
 
 });
 
 
-/* =========================
-   LOGIN MEMBER
-========================= */
+/* =================================
+   LOGIN
+================================= */
 
 document
 .getElementById("loginForm")
@@ -703,7 +721,7 @@ document
     const members = getMembers();
 
 
-    /* MEMBER EXISTS */
+    /* CHECK MEMBER EXISTS */
 
     if (!members[phone]) {
 
@@ -717,7 +735,7 @@ document
     }
 
 
-    /* PIN CHECK */
+    /* CHECK PIN */
 
     if (members[phone].pin !== pin) {
 
@@ -731,7 +749,7 @@ document
     }
 
 
-    /* SAVE LOGIN SESSION */
+    /* SET CURRENT USER */
 
     localStorage.setItem(
         "kenyaSurveyCurrentUser",
@@ -745,17 +763,26 @@ document
     );
 
 
+    /* CHECK PROFILE STATUS */
+
     setTimeout(() => {
 
-        window.location.href = "index.html";
+        if (members[phone].profileCompleted) {
 
-    }, 1200);
+            window.location.href = "dashboard.html";
+
+        } else {
+
+            window.location.href =
+                "complete-profile.html";
+
+        }
+
+    }, 1000);
 
 });
 
-
 </script>
-
 
 </body>
     </html>
