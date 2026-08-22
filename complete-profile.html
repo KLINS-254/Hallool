@@ -3,152 +3,875 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Complete Your Profile - KenyaSurvey</title>
+
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>body{font-family:Inter,sans-serif;background:#000}.sheet{backdrop-filter:blur(12px)}</style>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+>
+
+<style>
+body {
+    font-family: Inter, sans-serif;
+    background: #000;
+}
+
+.sheet {
+    backdrop-filter: blur(12px);
+}
+</style>
 </head>
+
+
 <body class="bg-black min-h-screen flex items-center justify-center p-0 lg:p-4">
 
+
 <div class="w-full max-w-[420px] bg-[#121f16] lg:border border-[#1c3320] lg:rounded-[24px] min-h-screen lg:min-h-0 p-6">
-<!-- Icon -->
-<div class="flex justify-center">
-<div class="w-[52px] h-[52px] bg-[#0f9d58] rounded-[14px] grid place-items-center text-white">
-<svg width="28" height="28" viewBox="0 0 24 24" fill="white"><circle cx="9" cy="7" r="4"/><path d="M3 19c0-2.7 2.7-5 6-5s6 2.3 6 5v1H3v-1z"/><path d="M16 10l2 2 4-4" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+
+    <!-- ICON -->
+
+    <div class="flex justify-center">
+
+        <div class="w-[52px] h-[52px] bg-[#0f9d58] rounded-[14px] grid place-items-center text-white">
+
+            <svg
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="white"
+            >
+
+                <circle cx="9" cy="7" r="4"/>
+
+                <path
+                    d="M3 19c0-2.7 2.7-5 6-5s6 2.3 6 5v1H3v-1z"
+                />
+
+                <path
+                    d="M16 10l2 2 4-4"
+                    stroke="white"
+                    stroke-width="2.2"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+
+            </svg>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- TITLE -->
+
+    <h1 class="text-center text-[22px] font-extrabold text-white mt-4">
+
+        Complete Your Profile
+
+    </h1>
+
+
+    <p class="text-center text-[12px] text-white/50 leading-5 mt-2 px-4">
+
+        We use demographic information to match you with relevant research
+        opportunities. All data is handled in accordance with our
+
+        <a href="#" class="text-[#0f9d58] underline">
+            Privacy Policy
+        </a>.
+
+    </p>
+
+
+
+    <!-- MESSAGE -->
+
+    <div
+        id="message"
+        class="hidden mt-5 rounded-[12px] px-4 py-3 text-[12px] font-medium"
+    ></div>
+
+
+
+    <!-- FORM -->
+
+    <div class="mt-6 space-y-4">
+
+
+        <!-- FULL NAME -->
+
+        <div>
+
+            <label class="text-[12px] font-semibold text-white/70">
+
+                Full Name
+
+            </label>
+
+
+            <div class="mt-1.5 relative">
+
+                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30">
+
+                    👤
+
+                </span>
+
+
+                <input
+                    id="fullName"
+                    placeholder="Enter your full name"
+                    autocomplete="name"
+                    class="w-full h-[46px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[13px] text-white placeholder:text-white/40 outline-none focus:border-[#0f9d58]"
+                />
+
+            </div>
+
+        </div>
+
+
+
+        <!-- COUNTY -->
+
+        <div>
+
+            <label class="text-[12px] font-semibold text-white/70">
+
+                County
+
+            </label>
+
+
+            <div class="mt-1.5 relative">
+
+                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30">
+
+                    📍
+
+                </span>
+
+
+                <select
+                    id="county"
+                    class="w-full h-[46px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[13px] text-white outline-none focus:border-[#0f9d58] appearance-none"
+                >
+
+                    <option value="">
+                        Select your county
+                    </option>
+
+                    <option value="Nairobi">Nairobi</option>
+                    <option value="Mombasa">Mombasa</option>
+                    <option value="Kiambu">Kiambu</option>
+                    <option value="Nakuru">Nakuru</option>
+                    <option value="Kakamega">Kakamega</option>
+                    <option value="Bungoma">Bungoma</option>
+                    <option value="Meru">Meru</option>
+                    <option value="Kilifi">Kilifi</option>
+                    <option value="Machakos">Machakos</option>
+                    <option value="Kisii">Kisii</option>
+                    <option value="Kisumu">Kisumu</option>
+                    <option value="Uasin Gishu">Uasin Gishu</option>
+                    <option value="Narok">Narok</option>
+                    <option value="Kajiado">Kajiado</option>
+                    <option value="Migori">Migori</option>
+                    <option value="Nyeri">Nyeri</option>
+                    <option value="Nyandarua">Nyandarua</option>
+                    <option value="Murang'a">Murang'a</option>
+                    <option value="Homa Bay">Homa Bay</option>
+                    <option value="Kericho">Kericho</option>
+                    <option value="Bomet">Bomet</option>
+                    <option value="Embu">Embu</option>
+                    <option value="Kitui">Kitui</option>
+                    <option value="Makueni">Makueni</option>
+                    <option value="Tharaka-Nithi">Tharaka-Nithi</option>
+                    <option value="Kirinyaga">Kirinyaga</option>
+                    <option value="Laikipia">Laikipia</option>
+                    <option value="Nandi">Nandi</option>
+                    <option value="Trans Nzoia">Trans Nzoia</option>
+                    <option value="Vihiga">Vihiga</option>
+                    <option value="Busia">Busia</option>
+                    <option value="Siaya">Siaya</option>
+                    <option value="Elgeyo-Marakwet">Elgeyo-Marakwet</option>
+                    <option value="West Pokot">West Pokot</option>
+                    <option value="Baringo">Baringo</option>
+                    <option value="Turkana">Turkana</option>
+                    <option value="Samburu">Samburu</option>
+                    <option value="Marsabit">Marsabit</option>
+                    <option value="Isiolo">Isiolo</option>
+                    <option value="Garissa">Garissa</option>
+                    <option value="Wajir">Wajir</option>
+                    <option value="Mandera">Mandera</option>
+                    <option value="Tana River">Tana River</option>
+                    <option value="Lamu">Lamu</option>
+                    <option value="Taita-Taveta">Taita-Taveta</option>
+                    <option value="Kwale">Kwale</option>
+                    <option value="Nyamira">Nyamira</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- OCCUPATION -->
+
+        <div>
+
+            <label class="text-[12px] font-semibold text-white/70">
+
+                Occupation
+
+            </label>
+
+
+            <div class="mt-1.5 relative">
+
+                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30">
+
+                    💼
+
+                </span>
+
+
+                <select
+                    id="occupation"
+                    class="w-full h-[46px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[13px] text-white outline-none focus:border-[#0f9d58] appearance-none"
+                >
+
+                    <option value="">
+                        Select occupation
+                    </option>
+
+                    <option value="Student">
+                        Student
+                    </option>
+
+                    <option value="Employed">
+                        Employed
+                    </option>
+
+                    <option value="Self-Employed">
+                        Self-Employed
+                    </option>
+
+                    <option value="Farmer">
+                        Farmer
+                    </option>
+
+                    <option value="Teacher">
+                        Teacher
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- EDUCATION -->
+
+        <div>
+
+            <label class="text-[12px] font-semibold text-white/70">
+
+                Highest Education Level
+
+            </label>
+
+
+            <div
+                onclick="openSheet()"
+                class="mt-1.5 relative h-[46px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] flex items-center pl-9 pr-4 cursor-pointer"
+            >
+
+                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30">
+
+                    🎓
+
+                </span>
+
+
+                <span
+                    id="eduValue"
+                    class="text-[13px] text-white/40"
+                >
+
+                    Select education level
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SAVE BUTTON -->
+
+        <button
+            onclick="saveProfile()"
+            class="w-full h-[50px] bg-[#0f9d58] hover:bg-[#0c854a] rounded-[12px] font-bold text-white text-[14px] mt-2 flex items-center justify-center gap-2 transition"
+        >
+
+            ✓ Save Profile and Continue
+
+        </button>
+
+
+    </div>
+
 </div>
+
+
+
+<!-- OVERLAY -->
+
+<div
+    id="sheetOverlay"
+    onclick="closeSheet()"
+    class="fixed inset-0 bg-black/60 z-50 hidden"
+></div>
+
+
+
+<!-- EDUCATION BOTTOM SHEET -->
+
+<div
+    id="eduSheet"
+    class="fixed bottom-0 left-0 right-0 z-[60] bg-[#2b2b2b] rounded-t-[28px] max-w-[420px] mx-auto translate-y-full transition-transform duration-300 ease-out"
+>
+
+    <div class="p-1">
+
+
+        <div class="px-5 py-4 border-b border-white/10">
+
+            <span class="text-[17px] text-white/90">
+
+                Select education level
+
+            </span>
+
+        </div>
+
+
+        <label class="flex items-center justify-between px-5 py-4 border-b border-white/10 cursor-pointer">
+
+            <span class="text-[16px] text-white/90">
+
+                Primary School
+
+            </span>
+
+
+            <input
+                type="radio"
+                name="edu"
+                value="Primary School"
+                class="accent-[#0f9d58] w-5 h-5"
+            >
+
+        </label>
+
+
+
+        <label class="flex items-center justify-between px-5 py-4 border-b border-white/10 cursor-pointer">
+
+            <span class="text-[16px] text-white/90">
+
+                Secondary School (KCSE)
+
+            </span>
+
+
+            <input
+                type="radio"
+                name="edu"
+                value="Secondary School (KCSE)"
+                class="accent-[#0f9d58] w-5 h-5"
+            >
+
+        </label>
+
+
+
+        <label class="flex items-center justify-between px-5 py-4 border-b border-white/10 cursor-pointer">
+
+            <span class="text-[16px] text-white/90">
+
+                Certificate / Diploma
+
+            </span>
+
+
+            <input
+                type="radio"
+                name="edu"
+                value="Certificate / Diploma"
+                class="accent-[#0f9d58] w-5 h-5"
+            >
+
+        </label>
+
+
+
+        <label class="flex items-center justify-between px-5 py-4 border-b border-white/10 cursor-pointer">
+
+            <span class="text-[16px] text-white/90">
+
+                Bachelor's Degree
+
+            </span>
+
+
+            <input
+                type="radio"
+                name="edu"
+                value="Bachelor's Degree"
+                class="accent-[#0f9d58] w-5 h-5"
+            >
+
+        </label>
+
+
+
+        <label class="flex items-center justify-between px-5 py-4 border-b border-white/10 cursor-pointer">
+
+            <span class="text-[16px] text-white/90">
+
+                Master's Degree
+
+            </span>
+
+
+            <input
+                type="radio"
+                name="edu"
+                value="Master's Degree"
+                class="accent-[#0f9d58] w-5 h-5"
+            >
+
+        </label>
+
+
+
+        <label class="flex items-center justify-between px-5 py-4 border-b border-white/10 cursor-pointer">
+
+            <span class="text-[16px] text-white/90">
+
+                PhD
+
+            </span>
+
+
+            <input
+                type="radio"
+                name="edu"
+                value="PhD"
+                class="accent-[#0f9d58] w-5 h-5"
+            >
+
+        </label>
+
+
+
+        <label class="flex items-center justify-between px-5 py-4 cursor-pointer">
+
+            <span class="text-[16px] text-white/90">
+
+                Other
+
+            </span>
+
+
+            <input
+                type="radio"
+                name="edu"
+                value="Other"
+                class="accent-[#0f9d58] w-5 h-5"
+            >
+
+        </label>
+
+
+    </div>
+
 </div>
 
-<h1 class="text-center text-[22px] font-extrabold text-white mt-4">Complete Your Profile</h1>
-<p class="text-center text-[12px] text-white/50 leading-5 mt-2 px-4">We use demographic information to match you with relevant research opportunities. All data is handled in accordance with our <a href="#" class="text-[#0f9d58] underline">Privacy Policy</a>.</p>
 
-<!-- Form -->
-<div class="mt-6 space-y-4">
-
-<div>
-<label class="text-[12px] font-semibold text-white/70">Full Name</label>
-<div class="mt-1.5 relative">
-<span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30">👤</span>
-<input id="fullName" placeholder="Enter your full name" class="w-full h-[46px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[13px] text-white placeholder:text-white/40 outline-none focus:border-[#0f9d58]" />
-</div>
-</div>
-
-<div>
-<label class="text-[12px] font-semibold text-white/70">County</label>
-<div class="mt-1.5 relative">
-<span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30">📍</span>
-<select class="w-full h-[46px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[13px] text-white outline-none focus:border-[#0f9d58] appearance-none">
-<option>Select your county</option>
-<option>Nairobi</option><option>Mombasa</option><option>Kisumu</option><option>Nakuru</option><option>Kiambu</option><option>Machakos</option><option>Kakamega</option>
-</select>
-</div>
-</div>
-
-<div>
-<label class="text-[12px] font-semibold text-white/70">Occupation</label>
-<div class="mt-1.5 relative">
-<span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30">💼</span>
-<select class="w-full h-[46px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[13px] text-white outline-none focus:border-[#0f9d58] appearance-none">
-<option>Select occupation</option>
-<option>Student</option><option>Employed</option><option>Self-Employed</option><option>Farmer</option><option>Teacher</option><option>Other</option>
-</select>
-</div>
-</div>
-
-<div>
-<label class="text-[12px] font-semibold text-white/70">Highest Education Level</label>
-<div onclick="openSheet()" class="mt-1.5 relative h-[46px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] flex items-center pl-9 pr-4 cursor-pointer">
-<span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30">🎓</span>
-<span id="eduValue" class="text-[13px] text-white">Select education level</span>
-</div>
-</div>
-
-<button onclick="saveProfile()" class="w-full h-[50px] bg-[#0f9d58] rounded-[12px] font-bold text-white text-[14px] mt-2 flex items-center justify-center gap-2">
-✓ Save Profile and Continue
-</button>
-
-</div>
-</div>
-
-<!-- EDUCATION BOTTOM SHEET - EXACT LIKE 2ND IMAGE -->
-<div id="sheetOverlay" onclick="closeSheet()" class="fixed inset-0 bg-black/60 z-50 hidden"></div>
-<div id="eduSheet" class="fixed bottom-0 left-0 right-0 z-[60] bg-[#2b2b2b] rounded-t-[28px] max-w-[420px] mx-auto translate-y-full transition-transform duration-300 ease-out">
-<div class="p-1">
-
-<label class="flex items-center justify-between px-5 py-4 border-b border-white/10 cursor-pointer">
-<span class="text-[17px] text-white/90">Select education level</span>
-<input type="radio" name="edu" value="" checked class="peer sr-only">
-<span class="w-6 h-6 rounded-full border-2 border-[#8ab4f8] grid place-items-center"><span class="w-3 h-3 bg-[#8ab4f8] rounded-full peer-checked:block hidden"></span></span>
-<span class="w-6 h-6 rounded-full border-2 border-[#8ab4f8] grid place-items-center peer-checked:[&>div]:block"><div class="w-3 h-3 bg-[#8ab4f8] rounded-full hidden"></div></span>
-</label>
-
-<label class="flex items-center justify-between px-5 py-4 border-b border-white/10 cursor-pointer">
-<span class="text-[17px] text-white/90">Primary School</span>
-<input type="radio" name="edu" value="Primary School" class="sr-only peer">
-<span class="w-6 h-6 rounded-full border-2 border-white/50 peer-checked:border-[#8ab4f8] grid place-items-center"><span class="w-3 h-3 bg-[#8ab4f8] rounded-full hidden peer-checked:block"></span></span>
-</label>
-
-<label class="flex items-center justify-between px-5 py-4 border-b border-white/10 cursor-pointer">
-<span class="text-[17px] text-white/90">Secondary School (KCSE)</span>
-<input type="radio" name="edu" value="Secondary School (KCSE)" class="sr-only peer">
-<span class="w-6 h-6 rounded-full border-2 border-white/50 peer-checked:border-[#8ab4f8] grid place-items-center"><span class="w-3 h-3 bg-[#8ab4f8] rounded-full hidden peer-checked:block"></span></span>
-</label>
-
-<label class="flex items-center justify-between px-5 py-4 border-b border-white/10 cursor-pointer">
-<span class="text-[17px] text-white/90">Certificate / Diploma</span>
-<input type="radio" name="edu" value="Certificate / Diploma" class="sr-only peer">
-<span class="w-6 h-6 rounded-full border-2 border-white/50 peer-checked:border-[#8ab4f8] grid place-items-center"><span class="w-3 h-3 bg-[#8ab4f8] rounded-full hidden peer-checked:block"></span></span>
-</label>
-
-<label class="flex items-center justify-between px-5 py-4 border-b border-white/10 cursor-pointer">
-<span class="text-[17px] text-white/90">Bachelor's Degree</span>
-<input type="radio" name="edu" value="Bachelor's Degree" class="sr-only peer">
-<span class="w-6 h-6 rounded-full border-2 border-white/50 peer-checked:border-[#8ab4f8] grid place-items-center"><span class="w-3 h-3 bg-[#8ab4f8] rounded-full hidden peer-checked:block"></span></span>
-</label>
-
-<label class="flex items-center justify-between px-5 py-4 border-b border-white/10 cursor-pointer">
-<span class="text-[17px] text-white/90">Master's Degree</span>
-<input type="radio" name="edu" value="Master's Degree" class="sr-only peer">
-<span class="w-6 h-6 rounded-full border-2 border-white/50 peer-checked:border-[#8ab4f8] grid place-items-center"><span class="w-3 h-3 bg-[#8ab4f8] rounded-full hidden peer-checked:block"></span></span>
-</label>
-
-<label class="flex items-center justify-between px-5 py-4 border-b border-white/10 cursor-pointer">
-<span class="text-[17px] text-white/90">PhD</span>
-<input type="radio" name="edu" value="PhD" class="sr-only peer">
-<span class="w-6 h-6 rounded-full border-2 border-white/50 peer-checked:border-[#8ab4f8] grid place-items-center"><span class="w-3 h-3 bg-[#8ab4f8] rounded-full hidden peer-checked:block"></span></span>
-</label>
-
-<label class="flex items-center justify-between px-5 py-4 cursor-pointer">
-<span class="text-[17px] text-white/90">Other</span>
-<input type="radio" name="edu" value="Other" class="sr-only peer">
-<span class="w-6 h-6 rounded-full border-2 border-white/50 peer-checked:border-[#8ab4f8] grid place-items-center"><span class="w-3 h-3 bg-[#8ab4f8] rounded-full hidden peer-checked:block"></span></span>
-</label>
-
-</div>
-</div>
 
 <script>
-function openSheet(){
-document.getElementById('sheetOverlay').classList.remove('hidden');
-setTimeout(()=>{document.getElementById('eduSheet').classList.remove('translate-y-full')},10)
+
+
+/* =========================
+   CHECK ACTIVE USER
+========================= */
+
+const currentUser =
+    localStorage.getItem("kenyaSurveyCurrentUser");
+
+
+if (!currentUser) {
+
+    window.location.href = "register.html";
+
 }
-function closeSheet(){
-document.getElementById('eduSheet').classList.add('translate-y-full');
-setTimeout(()=>{document.getElementById('sheetOverlay').classList.add('hidden')},300)
+
+
+
+/* =========================
+   OPEN EDUCATION SHEET
+========================= */
+
+function openSheet() {
+
+    document
+    .getElementById("sheetOverlay")
+    .classList
+    .remove("hidden");
+
+
+    setTimeout(() => {
+
+        document
+        .getElementById("eduSheet")
+        .classList
+        .remove("translate-y-full");
+
+    }, 10);
+
 }
-document.querySelectorAll('input[name="edu"]').forEach(r=>{
-r.addEventListener('change', e=>{
-if(e.target.value){
-document.getElementById('eduValue').textContent = e.target.value;
-document.getElementById('eduValue').classList.remove('text-white/40');
+
+
+
+/* =========================
+   CLOSE EDUCATION SHEET
+========================= */
+
+function closeSheet() {
+
+    document
+    .getElementById("eduSheet")
+    .classList
+    .add("translate-y-full");
+
+
+    setTimeout(() => {
+
+        document
+        .getElementById("sheetOverlay")
+        .classList
+        .add("hidden");
+
+    }, 300);
+
 }
-closeSheet();
-})
-})
-function saveProfile(){
-alert('Profile saved: ' + document.getElementById('fullName').value + ' - ' + document.getElementById('eduValue').textContent);
-// window.location.href = 'dashboard.html'
+
+
+
+/* =========================
+   SELECT EDUCATION
+========================= */
+
+document
+.querySelectorAll('input[name="edu"]')
+.forEach(radio => {
+
+    radio.addEventListener("change", function(event) {
+
+        document
+        .getElementById("eduValue")
+        .textContent =
+        event.target.value;
+
+
+        document
+        .getElementById("eduValue")
+        .classList
+        .remove("text-white/40");
+
+
+        document
+        .getElementById("eduValue")
+        .classList
+        .add("text-white");
+
+
+        closeSheet();
+
+    });
+
+});
+
+
+
+/* =========================
+   SHOW MESSAGE
+========================= */
+
+function showMessage(text, type) {
+
+    const message =
+        document.getElementById("message");
+
+
+    message.textContent = text;
+
+
+    message.classList.remove("hidden");
+
+
+    if (type === "success") {
+
+        message.className =
+            "mt-5 rounded-[12px] px-4 py-3 text-[12px] font-medium bg-green-500/10 border border-green-500/30 text-green-400";
+
+    }
+
+    else {
+
+        message.className =
+            "mt-5 rounded-[12px] px-4 py-3 text-[12px] font-medium bg-red-500/10 border border-red-500/30 text-red-400";
+
+    }
+
 }
+
+
+
+/* =========================
+   SAVE PROFILE
+========================= */
+
+function saveProfile() {
+
+
+    const currentUser =
+        localStorage.getItem(
+            "kenyaSurveyCurrentUser"
+        );
+
+
+    if (!currentUser) {
+
+        showMessage(
+            "No active account found. Please create an account first.",
+            "error"
+        );
+
+
+        setTimeout(() => {
+
+            window.location.href =
+                "register.html";
+
+        }, 1200);
+
+
+        return;
+
+    }
+
+
+    const fullName =
+        document
+        .getElementById("fullName")
+        .value
+        .trim();
+
+
+    const county =
+        document
+        .getElementById("county")
+        .value;
+
+
+    const occupation =
+        document
+        .getElementById("occupation")
+        .value;
+
+
+    const education =
+        document
+        .getElementById("eduValue")
+        .textContent
+        .trim();
+
+
+
+    /* VALIDATE NAME */
+
+    if (!fullName) {
+
+        showMessage(
+            "Please enter your full name.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+
+    /* VALIDATE COUNTY */
+
+    if (!county) {
+
+        showMessage(
+            "Please select your county.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+
+    /* VALIDATE OCCUPATION */
+
+    if (!occupation) {
+
+        showMessage(
+            "Please select your occupation.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+
+    /* VALIDATE EDUCATION */
+
+    if (
+        education ===
+        "Select education level"
+    ) {
+
+        showMessage(
+            "Please select your highest education level.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+
+    /* GET MEMBERS */
+
+    const members =
+        JSON.parse(
+            localStorage.getItem(
+                "kenyaSurveyMembers"
+            )
+        ) || {};
+
+
+
+    /* CHECK MEMBER */
+
+    if (!members[currentUser]) {
+
+        showMessage(
+            "Your account could not be found.",
+            "error"
+        );
+
+
+        setTimeout(() => {
+
+            window.location.href =
+                "register.html";
+
+        }, 1200);
+
+
+        return;
+
+    }
+
+
+
+    /* SAVE PROFILE */
+
+    members[currentUser].fullName =
+        fullName;
+
+
+    members[currentUser].county =
+        county;
+
+
+    members[currentUser].occupation =
+        occupation;
+
+
+    members[currentUser].education =
+        education;
+
+
+    members[currentUser].profileCompleted =
+        true;
+
+
+    members[currentUser].profileCompletedAt =
+        new Date().toISOString();
+
+
+
+    /* UPDATE MEMBER DATABASE */
+
+    localStorage.setItem(
+        "kenyaSurveyMembers",
+        JSON.stringify(members)
+    );
+
+
+
+    /* SUCCESS */
+
+    showMessage(
+        "Profile completed successfully!",
+        "success"
+    );
+
+
+
+    /* NEXT PAGE */
+
+    setTimeout(() => {
+
+        // Change dashboard.html to your next page
+        // window.location.href = "dashboard.html";
+
+    }, 1000);
+
+}
+
+
 </script>
 
+
 </body>
-  </html>
+              </html>
