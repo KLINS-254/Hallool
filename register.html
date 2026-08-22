@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>KenyaSurvey - Create Account</title>
@@ -18,305 +15,747 @@ body {
     font-family: Inter, sans-serif;
     background: #000;
 }
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 </style>
-
 </head>
-
 
 <body class="bg-black min-h-screen flex items-center justify-center p-4">
 
-
 <div class="w-full max-w-[380px] bg-[#101f15] border border-[#1a2e1e] rounded-[24px] p-6">
 
+    <!-- BACK -->
+    <a href="index.html"
+       class="flex items-center gap-1.5 text-[13px] font-semibold text-white/50 hover:text-white/80">
 
-<!-- BACK -->
+        <span class="text-[16px]">←</span>
+        Back to Home
 
-<a href="index.html" class="flex items-center gap-1.5 text-[13px] font-semibold text-white/50 hover:text-white/80">
-
-<span class="text-[16px]">←</span>
-
-Back to Home
-
-</a>
+    </a>
 
 
-<!-- LOGO -->
+    <!-- LOGO -->
+    <div class="flex flex-col items-center mt-6">
 
-<div class="flex flex-col items-center mt-6">
+        <div class="w-[56px] h-[56px] bg-[#0f9d58] rounded-[14px] grid place-items-center text-[28px] shadow-[0_0_20px_rgba(15,157,88,0.3)]">
+            🎓
+        </div>
 
-<div class="w-[56px] h-[56px] bg-[#0f9d58] rounded-[14px] grid place-items-center text-[28px] shadow-[0_0_20px_rgba(15,157,88,0.3)]">
+        <h1 class="text-[24px] font-black mt-3 tracking-tight">
+            <span class="text-white">Kenya</span>
+            <span class="text-[#0f9d58]">Survey</span>
+        </h1>
 
-🎓
+        <p class="text-[12px] text-white/50 mt-0.5">
+            Research Participation Platform
+        </p>
+
+    </div>
+
+
+    <!-- TABS -->
+    <div class="mt-6 bg-black/50 rounded-[12px] p-1 flex">
+
+        <button
+            id="registerTab"
+            onclick="showRegister()"
+            class="flex-1 h-[36px] rounded-[8px] bg-[#0f9d58] text-white text-[13px] font-bold">
+
+            Create Account
+
+        </button>
+
+
+        <button
+            id="loginTab"
+            onclick="showLogin()"
+            class="flex-1 h-[36px] rounded-[8px] text-white/60 text-[13px] font-semibold">
+
+            Log In
+
+        </button>
+
+    </div>
+
+
+    <!-- MESSAGE -->
+    <div
+        id="message"
+        class="hidden mt-4 rounded-[10px] px-3 py-2.5 text-[11px] font-medium">
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- REGISTER SECTION -->
+    <!-- ========================= -->
+
+    <div id="registerSection">
+
+        <h2 class="text-center font-bold text-[15px] text-white mt-5">
+            Become a KenyaSurvey Participant
+        </h2>
+
+
+        <!-- CONFIRMATION BOX -->
+        <div class="mt-4 bg-[#142b1a] border border-[#1e3a24] rounded-[12px] p-3.5">
+
+            <p class="text-[10px] font-bold tracking-widest text-white/40">
+                BY REGISTERING YOU CONFIRM:
+            </p>
+
+
+            <div class="mt-2 space-y-1.5 text-[11px] text-white/70 leading-4">
+
+                <p class="flex gap-2">
+                    <span class="text-[#0f9d58]">✓</span>
+                    You are at least 18 years old
+                </p>
+
+                <p class="flex gap-2">
+                    <span class="text-[#0f9d58]">✓</span>
+                    Information provided is accurate
+                </p>
+
+                <p class="flex gap-2">
+                    <span class="text-[#0f9d58]">✓</span>
+                    Survey eligibility is not guaranteed
+                </p>
+
+                <p class="flex gap-2">
+                    <span class="text-[#0f9d58]">✓</span>
+                    Compensation depends on project completion
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- REGISTER FORM -->
+        <form id="registerForm" class="mt-5 space-y-4">
+
+
+            <!-- PHONE -->
+            <div>
+
+                <label class="text-[12px] font-semibold text-white/80">
+                    Phone Number
+                </label>
+
+
+                <div class="mt-1.5 relative">
+
+                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 text-[13px]">
+                        📞
+                    </span>
+
+
+                    <input
+                        id="registerPhone"
+                        type="tel"
+                        inputmode="numeric"
+                        placeholder="Enter phone number"
+                        class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white outline-none focus:border-[#0f9d58]"
+                        required
+                    />
+
+                </div>
+
+            </div>
+
+
+            <!-- PIN -->
+            <div>
+
+                <label class="text-[12px] font-semibold text-white/80">
+                    Create 4-Digit PIN
+                </label>
+
+
+                <div class="mt-1.5 relative">
+
+                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 text-[12px]">
+                        🔒
+                    </span>
+
+
+                    <input
+                        id="registerPin"
+                        type="password"
+                        maxlength="4"
+                        inputmode="numeric"
+                        placeholder="••••"
+                        class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white outline-none focus:border-[#0f9d58]"
+                        required
+                    />
+
+                </div>
+
+            </div>
+
+
+            <!-- CONFIRM PIN -->
+            <div>
+
+                <label class="text-[12px] font-semibold text-white/80">
+                    Confirm PIN
+                </label>
+
+
+                <div class="mt-1.5 relative">
+
+                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 text-[12px]">
+                        🔒
+                    </span>
+
+
+                    <input
+                        id="confirmPin"
+                        type="password"
+                        maxlength="4"
+                        inputmode="numeric"
+                        placeholder="••••"
+                        class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white outline-none focus:border-[#0f9d58]"
+                        required
+                    />
+
+                </div>
+
+            </div>
+
+
+            <!-- REGISTER BUTTON -->
+            <button
+                type="submit"
+                class="w-full h-[48px] bg-[#0f9d58] hover:bg-[#0c854a] rounded-[12px] text-white font-bold text-[13px] mt-2 transition">
+
+                Create Account
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- LOGIN SECTION -->
+    <!-- ========================= -->
+
+    <div id="loginSection" class="hidden">
+
+        <h2 class="text-center font-bold text-[15px] text-white mt-5">
+            Welcome Back
+        </h2>
+
+        <p class="text-center text-[11px] text-white/50 mt-1">
+            Log in to your KenyaSurvey account
+        </p>
+
+
+        <!-- LOGIN FORM -->
+        <form id="loginForm" class="mt-6 space-y-4">
+
+
+            <!-- PHONE -->
+            <div>
+
+                <label class="text-[12px] font-semibold text-white/80">
+                    Phone Number
+                </label>
+
+
+                <div class="mt-1.5 relative">
+
+                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 text-[13px]">
+                        📞
+                    </span>
+
+
+                    <input
+                        id="loginPhone"
+                        type="tel"
+                        inputmode="numeric"
+                        placeholder="Enter phone number"
+                        class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white outline-none focus:border-[#0f9d58]"
+                        required
+                    />
+
+                </div>
+
+            </div>
+
+
+            <!-- PIN -->
+            <div>
+
+                <label class="text-[12px] font-semibold text-white/80">
+                    Enter PIN
+                </label>
+
+
+                <div class="mt-1.5 relative">
+
+                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 text-[12px]">
+                        🔒
+                    </span>
+
+
+                    <input
+                        id="loginPin"
+                        type="password"
+                        maxlength="4"
+                        inputmode="numeric"
+                        placeholder="••••"
+                        class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white outline-none focus:border-[#0f9d58]"
+                        required
+                    />
+
+                </div>
+
+            </div>
+
+
+            <!-- LOGIN BUTTON -->
+            <button
+                type="submit"
+                class="w-full h-[48px] bg-[#0f9d58] hover:bg-[#0c854a] rounded-[12px] text-white font-bold text-[13px] transition">
+
+                Log In
+
+            </button>
+
+        </form>
+
+
+        <p class="text-center text-[11px] text-white/50 mt-5">
+
+            New to KenyaSurvey?
+
+            <button
+                onclick="showRegister()"
+                class="text-[#0f9d58] font-semibold">
+
+                Create an account
+
+            </button>
+
+        </p>
+
+    </div>
+
+
+    <!-- TERMS -->
+    <p class="text-[11px] text-center text-white/40 leading-4 mt-5 px-2">
+
+        By registering, you agree to our
+
+        <a href="#" class="text-[#0f9d58] underline">
+            Terms of Service
+        </a>
+
+        and
+
+        <a href="#" class="text-[#0f9d58] underline">
+            Privacy Policy
+        </a>.
+
+        Participation in surveys does not guarantee compensation.
+
+    </p>
+
+
+    <!-- FOOTER LINKS -->
+    <div class="flex justify-center gap-3 mt-4 text-[13px] font-medium">
+
+        <a href="#" class="text-[#0f9d58] underline">
+            About Us
+        </a>
+
+        <a href="#" class="text-[#0f9d58] underline">
+            Terms
+        </a>
+
+        <a href="#" class="text-[#0f9d58] underline">
+            Privacy
+        </a>
+
+        <a href="#" class="text-[#0f9d58] underline">
+            Contact
+        </a>
+
+    </div>
 
 </div>
 
 
-<h1 class="text-[24px] font-black mt-3 tracking-tight">
+<script>
 
-<span class="text-white">Kenya</span>
+/* =========================
+   SHOW MESSAGE
+========================= */
 
-<span class="text-[#0f9d58]">Survey</span>
+function showMessage(text, type) {
 
-</h1>
+    const message = document.getElementById("message");
 
+    message.innerText = text;
 
-<p class="text-[12px] text-white/50 mt-0.5">
+    message.classList.remove("hidden");
 
-Research Participation Platform
+    if (type === "success") {
 
-</p>
+        message.className =
+            "mt-4 rounded-[10px] px-3 py-2.5 text-[11px] font-medium bg-green-500/10 border border-green-500/30 text-green-400";
 
-</div>
+    } else {
 
+        message.className =
+            "mt-4 rounded-[10px] px-3 py-2.5 text-[11px] font-medium bg-red-500/10 border border-red-500/30 text-red-400";
 
-<!-- TABS -->
+    }
 
-<div class="mt-6 bg-black/50 rounded-[12px] p-1 flex">
+}
 
-<button class="flex-1 h-[36px] rounded-[8px] bg-[#0f9d58] text-white text-[13px] font-bold">
 
-Create Account
+/* =========================
+   HIDE MESSAGE
+========================= */
 
-</button>
+function hideMessage() {
 
+    document
+        .getElementById("message")
+        .classList
+        .add("hidden");
 
-<button class="flex-1 h-[36px] rounded-[8px] text-white/60 text-[13px] font-semibold">
+}
 
-Sign In
 
-</button>
+/* =========================
+   SHOW REGISTER
+========================= */
 
-</div>
+function showRegister() {
 
+    document
+        .getElementById("registerSection")
+        .classList
+        .remove("hidden");
 
-<h2 class="text-center font-bold text-[15px] text-white mt-5">
 
-Become a KenyaSurvey Participant
+    document
+        .getElementById("loginSection")
+        .classList
+        .add("hidden");
 
-</h2>
 
+    document
+        .getElementById("registerTab")
+        .className =
+        "flex-1 h-[36px] rounded-[8px] bg-[#0f9d58] text-white text-[13px] font-bold";
 
-<!-- CONFIRMATION BOX -->
 
-<div class="mt-4 bg-[#142b1a] border border-[#1e3a24] rounded-[12px] p-3.5">
+    document
+        .getElementById("loginTab")
+        .className =
+        "flex-1 h-[36px] rounded-[8px] text-white/60 text-[13px] font-semibold";
 
-<p class="text-[10px] font-bold tracking-widest text-white/40">
 
-BY REGISTERING YOU CONFIRM:
+    hideMessage();
 
-</p>
+}
 
 
-<div class="mt-2 space-y-1.5 text-[11px] text-white/70 leading-4">
+/* =========================
+   SHOW LOGIN
+========================= */
 
-<p class="flex gap-2">
+function showLogin() {
 
-<span class="text-[#0f9d58]">✓</span>
+    document
+        .getElementById("registerSection")
+        .classList
+        .add("hidden");
 
-You are at least 18 years old
 
-</p>
+    document
+        .getElementById("loginSection")
+        .classList
+        .remove("hidden");
 
 
-<p class="flex gap-2">
+    document
+        .getElementById("loginTab")
+        .className =
+        "flex-1 h-[36px] rounded-[8px] bg-[#0f9d58] text-white text-[13px] font-bold";
 
-<span class="text-[#0f9d58]">✓</span>
 
-Information provided is accurate
+    document
+        .getElementById("registerTab")
+        .className =
+        "flex-1 h-[36px] rounded-[8px] text-white/60 text-[13px] font-semibold";
 
-</p>
 
+    hideMessage();
 
-<p class="flex gap-2">
+}
 
-<span class="text-[#0f9d58]">✓</span>
 
-Survey eligibility is not guaranteed
+/* =========================
+   GET MEMBERS
+========================= */
 
-</p>
+function getMembers() {
 
+    return JSON.parse(
+        localStorage.getItem("kenyaSurveyMembers")
+    ) || {};
 
-<p class="flex gap-2">
+}
 
-<span class="text-[#0f9d58]">✓</span>
 
-Compensation depends on project completion
+/* =========================
+   SAVE MEMBERS
+========================= */
 
-</p>
+function saveMembers(members) {
 
-</div>
+    localStorage.setItem(
+        "kenyaSurveyMembers",
+        JSON.stringify(members)
+    );
 
-</div>
+}
 
 
-<!-- FORM -->
+/* =========================
+   REGISTER NEW MEMBER
+========================= */
 
-<form class="mt-5 space-y-4">
+document
+.getElementById("registerForm")
+.addEventListener("submit", function(event) {
 
+    event.preventDefault();
 
-<div>
 
-<label class="text-[12px] font-semibold text-white/80">
+    const phone =
+        document
+        .getElementById("registerPhone")
+        .value
+        .trim();
 
-Phone Number
 
-</label>
+    const pin =
+        document
+        .getElementById("registerPin")
+        .value
+        .trim();
 
 
-<div class="mt-1.5 relative">
+    const confirmPin =
+        document
+        .getElementById("confirmPin")
+        .value
+        .trim();
 
-<span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 text-[13px]">
 
-📞
+    /* CHECK PHONE */
 
-</span>
+    if (!/^0\d{9}$/.test(phone)) {
 
+        showMessage(
+            "Enter a valid Kenyan phone number, for example 0712345678.",
+            "error"
+        );
 
-<input
-type="tel"
-placeholder="Enter phone number"
-class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white outline-none focus:border-[#0f9d58]"
-/>
+        return;
 
-</div>
+    }
 
-</div>
 
+    /* CHECK PIN */
 
-<div>
+    if (!/^\d{4}$/.test(pin)) {
 
-<label class="text-[12px] font-semibold text-white/80">
+        showMessage(
+            "PIN must contain exactly 4 digits.",
+            "error"
+        );
 
-Create 4-Digit PIN
+        return;
 
-</label>
+    }
 
 
-<div class="mt-1.5 relative">
+    /* CHECK PIN MATCH */
 
-<span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 text-[12px]">
+    if (pin !== confirmPin) {
 
-🔒
+        showMessage(
+            "The PINs do not match.",
+            "error"
+        );
 
-</span>
+        return;
 
+    }
 
-<input
-type="password"
-maxlength="4"
-inputmode="numeric"
-placeholder="••••"
-class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white outline-none focus:border-[#0f9d58]"
-/>
 
-</div>
+    const members = getMembers();
 
-</div>
 
+    /* PRIMARY KEY CHECK */
 
-<div>
+    if (members[phone]) {
 
-<label class="text-[12px] font-semibold text-white/80">
+        showMessage(
+            "This phone number is already registered. Please log in instead.",
+            "error"
+        );
 
-Confirm PIN
+        setTimeout(() => {
 
-</label>
+            showLogin();
 
+            document
+            .getElementById("loginPhone")
+            .value = phone;
 
-<div class="mt-1.5 relative">
+        }, 1500);
 
-<span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 text-[12px]">
+        return;
 
-🔒
+    }
 
-</span>
 
+    /* SAVE MEMBER */
 
-<input
-type="password"
-maxlength="4"
-inputmode="numeric"
-placeholder="••••"
-class="w-full h-[44px] bg-[#0a160e] border border-[#1e3a24] rounded-[12px] pl-9 pr-4 text-[14px] text-white outline-none focus:border-[#0f9d58]"
-/>
+    members[phone] = {
 
-</div>
+        phone: phone,
 
-</div>
+        pin: pin,
 
+        createdAt:
+            new Date().toISOString()
 
-<!-- CREATE ACCOUNT BUTTON -->
+    };
 
-<button
-type="submit"
-class="w-full h-[48px] bg-[#0f9d58] hover:bg-[#0c854a] rounded-[12px] text-white font-bold text-[13px] mt-2 transition">
 
-Create Account
+    saveMembers(members);
 
-</button>
 
+    showMessage(
+        "Account created successfully. You can now log in.",
+        "success"
+    );
 
-</form>
 
+    document
+    .getElementById("registerForm")
+    .reset();
 
-<p class="text-[11px] text-center text-white/40 leading-4 mt-4 px-2">
 
-By registering, you agree to our
+    setTimeout(() => {
 
-<a href="#" class="text-[#0f9d58] underline">
+        showLogin();
 
-Terms of Service
+        document
+        .getElementById("loginPhone")
+        .value = phone;
 
-</a>
+    }, 1500);
 
-and
+});
 
-<a href="#" class="text-[#0f9d58] underline">
 
-Privacy Policy
+/* =========================
+   LOGIN MEMBER
+========================= */
 
-</a>.
+document
+.getElementById("loginForm")
+.addEventListener("submit", function(event) {
 
-Participation in surveys does not guarantee compensation.
+    event.preventDefault();
 
-</p>
 
+    const phone =
+        document
+        .getElementById("loginPhone")
+        .value
+        .trim();
 
-<div class="flex justify-center gap-3 mt-4 text-[13px] font-medium">
 
-<a href="#" class="text-[#0f9d58] underline">
+    const pin =
+        document
+        .getElementById("loginPin")
+        .value
+        .trim();
 
-About Us
 
-</a>
+    const members = getMembers();
 
 
-<a href="#" class="text-[#0f9d58] underline">
+    /* MEMBER EXISTS */
 
-Terms
+    if (!members[phone]) {
 
-</a>
+        showMessage(
+            "No account was found with this phone number. Please create an account.",
+            "error"
+        );
 
+        return;
 
-<a href="#" class="text-[#0f9d58] underline">
+    }
 
-Privacy
 
-</a>
+    /* PIN CHECK */
 
+    if (members[phone].pin !== pin) {
 
-<a href="#" class="text-[#0f9d58] underline">
+        showMessage(
+            "Incorrect PIN. Please try again.",
+            "error"
+        );
 
-Contact
+        return;
 
-</a>
+    }
 
-</div>
 
+    /* SAVE LOGIN SESSION */
 
-</div>
+    localStorage.setItem(
+        "kenyaSurveyCurrentUser",
+        phone
+    );
+
+
+    showMessage(
+        "Login successful. Welcome back!",
+        "success"
+    );
+
+
+    setTimeout(() => {
+
+        window.location.href = "index.html";
+
+    }, 1200);
+
+});
+
+
+</script>
 
 
 </body>
-
-</html>
+    </html>
