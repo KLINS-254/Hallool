@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - KenyaSurvey</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>body{font-family:Inter,sans-serif;background:#0a1410}::-webkit-scrollbar{display:none}</style>
+</head>
+<body class="bg-[#0a1410] text-white">
+
+<!-- HEADER MOBILE -->
+<div class="lg:hidden flex items-center justify-between px-4 h-[56px] border-b border-[#1a2e1e] bg-[#0e1a12]">
+<div class="flex items-center gap-2"><div class="w-7 h-7 bg-[#0f9d58] rounded-lg grid place-items-center">🎓</div><span class="font-bold text-[14px]">KenyaSurvey</span></div>
+<button onclick="toggleMenu()" id="menuBtn" class="w-8 h-8 grid place-items-center text-xl">☰</button>
+</div>
+
+<div class="flex max-w-[1440px] mx-auto">
+<!-- SIDEBAR -->
+<div id="sidebar" class="fixed lg:sticky top-0 left-0 z-40 w-[240px] h-screen lg:h-auto bg-[#0e1a12] border-r border-[#1a2e1e] p-3 -translate-x-full lg:translate-x-0 transition-transform duration-300">
+<div class="hidden lg:flex items-center gap-2 px-2 py-3 mb-4">
+<div class="w-7 h-7 bg-[#0f9d58] rounded-lg grid place-items-center text-[14px]">🎓</div>
+<span class="font-bold text-[13px]"><span class="text-white">Kenya</span><span class="text-[#0f9d58]">Survey</span></span>
+</div>
+
+<!-- BALANCE BOX - THIS IS THE DROPDOWN AFTER 3 DASHES -->
+<div class="bg-[#0f9d58] rounded-[10px] p-3 mb-3">
+<p class="text-[9px] font-bold tracking-widest text-black/60">AVAILABLE COMPENSATION</p>
+<p class="text-[18px] font-black text-white">KSh <span id="availBal">225.00</span></p>
+<p class="text-[10px] text-black/60">Total compensation: KSh <span id="totalBal2">175.00</span></p>
+</div>
+
+<nav class="space-y-1 text-[11px] font-medium">
+<a class="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-[#142316] text-[#0f9d58]"><span>⊞</span> Dashboard</a>
+<a href="#surveys" class="flex items-center gap-2 px-3 py-2.5 rounded-lg text-white/50 hover:bg-white/5">🗂 Research Surveys <span class="ml-auto bg-[#0f9d58] text-black text-[9px] px-1.5 rounded-full">114</span></a>
+<a class="flex items-center gap-2 px-3 py-2.5 rounded-lg text-white/50 hover:bg-white/5">↗ Participant Compensation</a>
+<a class="flex items-center gap-2 px-3 py-2.5 rounded-lg text-white/50 hover:bg-white/5">↻ Compensation History</a>
+</nav>
+
+<!-- WITHDRAWAL TOAST TOP RIGHT (like screenshot) -->
+</
