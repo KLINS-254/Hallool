@@ -7,12 +7,11 @@
 <title>Research Surveys</title>
 
 <style>
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Inter,system-ui,sans-serif
+    font-family:Inter,system-ui,sans-serif;
 }
 
 body{
@@ -47,6 +46,14 @@ body{
     font-size:17px;
 }
 
+.back-btn{
+    background:none;
+    border:0;
+    color:#9aaa9d;
+    font-size:21px;
+    cursor:pointer;
+}
+
 .toast{
     margin:12px;
     background:#152a18;
@@ -67,7 +74,6 @@ body{
     display:grid;
     place-items:center;
     font-weight:800;
-    flex-shrink:0;
 }
 
 .info{
@@ -76,6 +82,96 @@ body{
     border:1px solid #1a2f1e;
     border-radius:16px;
     padding:16px;
+}
+
+.info h1{
+    font-size:19px;
+    color:#fff;
+    margin-bottom:7px;
+}
+
+.info p{
+    color:#87978b;
+    font-size:12px;
+    line-height:1.6;
+}
+
+.stats{
+    margin:12px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+}
+
+.stat{
+    background:#111d12;
+    border:1px solid #1a2f1e;
+    border-radius:14px;
+    padding:11px;
+}
+
+.stat-value{
+    font-size:16px;
+    font-weight:900;
+    color:#12c46b;
+}
+
+.stat-label{
+    margin-top:3px;
+    font-size:9px;
+    color:#6f8073;
+}
+
+.chapter{
+    margin:12px;
+    background:#132816;
+    border:1px solid #1d3d23;
+    border-radius:20px;
+    padding:16px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.chapter:hover{
+    border-color:#12c46b;
+    transform:translateY(-1px);
+}
+
+.chapter-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.chapter-title h3{
+    font-size:14px;
+    color:#fff;
+}
+
+.chapter-title span{
+    font-size:10px;
+    color:#12c46b;
+}
+
+.chapter-desc{
+    color:#708074;
+    font-size:10px;
+    margin-top:6px;
+}
+
+.progress{
+    height:5px;
+    background:#081209;
+    border-radius:99px;
+    overflow:hidden;
+    margin-top:12px;
+}
+
+.progress-bar{
+    height:100%;
+    width:0%;
+    background:#12c46b;
+    transition:.3s;
 }
 
 .card{
@@ -91,6 +187,13 @@ body{
     opacity:.65;
 }
 
+.question-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+}
+
 .pill{
     font-size:10px;
     font-weight:800;
@@ -100,14 +203,6 @@ body{
     border:1px solid #1d3d23;
     padding:4px 10px;
     border-radius:999px;
-}
-
-.pill-done{
-    background:#12c46b1f;
-    color:#12c46b;
-    display:flex;
-    align-items:center;
-    gap:4px;
 }
 
 .reward{
@@ -120,7 +215,7 @@ body{
     font-size:17px;
     font-weight:700;
     margin:14px 0;
-    line-height:1.35;
+    line-height:1.45;
     color:#fff;
 }
 
@@ -160,187 +255,115 @@ body{
     color:#fff!important;
 }
 
-button{
-    font-family:inherit;
+.opt:disabled{
+    cursor:default;
 }
 
-.start-btn{
-    width:100%;
-    border:0;
-    background:#12c46b;
-    color:#031008;
-    font-weight:900;
-    padding:13px;
-    border-radius:13px;
-    cursor:pointer;
-    margin-top:15px;
-}
-
-.start-btn:active{
-    transform:scale(.98);
-}
-
-.next-btn{
-    width:100%;
-    border:1px solid #1d3d23;
-    background:#0e2814;
-    color:#12c46b;
-    font-weight:800;
-    padding:13px;
-    border-radius:13px;
-    cursor:pointer;
-    margin-top:15px;
-    display:none;
-}
-
-.next-btn:active{
-    transform:scale(.98);
-}
-
-.back-btn{
-    border:1px solid #1d3d23;
-    background:#0e2814;
-    color:#8aa08e;
-    padding:8px 13px;
-    border-radius:10px;
-    cursor:pointer;
-}
-
-.progress-wrap{
-    margin-top:14px;
-}
-
-.progress-info{
-    display:flex;
-    justify-content:space-between;
-    font-size:10px;
-    color:#6f8372;
-    margin-bottom:6px;
-}
-
-.progress{
-    height:6px;
-    background:#081109;
-    border-radius:20px;
-    overflow:hidden;
-}
-
-.progress-bar{
-    height:100%;
-    background:#12c46b;
-    width:0%;
-    transition:.3s;
-}
-
-.question-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-}
-
-.difficulty{
-    font-size:9px;
-    color:#718575;
-    text-transform:uppercase;
-    letter-spacing:.8px;
-}
-
-.result-box{
+.result{
     display:none;
     margin-top:14px;
-    padding:12px;
     border-radius:12px;
-    font-size:12px;
+    padding:11px;
+    font-size:11px;
     line-height:1.5;
 }
 
-.result-correct{
-    background:#0c3a20;
+.result.good{
+    display:block;
+    background:#0d3420;
     border:1px solid #12c46b;
-    color:#8ff0b8;
+    color:#7ff0b2;
 }
 
-.result-wrong{
-    background:#321818;
+.result.bad{
+    display:block;
+    background:#351616;
     border:1px solid #7a2a2a;
     color:#ffaaaa;
+}
+
+.next-btn{
+    display:none;
+    width:100%;
+    margin-top:12px;
+    height:45px;
+    border:0;
+    border-radius:12px;
+    background:#12c46b;
+    color:#001d0c;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.next-btn.show{
+    display:block;
+}
+
+.back-dashboard{
+    width:calc(100% - 24px);
+    margin:20px 12px;
+    height:46px;
+    border-radius:13px;
+    background:#111d12;
+    color:#9aaa9d;
+    border:1px solid #1a2f1e;
+    cursor:pointer;
+}
+
+.empty{
+    margin:12px;
+    padding:35px 18px;
+    background:#111d12;
+    border:1px solid #1a2f1e;
+    border-radius:18px;
+    text-align:center;
+}
+
+.empty-icon{
+    font-size:38px;
+    opacity:.5;
+}
+
+.empty h2{
+    margin-top:12px;
+    font-size:16px;
+    color:#fff;
+}
+
+.empty p{
+    margin-top:7px;
+    color:#728074;
+    font-size:11px;
+    line-height:1.6;
 }
 
 .hidden{
     display:none!important;
 }
 
-.center{
-    text-align:center;
-}
+@media(max-width:500px){
 
-.big-icon{
-    font-size:40px;
-    margin-bottom:10px;
-}
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
 
-.success{
-    color:#12c46b;
-}
+    .stat{
+        padding:9px 7px;
+    }
 
-.gold{
-    color:#f5b400;
-}
-
-.small{
-    font-size:10px;
-    color:#718575;
-}
-
-.chapter{
-    color:#12c46b;
-    font-size:11px;
-    font-weight:800;
-    letter-spacing:.5px;
-}
-
-.completed-list{
-    margin-top:10px;
-}
-
-.completed-item{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:10px 0;
-    border-bottom:1px solid #182c1b;
-    font-size:11px;
-}
-
-.completed-item:last-child{
-    border-bottom:0;
-}
-
-@media(max-width:480px){
-
-    .balance{
-        font-size:15px;
-        padding:6px 10px;
+    .stat-value{
+        font-size:14px;
     }
 
     .q{
         font-size:16px;
     }
 
-    .opt{
-        font-size:13px;
-        padding:13px;
-    }
-
 }
-
 </style>
 </head>
 
-
 <body>
-
 
 <!-- =========================================================
      TOP BAR
@@ -352,45 +375,33 @@ button{
 
         <button
             class="back-btn"
-            onclick="goDashboard()"
-            title="Dashboard">
-
+            onclick="goDashboard()">
             ←
-
         </button>
 
         <div class="balance">
-
-            ⌂ KSh
-            <span id="bal">0.00</span>
-
+            💰 KSh <span id="bal">0.00</span>
         </div>
 
     </div>
 
     <span
-        onclick="logout()"
-        style="
-            font-size:20px;
-            color:#4a6a4e;
-            cursor:pointer;
-        ">
-
+        style="font-size:20px;color:#4a6a4e">
         ⏻
-
     </span>
 
 </div>
 
 
-
 <!-- =========================================================
-     HEADER TOAST
+     WELCOME
 ========================================================= -->
 
 <div class="toast">
 
-    <div class="av" id="avatar">
+    <div
+        class="av"
+        id="avatar">
         YU
     </div>
 
@@ -399,30 +410,25 @@ button{
         <div
             id="welcomeText"
             style="
-                font-size:13px;
+                font-size:12px;
                 font-weight:800;
                 color:#fff;
             ">
-
-            Research Surveys
-
+            Welcome
         </div>
 
         <div
             style="
                 font-size:10px;
-                color:#718575;
-                margin-top:2px;
+                color:#718174;
+                margin-top:3px;
             ">
-
-            Earn compensation for eligible research responses.
-
+            Research participant
         </div>
 
     </div>
 
 </div>
-
 
 
 <!-- =========================================================
@@ -431,149 +437,97 @@ button{
 
 <div class="info">
 
-    <div
-        style="
-            font-size:16px;
-            font-weight:800;
-            color:#fff;
-            margin-bottom:7px;
-        ">
-
+    <h1>
         Research Surveys
+    </h1>
 
-    </div>
+    <p>
+        Answer research questions honestly. Research depends
+        on accurate participant responses.
+    </p>
 
-    <p
-        style="
-            font-size:11px;
-            line-height:1.7;
-            color:#7f9282;
-        ">
-
-        Answer research questions honestly. Research depends on
-        accurate participant responses. False or inconsistent
-        responses may affect your eligibility for future surveys.
-
+    <p style="margin-top:7px">
+        False or inconsistent responses may affect your
+        eligibility for future surveys.
     </p>
 
 </div>
 
 
-
 <!-- =========================================================
-     MAIN CONTENT
+     STATS
 ========================================================= -->
 
-<div id="mainContent"></div>
+<div class="stats">
 
+    <div class="stat">
+
+        <div
+            class="stat-value"
+            id="completedCount">
+            0
+        </div>
+
+        <div class="stat-label">
+            COMPLETED
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div
+            class="stat-value"
+            id="availableCount">
+            0
+        </div>
+
+        <div class="stat-label">
+            AVAILABLE
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div
+            class="stat-value">
+            KSh <span id="earnedCount">0.00</span>
+        </div>
+
+        <div class="stat-label">
+            EARNED
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     CHAPTERS
+========================================================= -->
+
+<div id="chapters"></div>
 
 
 <!-- =========================================================
      QUESTION AREA
 ========================================================= -->
 
-<div
-    id="surveyArea"
-    class="hidden">
-
-    <div class="card">
-
-        <div class="question-header">
-
-            <div>
-
-                <div
-                    id="questionChapter"
-                    class="chapter">
-
-                    Geography
-
-                </div>
-
-                <div
-                    id="questionNumber"
-                    class="small"
-                    style="margin-top:4px">
-
-                    Question 1
-
-                </div>
-
-            </div>
-
-            <div
-                id="questionReward"
-                class="reward">
-
-                KSh 35
-
-            </div>
-
-        </div>
+<div id="questionArea"></div>
 
 
-        <div class="progress-wrap">
+<button
+    class="back-dashboard"
+    onclick="goDashboard()">
 
-            <div class="progress-info">
+    ← Back to Dashboard
 
-                <span id="progressText">
-                    1 / 250
-                </span>
+</button>
 
-                <span id="difficultyText">
-                    Easy
-                </span>
-
-            </div>
-
-            <div class="progress">
-
-                <div
-                    id="progressBar"
-                    class="progress-bar">
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div
-            id="questionText"
-            class="q">
-
-        </div>
-
-
-        <div id="options"></div>
-
-
-        <div
-            id="resultBox"
-            class="result-box">
-
-        </div>
-
-
-        <button
-            id="nextButton"
-            class="next-btn"
-            onclick="nextQuestion()">
-
-            Continue →
-
-        </button>
-
-    </div>
-
-</div>
-
-
-
-<!-- =========================================================
-     SCRIPT
-========================================================= -->
 
 <script>
 
@@ -584,23 +538,20 @@ button{
 const currentUser =
     localStorage.getItem("kenyaSurveyCurrentUser");
 
-
 if(!currentUser){
 
-    window.location.href = "register.html";
+    window.location.href =
+        "register.html";
 
 }
-
 
 const members =
     JSON.parse(
         localStorage.getItem("kenyaSurveyMembers")
     ) || {};
 
-
 const user =
     members[currentUser];
-
 
 if(!user){
 
@@ -608,13 +559,14 @@ if(!user){
         "kenyaSurveyCurrentUser"
     );
 
-    window.location.href = "register.html";
+    window.location.href =
+        "register.html";
 
 }
 
 
 /* =========================================================
-   INITIALISE USER
+   INITIAL USER DATA
 ========================================================= */
 
 if(user.availableBalance === undefined)
@@ -629,14 +581,53 @@ if(user.completedSurveys === undefined)
 if(user.remainingSurveys === undefined)
     user.remainingSurveys = 0;
 
-if(!Array.isArray(user.completedSurveyQuestions))
-    user.completedSurveyQuestions = [];
+if(!Array.isArray(user.activities))
+    user.activities = [];
 
-if(!user.surveyHistory)
-    user.surveyHistory = [];
 
-if(!user.surveyRenewalDate)
-    user.surveyRenewalDate = null;
+/* =========================================================
+   PERMANENT COMPLETED QUESTION STORAGE
+========================================================= */
+
+if(!Array.isArray(user.completedQuestionIds))
+    user.completedQuestionIds = [];
+
+
+/* =========================================================
+   WEEKLY DATA
+========================================================= */
+
+if(!user.surveyWeek)
+    user.surveyWeek = getWeekKey();
+
+
+/* =========================================================
+   USER DISPLAY
+========================================================= */
+
+const registeredName =
+    user.fullName ||
+    "Participant";
+
+document.getElementById(
+    "welcomeText"
+).textContent =
+    "Welcome, " + registeredName;
+
+
+const initials =
+    registeredName
+        .split(" ")
+        .filter(Boolean)
+        .slice(0,2)
+        .map(x => x.charAt(0).toUpperCase())
+        .join("");
+
+
+document.getElementById(
+    "avatar"
+).textContent =
+    initials || "P";
 
 
 /* =========================================================
@@ -656,492 +647,331 @@ function saveUser(){
 
 
 /* =========================================================
-   USER NAME
+   WEEK KEY
 ========================================================= */
 
-const fullName =
-    user.fullName ||
-    "Participant";
+function getWeekKey(){
 
+    const now =
+        new Date();
 
-const firstName =
-    fullName.split(" ")[0];
+    const first =
+        new Date(
+            now.getFullYear(),
+            0,
+            1
+        );
 
+    const days =
+        Math.floor(
+            (
+                now - first
+            ) /
+            86400000
+        );
 
-document.getElementById(
-    "welcomeText"
-).textContent =
-    "Welcome, " + fullName;
+    const week =
+        Math.ceil(
+            (
+                days +
+                first.getDay() +
+                1
+            ) / 7
+        );
 
-
-const initials =
-    fullName
-        .split(" ")
-        .slice(0,2)
-        .map(name => name.charAt(0).toUpperCase())
-        .join("");
-
-
-document.getElementById(
-    "avatar"
-).textContent =
-    initials || "YU";
-
-
-/* =========================================================
-   BALANCE
-========================================================= */
-
-function updateBalance(){
-
-    document.getElementById(
-        "bal"
-    ).textContent =
-        Number(
-            user.availableBalance || 0
-        ).toFixed(2);
+    return (
+        now.getFullYear() +
+        "-W" +
+        week
+    );
 
 }
 
-updateBalance();
-
 
 /* =========================================================
-   250 QUESTION DATABASE
-=========================================================
-
-   The system contains 250 question slots.
-
-   To keep the file manageable, the questions are generated
-   from structured research categories while retaining
-   different difficulties and rewards.
-
+   250 KENYA QUESTIONS
 ========================================================= */
 
-const questionBank = [
+const questions = [
 
-/* =========================================================
-   GEOGRAPHY
-========================================================= */
+/* ================= CHAPTER 1 ================= */
 
 {
-chapter:"Geography",
-difficulty:"Easy",
-reward:35,
+id:1,chapter:1,category:"Geography",difficulty:"easy",reward:35,
 q:"How many counties does Kenya have?",
-options:["42 counties","47 counties","46 counties","50 counties"],
-answer:1
-},
+o:["42 counties","47 counties","46 counties","50 counties"],
+a:1},
 
 {
-chapter:"Geography",
-difficulty:"Easy",
-reward:35,
-q:"What is the capital city of Kenya?",
-options:["Mombasa","Kisumu","Nairobi","Nakuru"],
-answer:2
-},
-
-{
-chapter:"Geography",
-difficulty:"Medium",
-reward:45,
+id:2,chapter:1,category:"Geography",difficulty:"medium",reward:45,
 q:"Which is the largest county by area in Kenya?",
-options:["Nairobi","Turkana","Marsabit","Mandera"],
-answer:1
-},
+o:["Nairobi","Turkana","Marsabit","Mandera"],
+a:1},
 
 {
-chapter:"Geography",
-difficulty:"Medium",
-reward:45,
-q:"Which lake is shared between Kenya, Uganda, and Tanzania?",
-options:["Lake Turkana","Lake Naivasha","Lake Victoria","Lake Baringo"],
-answer:2
-},
+id:3,chapter:1,category:"Geography",difficulty:"medium",reward:45,
+q:"Which lake is shared between Kenya, Uganda and Tanzania?",
+o:["Lake Turkana","Lake Naivasha","Lake Victoria","Lake Baringo"],
+a:2},
 
 {
-chapter:"Geography",
-difficulty:"Medium",
-reward:45,
+id:4,chapter:1,category:"Geography",difficulty:"easy",reward:35,
+q:"What is the capital city of Kenya?",
+o:["Mombasa","Kisumu","Nairobi","Nakuru"],
+a:2},
+
+{
+id:5,chapter:1,category:"Geography",difficulty:"medium",reward:45,
 q:"Which mountain is the highest point in Kenya?",
-options:["Mount Elgon","Aberdare Range","Mount Kenya","Ol Doinyo Lengai"],
-answer:2
-},
+o:["Mount Elgon","Aberdare Range","Mount Kenya","Ol Doinyo Lengai"],
+a:2},
 
 {
-chapter:"Geography",
-difficulty:"Hard",
-reward:60,
-q:"The Great Rift Valley runs through Kenya mainly from which direction?",
-options:[
-"East to West",
-"North to South",
-"Northeast to Southwest",
-"Northwest to Southeast"
-],
-answer:1
-},
+id:6,chapter:1,category:"Geography",difficulty:"hard",reward:60,
+q:"The Great Rift Valley runs through Kenya mainly in which direction?",
+o:["East to West","North to South","Southwest to Northeast","West to East only"],
+a:2},
 
 {
-chapter:"Geography",
-difficulty:"Easy",
-reward:35,
-q:"Which city is located on the Kenyan coast?",
-options:["Eldoret","Nakuru","Mombasa","Kitale"],
-answer:2
-},
+id:7,chapter:1,category:"Geography",difficulty:"medium",reward:45,
+q:"Which county contains the city of Mombasa?",
+o:["Kilifi","Kwale","Mombasa","Taita Taveta"],
+a:2},
 
 {
-chapter:"Geography",
-difficulty:"Medium",
-reward:45,
-q:"Which county contains Mount Kenya?",
-options:["Nyeri","Turkana","Kakamega","Garissa"],
-answer:0
-},
-
-{
-chapter:"Geography",
-difficulty:"Medium",
-reward:45,
+id:8,chapter:1,category:"Geography",difficulty:"easy",reward:35,
 q:"Which ocean borders Kenya?",
-options:["Atlantic Ocean","Indian Ocean","Pacific Ocean","Arctic Ocean"],
-answer:1
-},
+o:["Atlantic Ocean","Indian Ocean","Pacific Ocean","Arctic Ocean"],
+a:1},
 
 {
-chapter:"Geography",
-difficulty:"Hard",
-reward:60,
-q:"Which Kenyan county is the largest by land area?",
-options:["Marsabit","Turkana","Garissa","Wajir"],
-answer:1
-},
-
-
-/* =========================================================
-   HISTORY
-========================================================= */
+id:9,chapter:1,category:"Geography",difficulty:"medium",reward:45,
+q:"Which county is famous for Lake Naivasha?",
+o:["Nakuru","Narok","Kiambu","Baringo"],
+a:0},
 
 {
-chapter:"History",
-difficulty:"Easy",
-reward:35,
-q:"In which year did Kenya gain independence?",
-options:["1952","1960","1963","1970"],
-answer:2
-},
+id:10,chapter:1,category:"Geography",difficulty:"hard",reward:60,
+q:"Which Kenyan county is the northernmost?",
+o:["Turkana","Marsabit","Mandera","Wajir"],
+a:2},
+
+
+/* ================= CHAPTER 2 ================= */
 
 {
-chapter:"History",
-difficulty:"Easy",
-reward:35,
-q:"Who became Kenya's first president?",
-options:["Jomo Kenyatta","Daniel Moi","Mwai Kibaki","Jaramogi Odinga"],
-answer:0
-},
+id:11,chapter:2,category:"Geography",difficulty:"easy",reward:35,
+q:"Which county is Nairobi located in?",
+o:["Kiambu","Nairobi City","Machakos","Kajiado"],
+a:1},
 
 {
-chapter:"History",
-difficulty:"Medium",
-reward:45,
-q:"Kenya gained independence from which country?",
-options:["France","Britain","Portugal","Germany"],
-answer:1
-},
+id:12,chapter:2,category:"Geography",difficulty:"medium",reward:45,
+q:"Which county borders Lake Victoria and includes Homa Bay town?",
+o:["Homa Bay","Siaya","Kisii","Migori"],
+a:0},
 
 {
-chapter:"History",
-difficulty:"Medium",
-reward:45,
+id:13,chapter:2,category:"Geography",difficulty:"medium",reward:45,
+q:"Which county contains Amboseli National Park?",
+o:["Kajiado","Narok","Laikipia","Samburu"],
+a:0},
+
+{
+id:14,chapter:2,category:"Geography",difficulty:"hard",reward:60,
+q:"Which county is associated with the town of Lodwar?",
+o:["Marsabit","Turkana","Wajir","Samburu"],
+a:1},
+
+{
+id:15,chapter:2,category:"Geography",difficulty:"easy",reward:35,
+q:"Which town is widely known as the gateway to Mount Kenya?",
+o:["Nanyuki","Malindi","Lamu","Eldoret"],
+a:0},
+
+{
+id:16,chapter:2,category:"Geography",difficulty:"medium",reward:45,
+q:"Which county contains Kakamega Forest?",
+o:["Kakamega","Bungoma","Busia","Vihiga"],
+a:0},
+
+{
+id:17,chapter:2,category:"Geography",difficulty:"medium",reward:45,
+q:"Which county contains the town of Garissa?",
+o:["Wajir","Garissa","Mandera","Isiolo"],
+a:1},
+
+{
+id:18,chapter:2,category:"Geography",difficulty:"hard",reward:60,
+q:"Which county is home to Lake Bogoria?",
+o:["Baringo","Nakuru","Laikipia","Samburu"],
+a:0},
+
+{
+id:19,chapter:2,category:"Geography",difficulty:"easy",reward:35,
+q:"Which Kenyan coastal town is famous for its historic old town?",
+o:["Lamu","Kitale","Nyeri","Kericho"],
+a:0},
+
+{
+id:20,chapter:2,category:"Geography",difficulty:"medium",reward:45,
+q:"Which county is famous for tea-growing around Kericho?",
+o:["Kericho","Narok","Bomet","Kisii"],
+a:0},
+
+
+/* ================= CHAPTER 3 ================= */
+
+{
+id:21,chapter:3,category:"History",difficulty:"easy",reward:35,
+q:"When did Kenya gain independence?",
+o:["1957","1960","1963","1965"],
+a:2},
+
+{
+id:22,chapter:3,category:"History",difficulty:"medium",reward:45,
+q:"Who became Kenya's first president after independence?",
+o:["Daniel arap Moi","Jomo Kenyatta","Mwai Kibaki","Jaramogi Oginga Odinga"],
+a:1},
+
+{
+id:23,chapter:3,category:"History",difficulty:"medium",reward:45,
+q:"Kenya became a republic in which year?",
+o:["1963","1964","1965","1967"],
+a:1},
+
+{
+id:24,chapter:3,category:"History",difficulty:"easy",reward:35,
+q:"What was Kenya's colonial capital before independence?",
+o:["Mombasa","Nairobi","Kisumu","Nakuru"],
+a:1},
+
+{
+id:25,chapter:3,category:"History",difficulty:"hard",reward:60,
+q:"The Mau Mau uprising was primarily associated with resistance against which rule?",
+o:["Portuguese rule","British colonial rule","German rule","Italian rule"],
+a:1},
+
+{
+id:26,chapter:3,category:"History",difficulty:"medium",reward:45,
 q:"Who was Kenya's second president?",
-options:["Mwai Kibaki","Uhuru Kenyatta","Daniel arap Moi","Jomo Kenyatta"],
-answer:2
-},
+o:["Jomo Kenyatta","Daniel arap Moi","Mwai Kibaki","Uhuru Kenyatta"],
+a:1},
 
 {
-chapter:"History",
-difficulty:"Hard",
-reward:60,
-q:"Which movement played a major role in Kenya's struggle against colonial rule?",
-options:["Mau Mau","Pan-African Congress","NARC","KANU"],
-answer:0
-},
-
-{
-chapter:"History",
-difficulty:"Medium",
-reward:45,
+id:27,chapter:3,category:"History",difficulty:"easy",reward:35,
 q:"Who was Kenya's third president?",
-options:["Mwai Kibaki","Daniel Moi","Uhuru Kenyatta","Jomo Kenyatta"],
-answer:0
-},
+o:["Mwai Kibaki","Uhuru Kenyatta","Daniel arap Moi","Jomo Kenyatta"],
+a:0},
 
 {
-chapter:"History",
-difficulty:"Medium",
-reward:45,
+id:28,chapter:3,category:"History",difficulty:"medium",reward:45,
 q:"Who was Kenya's fourth president?",
-options:["Uhuru Kenyatta","Mwai Kibaki","Daniel Moi","William Ruto"],
-answer:0
-},
+o:["Mwai Kibaki","Uhuru Kenyatta","Daniel arap Moi","William Ruto"],
+a:0},
 
 {
-chapter:"History",
-difficulty:"Easy",
-reward:35,
+id:29,chapter:3,category:"History",difficulty:"easy",reward:35,
 q:"Who was Kenya's fifth president?",
-options:["Mwai Kibaki","William Ruto","Uhuru Kenyatta","Daniel Moi"],
-answer:1
-},
-
-
-/* =========================================================
-   CIVICS
-========================================================= */
+o:["Uhuru Kenyatta","William Ruto","Mwai Kibaki","Raila Odinga"],
+a:1},
 
 {
-chapter:"Civics",
-difficulty:"Easy",
-reward:35,
-q:"How many levels of government are recognized in Kenya?",
-options:["One","Two","Three","Four"],
-answer:1
-},
+id:30,chapter:3,category:"History",difficulty:"hard",reward:60,
+q:"Which date is celebrated as Kenya's Jamhuri Day?",
+o:["1 June","1 May","12 December","20 October"],
+a:2},
+
+
+/* ================= CHAPTER 4 ================= */
 
 {
-chapter:"Civics",
-difficulty:"Medium",
-reward:45,
+id:31,chapter:4,category:"Government",difficulty:"easy",reward:35,
+q:"What is the name of Kenya's national legislature?",
+o:["Parliament","Congress","Assembly of Africa","National Council"],
+a:0},
+
+{
+id:32,chapter:4,category:"Government",difficulty:"medium",reward:45,
+q:"Kenya's Parliament consists of which two houses?",
+o:["Senate and National Assembly","County and Senate","Cabinet and Senate","Assembly and Judiciary"],
+a:0},
+
+{
+id:33,chapter:4,category:"Government",difficulty:"easy",reward:35,
+q:"How many houses make up Kenya's Parliament?",
+o:["One","Two","Three","Four"],
+a:1},
+
+{
+id:34,chapter:4,category:"Government",difficulty:"medium",reward:45,
+q:"Which institution interprets the Constitution and laws?",
+o:["Judiciary","Executive","Treasury","Parliament"],
+a:0},
+
+{
+id:35,chapter:4,category:"Government",difficulty:"hard",reward:60,
+q:"Kenya's Constitution 2010 introduced how many levels of government?",
+o:["One","Two","Three","Four"],
+a:1},
+
+{
+id:36,chapter:4,category:"Government",difficulty:"easy",reward:35,
+q:"Who heads a county government?",
+o:["Governor","Senator","MP","Chief"],
+a:0},
+
+{
+id:37,chapter:4,category:"Government",difficulty:"medium",reward:45,
 q:"Which document is the supreme law of Kenya?",
-options:["The Penal Code","The Constitution","The Finance Act","The County Act"],
-answer:1
-},
+o:["Penal Code","Constitution","Finance Act","County Act"],
+a:1},
 
 {
-chapter:"Civics",
-difficulty:"Medium",
-reward:45,
-q:"How many members are in the Kenyan Senate from the 47 counties, before special seats?",
-options:["47","94","100","50"],
-answer:0
-},
+id:38,chapter:4,category:"Government",difficulty:"medium",reward:45,
+q:"Which body conducts national elections in Kenya?",
+o:["IEBC","KRA","CBK","KNBS"],
+a:0},
 
 {
-chapter:"Civics",
-difficulty:"Hard",
-reward:60,
-q:"Which arm of government interprets the law?",
-options:["Executive","Legislature","Judiciary","County Assembly"],
-answer:2
-},
+id:39,chapter:4,category:"Government",difficulty:"easy",reward:35,
+q:"What does IEBC stand for?",
+o:["Independent Electoral and Boundaries Commission","Internal Election Board of Counties","Independent Economic and Budget Commission","International Electoral Board of Kenya"],
+a:0},
 
 {
-chapter:"Civics",
-difficulty:"Easy",
-reward:35,
-q:"Which arm of government makes laws?",
-options:["Judiciary","Executive","Legislature","Police"],
-answer:2
-},
+id:40,chapter:4,category:"Government",difficulty:"hard",reward:60,
+q:"Which arm of government is responsible for implementing laws and policies?",
+o:["Executive","Judiciary","Legislature","Electoral Commission"],
+a:0},
 
 
-/* =========================================================
-   ECONOMY
-========================================================= */
+/* ================= CHAPTER 5 ================= */
 
 {
-chapter:"Economy",
-difficulty:"Easy",
-reward:35,
-q:"What is the currency of Kenya?",
-options:["Dollar","Shilling","Rand","Franc"],
-answer:1
-},
+id:41,chapter:5,category:"Culture",difficulty:"easy",reward:35,
+q:"Which language, together with English, is an official language of Kenya?",
+o:["French","Kiswahili","German","Arabic"],
+a:1},
 
 {
-chapter:"Economy",
-difficulty:"Medium",
-reward:45,
-q:"What does GDP generally measure?",
-options:[
-"Population size",
-"Economic output",
-"Land area",
-"Rainfall"
-],
-answer:1
-},
+id:42,chapter:5,category:"Culture",difficulty:"easy",reward:35,
+q:"What is Kenya's national language?",
+o:["English","Kiswahili","Kikuyu","Luo"],
+a:1},
 
 {
-chapter:"Economy",
-difficulty:"Medium",
-reward:45,
-q:"Which sector is strongly associated with tea production in Kenya?",
-options:["Agriculture","Mining","Construction","Transport"],
-answer:0
-},
+id:43,chapter:5,category:"Culture",difficulty:"medium",reward:45,
+q:"Which community is traditionally associated with the Maasai Mara region?",
+o:["Maasai","Luo","Luhya","Kamba"],
+a:0},
 
 {
-chapter:"Economy",
-difficulty:"Hard",
-reward:60,
-q:"Inflation generally refers to what?",
-options:[
-"A fall in population",
-"A sustained rise in general prices",
-"A rise in exports only",
-"A reduction in taxes"
-],
-answer:1
-},
-
-
-/* =========================================================
-   TECHNOLOGY
-========================================================= */
+id:44,chapter:5,category:"Culture",difficulty:"medium",reward:45,
+q:"Which traditional Kenyan dish is commonly made from maize and beans?",
+o:["Githeri","Pilau","Chapati","Mukimo"],
+a:0},
 
 {
-chapter:"Technology",
-difficulty:"Easy",
-reward:35,
-q:"What does Wi-Fi primarily allow devices to do?",
-options:[
-"Connect wirelessly to a network",
-"Print without ink",
-"Charge automatically",
-"Increase storage"
-],
-answer:0
-},
-
-{
-chapter:"Technology",
-difficulty:"Medium",
-reward:45,
-q:"What does CPU stand for?",
-options:[
-"Central Processing Unit",
-"Computer Personal Utility",
-"Central Power User",
-"Computer Processing Utility"
-],
-answer:0
-},
-
-{
-chapter:"Technology",
-difficulty:"Medium",
-reward:45,
-q:"Which language is commonly used to structure webpages?",
-options:["HTML","SQL","Python","PHP"],
-answer:0
-},
-
-{
-chapter:"Technology",
-difficulty:"Hard",
-reward:60,
-q:"What does HTTPS add to ordinary HTTP?",
-options:[
-"Encryption and authentication",
-"More storage",
-"Faster battery charging",
-"More screen resolution"
-],
-answer:0
-},
-
-
-/* =========================================================
-   SCIENCE
-========================================================= */
-
-{
-chapter:"Science",
-difficulty:"Easy",
-reward:35,
-q:"What gas do humans need to breathe?",
-options:["Oxygen","Hydrogen","Helium","Carbon monoxide"],
-answer:0
-},
-
-{
-chapter:"Science",
-difficulty:"Easy",
-reward:35,
-q:"How many planets are officially recognized in our solar system?",
-options:["7","8","9","10"],
-answer:1
-},
-
-{
-chapter:"Science",
-difficulty:"Medium",
-reward:45,
-q:"What is H2O commonly known as?",
-options:["Oxygen","Salt","Water","Hydrogen"],
-answer:2
-},
-
-{
-chapter:"Science",
-difficulty:"Medium",
-reward:45,
-q:"Which organ pumps blood around the human body?",
-options:["Lungs","Heart","Liver","Kidney"],
-answer:1
-},
-
-{
-chapter:"Science",
-difficulty:"Hard",
-reward:60,
-q:"What is the approximate speed of light in a vacuum?",
-options:[
-"30,000 km/s",
-"300,000 km/s",
-"3,000 km/s",
-"3,000,000 km/s"
-],
-answer:1
-},
-
-
-/* =========================================================
-   HEALTH
-========================================================= */
-
-{
-chapter:"Health",
-difficulty:"Easy",
-reward:35,
-q:"Which nutrient is mainly associated with building and repairing body tissues?",
-options:["Protein","Water","Salt","Sugar"],
-answer:0
-},
-
-{
-chapter:"Health",
-difficulty:"Medium",
-reward:45,
-q:"Which organ is primarily responsible for pumping blood?",
-options:["Liver","Heart","Lung","Stomach"],
-answer:1
-},
-
-{
-chapter:"Health",
-difficulty:"Medium",
-reward:45,
-q:"Which vitamin is commonly produced when skin is exposed to sunlight?",
-options:["Vitamin A","Vitamin B12","Vitamin C","Vitamin D"],
-answer:3
-},
-
-{
-chapter:"Health",
-difficulty:"Hard",
-reward:60,
-q:"Which blood cells primarily help the body fight i
+id:45,chapter:5,category:"Culture",difficulty:"easy",reward:35,
+q:"Which food is commonly made from maize flour and se
