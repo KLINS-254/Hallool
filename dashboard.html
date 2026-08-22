@@ -809,10 +809,10 @@ function logout() {
 </script>
 
 </body>
-</html>
+   </html>
 <!-- =========================================================
      KENYASURVEY RANDOM WITHDRAWAL NOTIFICATIONS
-     Paste this entire block at the very bottom of the file
+     UPDATED SMALLER VERSION
 ========================================================= -->
 
 <style>
@@ -820,28 +820,31 @@ function logout() {
 #ksWithdrawalNotification {
     position: fixed;
 
-    top: 20px;
-    right: 18px;
+    top: 18px;
+    right: 14px;
 
-    width: min(340px, calc(100vw - 36px));
+    /* Smaller — roughly 1/4 of the screen */
+    width: min(280px, 25vw);
+
+    min-width: 230px;
 
     background: #132016;
 
     border: 1px solid #1f3522;
 
-    border-left: 4px solid #0f9d58;
+    border-left: 3px solid #0f9d58;
 
-    border-radius: 14px;
+    border-radius: 11px;
 
-    padding: 13px 15px;
+    padding: 10px 12px;
 
     z-index: 999999;
 
     box-shadow:
-        0 15px 40px rgba(0,0,0,0.45);
+        0 10px 30px rgba(0,0,0,0.40);
 
     transform: translateX(
-        calc(100% + 60px)
+        calc(100% + 50px)
     );
 
     opacity: 0;
@@ -851,13 +854,15 @@ function logout() {
     pointer-events: none;
 
     transition:
-        transform 0.55s cubic-bezier(.22,.61,.36,1),
-        opacity 0.4s ease,
-        visibility 0.4s ease;
+        transform 0.5s cubic-bezier(.22,.61,.36,1),
+        opacity 0.35s ease,
+        visibility 0.35s ease;
 }
 
 
-/* SLIDE IN */
+/* =========================================================
+   SLIDE IN
+========================================================= */
 
 #ksWithdrawalNotification.ks-show {
 
@@ -870,12 +875,14 @@ function logout() {
 }
 
 
-/* SLIDE OUT */
+/* =========================================================
+   SLIDE OUT
+========================================================= */
 
 #ksWithdrawalNotification.ks-hide {
 
     transform: translateX(
-        calc(100% + 60px)
+        calc(100% + 50px)
     );
 
     opacity: 0;
@@ -885,17 +892,19 @@ function logout() {
 }
 
 
-/* ICON */
+/* =========================================================
+   ICON
+========================================================= */
 
 .ks-notification-icon {
 
-    width: 38px;
+    width: 32px;
 
-    height: 38px;
+    height: 32px;
 
-    min-width: 38px;
+    min-width: 32px;
 
-    border-radius: 10px;
+    border-radius: 8px;
 
     background: rgba(15,157,88,0.12);
 
@@ -905,12 +914,14 @@ function logout() {
 
     justify-content: center;
 
-    font-size: 18px;
+    font-size: 15px;
 
 }
 
 
-/* NAME */
+/* =========================================================
+   NAME
+========================================================= */
 
 .ks-notification-name {
 
@@ -921,7 +932,9 @@ function logout() {
 }
 
 
-/* PHONE */
+/* =========================================================
+   PHONE
+========================================================= */
 
 .ks-notification-phone {
 
@@ -930,7 +943,9 @@ function logout() {
 }
 
 
-/* AMOUNT */
+/* =========================================================
+   AMOUNT
+========================================================= */
 
 .ks-notification-amount {
 
@@ -941,28 +956,38 @@ function logout() {
 }
 
 
-/* SMALL TEXT */
+/* =========================================================
+   SMALL TEXT
+========================================================= */
 
 .ks-notification-small {
 
     color: rgba(255,255,255,0.35);
 
-    font-size: 9px;
+    font-size: 8px;
 
-    margin-top: 2px;
+    margin-top: 1px;
 
 }
 
 
-@media (max-width: 480px) {
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
 
     #ksWithdrawalNotification {
 
-        top: 14px;
+        width: 250px;
 
-        right: 12px;
+        min-width: 0;
 
-        width: calc(100vw - 24px);
+        top: 12px;
+
+        right: 10px;
+
+        padding: 9px 10px;
 
     }
 
@@ -1070,12 +1095,14 @@ function logout() {
             style="
                 display:flex;
                 align-items:center;
-                gap:12px;
+                gap:9px;
             "
         >
 
             <div class="ks-notification-icon">
+
                 💰
+
             </div>
 
 
@@ -1089,9 +1116,10 @@ function logout() {
                 <div
                     id="ksNotificationMessage"
                     style="
-                        font-size:11px;
-                        line-height:18px;
+                        font-size:10px;
+                        line-height:16px;
                         color:rgba(255,255,255,0.9);
+                        white-space:normal;
                     "
                 ></div>
 
@@ -1296,3 +1324,4 @@ function logout() {
 })();
 
 </script>
+   
