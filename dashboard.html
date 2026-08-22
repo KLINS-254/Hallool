@@ -1,62 +1,812 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>KenyaSurvey Dashboard</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial,sans-serif}
-body{background:#08120a;color:#fff;display:flex;min-height:100vh}
-.sidebar{width:230px;background:#0d1a0f;border-right:1px solid #1a2e1e;padding:16px;position:fixed;height:100vh;z-index:50;transition:.3s}
-.main{flex:1;margin-left:230px;padding:24px}
-.card{background:#132016;border:1px solid #1f3522;border-radius:14px;padding:16px;margin-top:12px}
-.green{background:#0f9d58;color:#fff;border:none;border-radius:999px;padding:9px 18px;font-weight:700;font-size:11px;cursor:pointer}
-.bal{background:#0f9d58;border-radius:12px;padding:12px;color:#fff}
-.bal small{font-size:9px;letter-spacing:1px;opacity:.7;font-weight:700}
-.bal h2{font-size:16px;font-weight:900}
-.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:16px}
-.stat{background:#132016;border:1px solid #1f3522;border-radius:14px;padding:14px;display:flex;gap:10px;align-items:center}
-.progress{height:6px;background:#000;border-radius:99px;margin-top:10px}
-.progress div{height:6px;background:#0f9d58;border-radius:99px;width:5%}
-.activity{margin-top:8px;background:#132016;border:1px solid #1f3522;border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center}
-@media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.stats{grid-template-columns:1fr 1fr}}
+    * {
+        font-family: Inter, Arial, sans-serif;
+    }
+
+    body {
+        background: #08120a;
+    }
+
+    .sidebar {
+        transition: transform 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+        .sidebar {
+            transform: translateX(-100%);
+        }
+
+        .sidebar.open {
+            transform: translateX(0);
+        }
+    }
 </style>
 </head>
-<body>
 
-<div class="sidebar" id="sidebar">
-<div style="display:flex;align-items:center;gap:8px;padding:12px 8px"><div style="width:28px;height:28px;background:#0f9d58;border-radius:8px;display:grid;place-items:center">🎓</div><b style="font-size:13px">Kenya<span style="color:#0f9d58">Survey</span></b></div>
-<div class="bal"><small>AVAILABLE COMPENSATION</small><h2>KSh 225.00</h2><small style="opacity:.7;text-transform:none;letter-spacing:0">Total: KSh 175.00</small></div>
-<div style="margin-top:16px;font-size:11px;line-height:32px;color:#ffffff80">
-<div style="background:#132016;color:#0f9d58;padding:6px 12px;border-radius:10px">⊞ Dashboard</div>
-<div style="padding:6px 12px">📄 Research Surveys (114)</div>
-<div style="padding:6px 12px">↗ Participant Compensation</div>
-<div style="padding:6px 12px">↻ Compensation History</div>
-</div>
+<body class="bg-[#08120a] text-white min-h-screen">
+
+
+<!-- MOBILE OVERLAY -->
+<div
+    id="overlay"
+    onclick="closeSidebar()"
+    class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden">
 </div>
 
-<div class="main">
-<div style="display:flex;justify-content:space-between">
-<div><h1 style="font-size:18px">Good morning, Klins woo!</h1><p style="font-size:11px;color:#ffffff80">Track your research participation activity and compensation.</p></div>
-<button onclick="document.getElementById('sidebar').classList.toggle('open')" style="background:none;border:1px solid #1a2e1e;color:#fff;border-radius:8px;padding:6px 10px">☰</button>
-</div>
 
-<div class="card" style="display:flex;justify-content:space-between">
-<div style="display:flex;gap:12px"><div style="width:40px;height:40px;background:#0f9d5820;border-radius:10px;display:grid;place-items:center">📋</div><div><b style="font-size:12px">Ready to Participate?</b><p style="font-size:11px;color:#ffffff80;margin-top:4px">Access available research surveys and receive compensation based on eligible responses.</p><button class="green" style="margin-top:10px">◉ Start Surveys</button></div></div>
-</div>
+<!-- SIDEBAR -->
+<aside
+    id="sidebar"
+    class="sidebar fixed top-0 left-0 z-50 w-[250px] h-screen bg-[#0d1a0f] border-r border-[#1a2e1e] p-4">
 
-<div class="card" style="display:flex;justify-content:space-between">
-<div style="display:flex;gap:12px"><div style="width:40px;height:40px;background:#0f9d5820;border-radius:10px;display:grid;place-items:center">↗</div><div><b style="font-size:12px">Withdraw Your Earnings</b><p style="font-size:9px;color:#ffffff60;margin-top:4px">A one-time account verification is required before your first withdrawal.</p></div></div>
-<div><button class="green">🛡️ Withdraw Now</button></div>
-</div>
+    <!-- LOGO -->
+    <div class="flex items-center gap-2.5 px-2 py-3">
 
-<div class="stats">
-<div class="stat"><div>💰</div><div><b>225.00</b><br><small style="font-size:9px;color:#ffffff60">Available Compensation (KSh)</small></div></div>
-<div class="stat"><div>📈</div><div><b>175.00</b><br><small style="font-size:9px;color:#ffffff60">Total Compensation (KSh)</small></div></div>
-<div class="stat"><div>📄</div><div><b>6</b><br><small style="font-size:9px;color:#ffffff60">Surveys Completed</small></div></div>
-</div>
-<div class="stat" style="margin-top:12px;max-width:33%"><div>☰</div><div><b>114</b><br><small style="font-size:9px;color:#ffffff60">Surveys Remaining</small></div></div>
+        <div class="w-8 h-8 bg-[#0f9d58] rounded-lg grid place-items-center">
+            🎓
+        </div>
 
-<div class="card"><div style="display:flex;justify-content:space-between;font-size:11px"><b>📊 Participation Progress</b><span style="color:#ffffff80">6 / 120 completed</span></div><div class="progress"><div></div></div></div>
+        <p class="font-bold text-[14px]">
+            Kenya<span class="text-[#0f9d58]">Survey</span>
+        </p>
 
-<div class="card" style="background:#0f1e2a60;border-color:#1e2f40;display:flex;gap:8px"><span style="color:#60a5fa">ⓘ</span><p style="font-size:10px;color:#ffffff80;line-height:14
+    </div>
+
+
+    <!-- BALANCE -->
+    <div class="mt-4 bg-[#0f9d58] rounded-xl p-4">
+
+        <p class="text-[9px] tracking-[0.12em] font-bold text-white/70">
+            AVAILABLE COMPENSATION
+        </p>
+
+        <h2
+            id="sidebarBalance"
+            class="text-[22px] font-black mt-1">
+            KSh 0.00
+        </h2>
+
+        <p class="text-[10px] text-white/70 mt-1">
+            Total: KSh <span id="sidebarTotal">0.00</span>
+        </p>
+
+    </div>
+
+
+    <!-- MENU -->
+    <nav class="mt-6 space-y-1 text-[12px]">
+
+        <a
+            href="dashboard.html"
+            class="flex items-center gap-3 bg-[#132016] text-[#0f9d58] px-4 py-3 rounded-xl font-semibold">
+
+            <span>⊞</span>
+            Dashboard
+
+        </a>
+
+
+        <a
+            href="surveys.html"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-[#132016] hover:text-white transition">
+
+            <span>📄</span>
+            Research Surveys
+            <span
+                id="surveyCount"
+                class="ml-auto text-[10px] text-white/30">
+                (0)
+            </span>
+
+        </a>
+
+
+        <a
+            href="withdraw.html"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-[#132016] hover:text-white transition">
+
+            <span>↗</span>
+            Participant Compensation
+
+        </a>
+
+
+        <a
+            href="history.html"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-[#132016] hover:text-white transition">
+
+            <span>↻</span>
+            Compensation History
+
+        </a>
+
+    </nav>
+
+
+    <!-- LOGOUT -->
+    <button
+        onclick="logout()"
+        class="absolute bottom-5 left-4 right-4 flex items-center gap-3 px-4 py-3 rounded-xl border border-[#1e3a24] text-[12px] text-white/50 hover:text-red-400 hover:border-red-500/30 transition">
+
+        <span>↪</span>
+        Log Out
+
+    </button>
+
+</aside>
+
+
+
+<!-- MAIN -->
+<main class="lg:ml-[250px] min-h-screen px-4 py-5 md:px-8 md:py-7">
+
+
+    <!-- HEADER -->
+    <div class="flex items-start justify-between gap-4">
+
+        <div>
+
+            <h1
+                id="welcomeName"
+                class="text-[20px] md:text-[24px] font-extrabold">
+
+                Good morning!
+
+            </h1>
+
+            <p class="text-[11px] md:text-[12px] text-white/50 mt-1">
+
+                Track your research participation activity and compensation.
+
+            </p>
+
+        </div>
+
+
+        <!-- DROPDOWN ON OPPOSITE SIDE -->
+        <div class="relative">
+
+            <button
+                onclick="toggleDropdown()"
+                class="w-11 h-11 rounded-xl bg-[#132016] border border-[#1f3522] flex items-center justify-center text-white text-[18px]">
+
+                ☰
+
+            </button>
+
+
+            <!-- DROPDOWN -->
+            <div
+                id="dropdown"
+                class="hidden absolute right-0 top-[50px] w-[190px] bg-[#132016] border border-[#1f3522] rounded-xl shadow-2xl overflow-hidden z-30">
+
+                <a
+                    href="dashboard.html"
+                    class="block px-4 py-3 text-[12px] text-[#0f9d58] bg-[#0f9d58]/5">
+
+                    ⊞ Dashboard
+
+                </a>
+
+                <a
+                    href="surveys.html"
+                    class="block px-4 py-3 text-[12px] text-white/60 border-t border-white/5">
+
+                    📄 Research Surveys
+
+                </a>
+
+                <a
+                    href="withdraw.html"
+                    class="block px-4 py-3 text-[12px] text-white/60 border-t border-white/5">
+
+                    ↗ Withdraw Earnings
+
+                </a>
+
+                <a
+                    href="history.html"
+                    class="block px-4 py-3 text-[12px] text-white/60 border-t border-white/5">
+
+                    ↻ Payment History
+
+                </a>
+
+                <button
+                    onclick="logout()"
+                    class="w-full text-left px-4 py-3 text-[12px] text-red-400 border-t border-white/5">
+
+                    ↪ Log Out
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- READY TO PARTICIPATE -->
+    <section class="mt-6 bg-[#132016] border border-[#1f3522] rounded-2xl p-5">
+
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+
+            <div class="flex gap-4">
+
+                <div class="w-12 h-12 shrink-0 bg-[#0f9d58]/10 rounded-xl grid place-items-center text-[20px]">
+                    📋
+                </div>
+
+                <div>
+
+                    <h2 class="font-bold text-[14px]">
+                        Ready to Participate?
+                    </h2>
+
+                    <p class="text-[11px] text-white/50 leading-5 mt-1 max-w-[520px]">
+
+                        Access available research surveys and receive compensation based on eligible responses.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <button
+                onclick="window.location.href='surveys.html'"
+                class="w-full sm:w-auto px-7 h-[48px] bg-[#0f9d58] hover:bg-[#0c874a] rounded-xl text-[13px] font-bold transition">
+
+                Start Surveys
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- WITHDRAW -->
+    <section class="mt-4 bg-[#132016] border border-[#1f3522] rounded-2xl p-5">
+
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+
+            <div class="flex gap-4">
+
+                <div class="w-12 h-12 shrink-0 bg-[#0f9d58]/10 rounded-xl grid place-items-center text-[20px]">
+                    💰
+                </div>
+
+                <div>
+
+                    <h2 class="font-bold text-[14px]">
+                        Withdraw Your Earnings
+                    </h2>
+
+                    <p class="text-[11px] text-white/50 leading-5 mt-1">
+
+                        Get your rewards now. Minimum withdrawal is KSh 150.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <button
+                onclick="window.location.href='withdraw.html'"
+                class="w-full sm:w-auto px-7 h-[48px] bg-[#0f9d58] hover:bg-[#0c874a] rounded-xl text-[13px] font-bold transition">
+
+                Withdraw Now
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- STATS -->
+    <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-5">
+
+
+        <!-- AVAILABLE -->
+        <div class="bg-[#132016] border border-[#1f3522] rounded-2xl p-4">
+
+            <div class="text-[20px]">💰</div>
+
+            <p
+                id="availableBalance"
+                class="font-bold text-[18px] mt-3">
+
+                0.00
+
+            </p>
+
+            <p class="text-[10px] text-white/40 mt-1">
+
+                Available Compensation (KSh)
+
+            </p>
+
+        </div>
+
+
+
+        <!-- TOTAL -->
+        <div class="bg-[#132016] border border-[#1f3522] rounded-2xl p-4">
+
+            <div class="text-[20px]">📈</div>
+
+            <p
+                id="totalBalance"
+                class="font-bold text-[18px] mt-3">
+
+                0.00
+
+            </p>
+
+            <p class="text-[10px] text-white/40 mt-1">
+
+                Total Compensation (KSh)
+
+            </p>
+
+        </div>
+
+
+
+        <!-- COMPLETED -->
+        <div class="bg-[#132016] border border-[#1f3522] rounded-2xl p-4">
+
+            <div class="text-[20px]">📄</div>
+
+            <p
+                id="completedSurveys"
+                class="font-bold text-[18px] mt-3">
+
+                0
+
+            </p>
+
+            <p class="text-[10px] text-white/40 mt-1">
+
+                Surveys Completed
+
+            </p>
+
+        </div>
+
+
+
+        <!-- REMAINING -->
+        <div class="bg-[#132016] border border-[#1f3522] rounded-2xl p-4">
+
+            <div class="text-[20px]">☰</div>
+
+            <p
+                id="remainingSurveys"
+                class="font-bold text-[18px] mt-3">
+
+                0
+
+            </p>
+
+            <p class="text-[10px] text-white/40 mt-1">
+
+                Surveys Remaining
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- PARTICIPATION PROGRESS -->
+    <section class="mt-4 bg-[#132016] border border-[#1f3522] rounded-2xl p-5">
+
+        <div class="flex justify-between items-center gap-4">
+
+            <h3 class="text-[13px] font-bold">
+                📊 Participation Progress
+            </h3>
+
+            <span
+                id="progressText"
+                class="text-[11px] text-white/50">
+
+                0 / 0 completed
+
+            </span>
+
+        </div>
+
+
+        <div class="h-[7px] bg-black/50 rounded-full overflow-hidden mt-4">
+
+            <div
+                id="progressBar"
+                class="h-full bg-[#0f9d58] rounded-full transition-all"
+                style="width:0%">
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- INFORMATION -->
+    <section class="mt-4 bg-[#0f1e2a]/60 border border-[#1e2f40] rounded-2xl p-4 flex gap-3">
+
+        <span class="text-[#60a5fa]">
+            ⓘ
+        </span>
+
+        <p class="text-[10px] md:text-[11px] text-white/50 leading-5">
+
+            Compensation is subject to survey eligibility and project availability.
+            KenyaSurvey does not guarantee a specific income level.
+            A 4% processing fee applies to all payment requests.
+
+        </p>
+
+    </section>
+
+
+
+    <!-- RECENT ACTIVITY -->
+    <section class="mt-5 bg-[#132016] border border-[#1f3522] rounded-2xl p-5">
+
+        <h3 class="font-bold text-[14px]">
+            Recent Activity
+        </h3>
+
+
+        <div
+            id="activityList"
+            class="mt-4 text-center py-8">
+
+            <div class="text-[28px] opacity-40">
+                📋
+            </div>
+
+            <p class="text-[12px] text-white/50 mt-3">
+
+                No recent activity yet.
+
+            </p>
+
+            <p class="text-[10px] text-white/30 mt-1">
+
+                Complete a survey to start earning compensation.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<script>
+
+/* ==============================
+   CHECK LOGGED IN USER
+============================== */
+
+const currentUser =
+    localStorage.getItem("kenyaSurveyCurrentUser");
+
+
+if (!currentUser) {
+
+    window.location.href = "register.html";
+
+}
+
+
+/* ==============================
+   LOAD MEMBERS
+============================== */
+
+const members =
+    JSON.parse(
+        localStorage.getItem("kenyaSurveyMembers")
+    ) || {};
+
+
+const user = members[currentUser];
+
+
+/* ==============================
+   ACCOUNT SAFETY
+============================== */
+
+if (!user) {
+
+    localStorage.removeItem(
+        "kenyaSurveyCurrentUser"
+    );
+
+    window.location.href = "register.html";
+
+}
+
+
+/* ==============================
+   INITIALISE NEW CUSTOMER DATA
+============================== */
+
+if (user.availableBalance === undefined) {
+
+    user.availableBalance = 0;
+
+}
+
+
+if (user.totalCompensation === undefined) {
+
+    user.totalCompensation = 0;
+
+}
+
+
+if (user.completedSurveys === undefined) {
+
+    user.completedSurveys = 0;
+
+}
+
+
+if (user.remainingSurveys === undefined) {
+
+    user.remainingSurveys = 0;
+
+}
+
+
+if (!user.activities) {
+
+    user.activities = [];
+
+}
+
+
+/* SAVE DEFAULT DATA */
+
+members[currentUser] = user;
+
+
+localStorage.setItem(
+    "kenyaSurveyMembers",
+    JSON.stringify(members)
+);
+
+
+/* ==============================
+   USER NAME
+============================== */
+
+const firstName =
+    user.fullName
+        ? user.fullName.split(" ")[0]
+        : "Participant";
+
+
+document.getElementById("welcomeName").textContent =
+    "Good morning, " + firstName + "!";
+
+
+/* ==============================
+   BALANCES
+============================== */
+
+document.getElementById("sidebarBalance").textContent =
+    "KSh " +
+    Number(user.availableBalance).toFixed(2);
+
+
+document.getElementById("sidebarTotal").textContent =
+    Number(user.totalCompensation).toFixed(2);
+
+
+document.getElementById("availableBalance").textContent =
+    Number(user.availableBalance).toFixed(2);
+
+
+document.getElementById("totalBalance").textContent =
+    Number(user.totalCompensation).toFixed(2);
+
+
+document.getElementById("completedSurveys").textContent =
+    user.completedSurveys;
+
+
+document.getElementById("remainingSurveys").textContent =
+    user.remainingSurveys;
+
+
+/* ==============================
+   PROGRESS
+============================== */
+
+const totalSurveys =
+    user.completedSurveys +
+    user.remainingSurveys;
+
+
+document.getElementById("progressText").textContent =
+    user.completedSurveys +
+    " / " +
+    totalSurveys +
+    " completed";
+
+
+let progress = 0;
+
+
+if (totalSurveys > 0) {
+
+    progress =
+        (user.completedSurveys / totalSurveys) * 100;
+
+}
+
+
+document.getElementById("progressBar").style.width =
+    progress + "%";
+
+
+/* ==============================
+   RECENT ACTIVITY
+============================== */
+
+if (user.activities.length > 0) {
+
+    const activityList =
+        document.getElementById("activityList");
+
+
+    activityList.innerHTML = "";
+
+
+    user.activities
+        .slice()
+        .reverse()
+        .slice(0, 5)
+        .forEach(activity => {
+
+            activityList.innerHTML += `
+
+                <div class="flex items-center justify-between py-4 border-b border-white/5 text-left">
+
+                    <div class="flex gap-3 items-center">
+
+                        <div class="w-10 h-10 bg-[#0f9d58]/10 rounded-xl grid place-items-center">
+                            📋
+                        </div>
+
+                        <div>
+
+                            <p class="text-[12px] font-semibold">
+                                ${activity.title}
+                            </p>
+
+                            <p class="text-[10px] text-white/40 mt-1">
+                                ${activity.date}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <span class="text-[#0f9d58] text-[12px] font-bold">
+
+                        +KSh ${Number(activity.amount || 0).toFixed(2)}
+
+                    </span>
+
+                </div>
+
+            `;
+
+        });
+
+}
+
+
+/* ==============================
+   DROPDOWN
+============================== */
+
+function toggleDropdown() {
+
+    document
+        .getElementById("dropdown")
+        .classList
+        .toggle("hidden");
+
+}
+
+
+/* ==============================
+   MOBILE SIDEBAR
+============================== */
+
+function openSidebar() {
+
+    document
+        .getElementById("sidebar")
+        .classList
+        .add("open");
+
+
+    document
+        .getElementById("overlay")
+        .classList
+        .remove("hidden");
+
+}
+
+
+function closeSidebar() {
+
+    document
+        .getElementById("sidebar")
+        .classList
+        .remove("open");
+
+
+    document
+        .getElementById("overlay")
+        .classList
+        .add("hidden");
+
+}
+
+
+/* ==============================
+   LOGOUT
+============================== */
+
+function logout() {
+
+    localStorage.removeItem(
+        "kenyaSurveyCurrentUser"
+    );
+
+
+    window.location.href =
+        "index.html";
+
+}
+
+</script>
+
+</body>
+              </html>
