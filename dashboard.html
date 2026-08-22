@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
+
     * {
         font-family: Inter, Arial, sans-serif;
     }
@@ -24,6 +25,7 @@
     }
 
     @media (max-width: 768px) {
+
         .sidebar {
             transform: translateX(-100%);
         }
@@ -31,97 +33,156 @@
         .sidebar.open {
             transform: translateX(0);
         }
+
     }
 
+
     /* ==============================
-       WITHDRAWAL NOTIFICATION
+       WITHDRAWAL POPUP
     ============================== */
 
     .withdraw-notification {
+
         position: fixed;
+
         top: 24px;
+
         right: 20px;
+
         width: min(340px, calc(100vw - 30px));
+
         z-index: 100;
 
         background: #132016;
+
         border: 1px solid #1f3522;
+
         border-left: 4px solid #0f9d58;
+
         border-radius: 14px;
 
         padding: 14px 16px;
 
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
+        box-shadow:
+            0 15px 40px rgba(0,0,0,0.45);
 
-        transform: translateX(calc(100% + 40px));
+        transform:
+            translateX(calc(100% + 40px));
+
         opacity: 0;
 
         transition:
             transform 0.45s ease,
             opacity 0.45s ease;
+
     }
+
 
     .withdraw-notification.show {
+
         transform: translateX(0);
+
         opacity: 1;
+
     }
+
 
     .withdraw-notification.hide {
-        transform: translateX(calc(100% + 40px));
+
+        transform:
+            translateX(calc(100% + 40px));
+
         opacity: 0;
+
     }
+
 
     .withdraw-notification-content {
+
         display: flex;
+
         align-items: center;
+
         gap: 12px;
+
     }
 
+
     .withdraw-notification-icon {
+
         width: 38px;
+
         height: 38px;
+
         flex-shrink: 0;
 
         border-radius: 10px;
 
-        background: rgba(15, 157, 88, 0.12);
+        background:
+            rgba(15,157,88,0.12);
 
         display: grid;
+
         place-items: center;
 
         font-size: 18px;
+
     }
+
 
     .withdraw-notification-name {
+
         font-size: 12px;
+
         font-weight: 700;
+
         color: white;
+
     }
+
 
     .withdraw-notification-number {
+
         font-size: 11px;
-        color: rgba(255, 255, 255, 0.45);
+
+        color:
+            rgba(255,255,255,0.45);
+
         margin-left: 4px;
+
     }
+
 
     .withdraw-notification-text {
+
         font-size: 11px;
-        color: rgba(255, 255, 255, 0.55);
+
+        color:
+            rgba(255,255,255,0.55);
+
         margin-top: 4px;
+
     }
 
+
     .withdraw-notification-amount {
+
         color: #0f9d58;
+
         font-weight: 800;
+
     }
+
 </style>
+
 </head>
+
 
 <body class="bg-[#08120a] text-white min-h-screen">
 
 
 <!-- ==============================
-     RANDOM WITHDRAWAL NOTIFICATION
+     WITHDRAWAL POPUP
 ============================== -->
 
 <div
@@ -134,14 +195,14 @@
             💰
         </div>
 
-        <div class="min-w-0">
+        <div>
 
             <div>
 
                 <span
                     id="notificationName"
                     class="withdraw-notification-name">
-                    Mercy
+                    Irine
                 </span>
 
                 <span
@@ -171,7 +232,9 @@
 </div>
 
 
+
 <!-- MOBILE OVERLAY -->
+
 <div
     id="overlay"
     onclick="closeSidebar()"
@@ -179,12 +242,16 @@
 </div>
 
 
+
 <!-- SIDEBAR -->
+
 <aside
     id="sidebar"
     class="sidebar fixed top-0 left-0 z-50 w-[250px] h-screen bg-[#0d1a0f] border-r border-[#1a2e1e] p-4">
 
+
     <!-- LOGO -->
+
     <div class="flex items-center gap-2.5 px-2 py-3">
 
         <div class="w-8 h-8 bg-[#0f9d58] rounded-lg grid place-items-center">
@@ -192,43 +259,63 @@
         </div>
 
         <p class="font-bold text-[14px]">
-            Kenya<span class="text-[#0f9d58]">Survey</span>
+
+            Kenya<span class="text-[#0f9d58]">
+                Survey
+            </span>
+
         </p>
 
     </div>
 
 
+
     <!-- BALANCE -->
+
     <div class="mt-4 bg-[#0f9d58] rounded-xl p-4">
 
         <p class="text-[9px] tracking-[0.12em] font-bold text-white/70">
+
             AVAILABLE COMPENSATION
+
         </p>
 
         <h2
             id="sidebarBalance"
             class="text-[22px] font-black mt-1">
+
             KSh 0.00
+
         </h2>
 
         <p class="text-[10px] text-white/70 mt-1">
-            Total: KSh <span id="sidebarTotal">0.00</span>
+
+            Total: KSh
+            <span id="sidebarTotal">
+                0.00
+            </span>
+
         </p>
 
     </div>
 
 
+
     <!-- MENU -->
+
     <nav class="mt-6 space-y-1 text-[12px]">
+
 
         <a
             href="dashboard.html"
             class="flex items-center gap-3 bg-[#132016] text-[#0f9d58] px-4 py-3 rounded-xl font-semibold">
 
             <span>⊞</span>
+
             Dashboard
 
         </a>
+
 
 
         <a
@@ -242,10 +329,13 @@
             <span
                 id="surveyCount"
                 class="ml-auto text-[10px] text-white/30">
+
                 (0)
+
             </span>
 
         </a>
+
 
 
         <a
@@ -257,6 +347,7 @@
             Participant Compensation
 
         </a>
+
 
 
         <a
@@ -272,7 +363,9 @@
     </nav>
 
 
+
     <!-- LOGOUT -->
+
     <button
         onclick="logout()"
         class="absolute bottom-5 left-4 right-4 flex items-center gap-3 px-4 py-3 rounded-xl border border-[#1e3a24] text-[12px] text-white/50 hover:text-red-400 hover:border-red-500/30 transition">
@@ -288,11 +381,15 @@
 
 
 <!-- MAIN -->
+
 <main class="lg:ml-[250px] min-h-screen px-4 py-5 md:px-8 md:py-7">
 
 
+
     <!-- HEADER -->
+
     <div class="flex items-start justify-between gap-4">
+
 
         <div>
 
@@ -304,6 +401,7 @@
 
             </h1>
 
+
             <p class="text-[11px] md:text-[12px] text-white/50 mt-1">
 
                 Track your research participation activity and compensation.
@@ -313,8 +411,11 @@
         </div>
 
 
-        <!-- DROPDOWN ON OPPOSITE SIDE -->
+
+        <!-- DROPDOWN -->
+
         <div class="relative">
+
 
             <button
                 onclick="toggleDropdown()"
@@ -325,10 +426,13 @@
             </button>
 
 
+
             <!-- DROPDOWN -->
+
             <div
                 id="dropdown"
                 class="hidden absolute right-0 top-[50px] w-[190px] bg-[#132016] border border-[#1f3522] rounded-xl shadow-2xl overflow-hidden z-30">
+
 
                 <a
                     href="dashboard.html"
@@ -338,6 +442,8 @@
 
                 </a>
 
+
+
                 <a
                     href="surveys.html"
                     class="block px-4 py-3 text-[12px] text-white/60 border-t border-white/5">
@@ -345,6 +451,8 @@
                     📄 Research Surveys
 
                 </a>
+
+
 
                 <a
                     href="withdraw.html"
@@ -354,6 +462,8 @@
 
                 </a>
 
+
+
                 <a
                     href="history.html"
                     class="block px-4 py-3 text-[12px] text-white/60 border-t border-white/5">
@@ -361,6 +471,8 @@
                     ↻ Payment History
 
                 </a>
+
+
 
                 <button
                     onclick="logout()"
@@ -379,21 +491,29 @@
 
 
     <!-- READY TO PARTICIPATE -->
+
     <section class="mt-6 bg-[#132016] border border-[#1f3522] rounded-2xl p-5">
 
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-5">
 
+
             <div class="flex gap-4">
 
                 <div class="w-12 h-12 shrink-0 bg-[#0f9d58]/10 rounded-xl grid place-items-center text-[20px]">
+
                     📋
+
                 </div>
+
 
                 <div>
 
                     <h2 class="font-bold text-[14px]">
+
                         Ready to Participate?
+
                     </h2>
+
 
                     <p class="text-[11px] text-white/50 leading-5 mt-1 max-w-[520px]">
 
@@ -404,6 +524,7 @@
                 </div>
 
             </div>
+
 
 
             <button
@@ -421,21 +542,29 @@
 
 
     <!-- WITHDRAW -->
+
     <section class="mt-4 bg-[#132016] border border-[#1f3522] rounded-2xl p-5">
 
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-5">
 
+
             <div class="flex gap-4">
 
                 <div class="w-12 h-12 shrink-0 bg-[#0f9d58]/10 rounded-xl grid place-items-center text-[20px]">
+
                     💰
+
                 </div>
+
 
                 <div>
 
                     <h2 class="font-bold text-[14px]">
+
                         Withdraw Your Earnings
+
                     </h2>
+
 
                     <p class="text-[11px] text-white/50 leading-5 mt-1">
 
@@ -446,6 +575,7 @@
                 </div>
 
             </div>
+
 
 
             <button
@@ -463,13 +593,15 @@
 
 
     <!-- STATS -->
+
     <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-5">
 
 
-        <!-- AVAILABLE -->
         <div class="bg-[#132016] border border-[#1f3522] rounded-2xl p-4">
 
-            <div class="text-[20px]">💰</div>
+            <div class="text-[20px]">
+                💰
+            </div>
 
             <p
                 id="availableBalance"
@@ -489,10 +621,11 @@
 
 
 
-        <!-- TOTAL -->
         <div class="bg-[#132016] border border-[#1f3522] rounded-2xl p-4">
 
-            <div class="text-[20px]">📈</div>
+            <div class="text-[20px]">
+                📈
+            </div>
 
             <p
                 id="totalBalance"
@@ -512,10 +645,11 @@
 
 
 
-        <!-- COMPLETED -->
         <div class="bg-[#132016] border border-[#1f3522] rounded-2xl p-4">
 
-            <div class="text-[20px]">📄</div>
+            <div class="text-[20px]">
+                📄
+            </div>
 
             <p
                 id="completedSurveys"
@@ -535,10 +669,11 @@
 
 
 
-        <!-- REMAINING -->
         <div class="bg-[#132016] border border-[#1f3522] rounded-2xl p-4">
 
-            <div class="text-[20px]">☰</div>
+            <div class="text-[20px]">
+                ☰
+            </div>
 
             <p
                 id="remainingSurveys"
@@ -561,13 +696,17 @@
 
 
     <!-- PARTICIPATION PROGRESS -->
+
     <section class="mt-4 bg-[#132016] border border-[#1f3522] rounded-2xl p-5">
 
         <div class="flex justify-between items-center gap-4">
 
             <h3 class="text-[13px] font-bold">
+
                 📊 Participation Progress
+
             </h3>
+
 
             <span
                 id="progressText"
@@ -596,11 +735,13 @@
 
 
     <!-- INFORMATION -->
+
     <section class="mt-4 bg-[#0f1e2a]/60 border border-[#1e2f40] rounded-2xl p-4 flex gap-3">
 
         <span class="text-[#60a5fa]">
             ⓘ
         </span>
+
 
         <p class="text-[10px] md:text-[11px] text-white/50 leading-5">
 
@@ -615,10 +756,14 @@
 
 
     <!-- RECENT ACTIVITY -->
+
     <section class="mt-5 bg-[#132016] border border-[#1f3522] rounded-2xl p-5">
 
+
         <h3 class="font-bold text-[14px]">
+
             Recent Activity
+
         </h3>
 
 
@@ -626,15 +771,18 @@
             id="activityList"
             class="mt-4 text-center py-8">
 
+
             <div class="text-[28px] opacity-40">
                 📋
             </div>
+
 
             <p class="text-[12px] text-white/50 mt-3">
 
                 No recent activity yet.
 
             </p>
+
 
             <p class="text-[10px] text-white/30 mt-1">
 
@@ -658,12 +806,15 @@
 ============================== */
 
 const currentUser =
-    localStorage.getItem("kenyaSurveyCurrentUser");
+    localStorage.getItem(
+        "kenyaSurveyCurrentUser"
+    );
 
 
 if (!currentUser) {
 
-    window.location.href = "register.html";
+    window.location.href =
+        "register.html";
 
 }
 
@@ -674,11 +825,14 @@ if (!currentUser) {
 
 const members =
     JSON.parse(
-        localStorage.getItem("kenyaSurveyMembers")
+        localStorage.getItem(
+            "kenyaSurveyMembers"
+        )
     ) || {};
 
 
-const user = members[currentUser];
+const user =
+    members[currentUser];
 
 
 /* ==============================
@@ -691,53 +845,65 @@ if (!user) {
         "kenyaSurveyCurrentUser"
     );
 
-    window.location.href = "register.html";
+    window.location.href =
+        "register.html";
 
 }
 
 
 /* ==============================
-   INITIALISE NEW CUSTOMER DATA
+   INITIALISE DATA
 ============================== */
 
-if (user.availableBalance === undefined) {
+if (
+    user.availableBalance === undefined
+) {
 
     user.availableBalance = 0;
 
 }
 
 
-if (user.totalCompensation === undefined) {
+if (
+    user.totalCompensation === undefined
+) {
 
     user.totalCompensation = 0;
 
 }
 
 
-if (user.completedSurveys === undefined) {
+if (
+    user.completedSurveys === undefined
+) {
 
     user.completedSurveys = 0;
 
 }
 
 
-if (user.remainingSurveys === undefined) {
+if (
+    user.remainingSurveys === undefined
+) {
 
     user.remainingSurveys = 0;
 
 }
 
 
-if (!Array.isArray(user.activities)) {
+if (
+    !Array.isArray(user.activities)
+) {
 
     user.activities = [];
 
 }
 
 
-/* SAVE DEFAULT DATA */
+/* SAVE */
 
-members[currentUser] = user;
+members[currentUser] =
+    user;
 
 
 localStorage.setItem(
@@ -752,187 +918,133 @@ localStorage.setItem(
 
 const firstName =
     user.fullName
-        ? user.fullName.trim().split(/\s+/)[0]
+        ? user.fullName
+            .trim()
+            .split(/\s+/)[0]
         : "Participant";
 
 
-document.getElementById("welcomeName").textContent =
-    "Good morning, " + firstName + "!";
+/*
+   IMPORTANT:
+   This uses the registered fullName
+   from kenyaSurveyMembers.
+*/
 
+document.getElementById(
+    "welcomeName"
+).textContent =
+    "Good morning, " +
+    firstName +
+    "!";
 
-/* ==============================
-   TIME BASED GREETING
-============================== */
-
-function updateGreeting() {
-
-    const hour =
-        new Date().getHours();
-
-    let greeting;
-
-    if (hour >= 5 && hour < 12) {
-
-        greeting = "Good morning";
-
-    } else if (hour >= 12 && hour < 17) {
-
-        greeting = "Good afternoon";
-
-    } else if (hour >= 17 && hour < 21) {
-
-        greeting = "Good evening";
-
-    } else {
-
-        greeting = "Good night";
-
-    }
-
-
-    document.getElementById(
-        "welcomeName"
-    ).textContent =
-        greeting + ", " + firstName + "!";
-
-}
-
-
-updateGreeting();
 
 
 /* ==============================
    BALANCES
 ============================== */
 
-function updateDashboard() {
-
-    const latestMembers =
-        JSON.parse(
-            localStorage.getItem("kenyaSurveyMembers")
-        ) || {};
-
-
-    const latestUser =
-        latestMembers[currentUser];
+document.getElementById(
+    "sidebarBalance"
+).textContent =
+    "KSh " +
+    Number(
+        user.availableBalance
+    ).toFixed(2);
 
 
-    if (!latestUser) {
-
-        return;
-
-    }
-
-
-    const available =
-        Number(
-            latestUser.availableBalance || 0
-        );
+document.getElementById(
+    "sidebarTotal"
+).textContent =
+    Number(
+        user.totalCompensation
+    ).toFixed(2);
 
 
-    const total =
-        Number(
-            latestUser.totalCompensation || 0
-        );
+document.getElementById(
+    "availableBalance"
+).textContent =
+    Number(
+        user.availableBalance
+    ).toFixed(2);
 
 
-    const completed =
-        Number(
-            latestUser.completedSurveys || 0
-        );
+document.getElementById(
+    "totalBalance"
+).textContent =
+    Number(
+        user.totalCompensation
+    ).toFixed(2);
 
 
-    const remaining =
-        Number(
-            latestUser.remainingSurveys || 0
-        );
+document.getElementById(
+    "completedSurveys"
+).textContent =
+    user.completedSurveys;
 
 
-    const activities =
-        Array.isArray(latestUser.activities)
-            ? latestUser.activities
-            : [];
+document.getElementById(
+    "remainingSurveys"
+).textContent =
+    user.remainingSurveys;
 
 
-    document.getElementById(
-        "sidebarBalance"
-    ).textContent =
-        "KSh " + available.toFixed(2);
+/* ==============================
+   SURVEY COUNT
+============================== */
+
+document.getElementById(
+    "surveyCount"
+).textContent =
+    "(" +
+    user.remainingSurveys +
+    ")";
 
 
-    document.getElementById(
-        "sidebarTotal"
-    ).textContent =
-        total.toFixed(2);
+
+/* ==============================
+   PROGRESS
+============================== */
+
+const totalSurveys =
+    Number(user.completedSurveys) +
+    Number(user.remainingSurveys);
 
 
-    document.getElementById(
-        "availableBalance"
-    ).textContent =
-        available.toFixed(2);
+document.getElementById(
+    "progressText"
+).textContent =
+    user.completedSurveys +
+    " / " +
+    totalSurveys +
+    " completed";
 
 
-    document.getElementById(
-        "totalBalance"
-    ).textContent =
-        total.toFixed(2);
+let progress = 0;
 
 
-    document.getElementById(
-        "completedSurveys"
-    ).textContent =
-        completed;
+if (totalSurveys > 0) {
+
+    progress =
+        (
+            Number(user.completedSurveys) /
+            totalSurveys
+        ) * 100;
+
+}
 
 
-    document.getElementById(
-        "remainingSurveys"
-    ).textContent =
-        remaining;
+document.getElementById(
+    "progressBar"
+).style.width =
+    progress + "%";
 
 
-    document.getElementById(
-        "surveyCount"
-    ).textContent =
-        "(" + remaining + ")";
 
+/* ==============================
+   RECENT ACTIVITY
+============================== */
 
-    /* ==============================
-       PROGRESS
-    ============================== */
-
-    const totalSurveys =
-        completed + remaining;
-
-
-    document.getElementById(
-        "progressText"
-    ).textContent =
-        completed +
-        " / " +
-        totalSurveys +
-        " completed";
-
-
-    let progress = 0;
-
-
-    if (totalSurveys > 0) {
-
-        progress =
-            (completed / totalSurveys) * 100;
-
-    }
-
-
-    document.getElementById(
-        "progressBar"
-    ).style.width =
-        Math.min(progress, 100) + "%";
-
-
-    /* ==============================
-       RECENT ACTIVITY
-    ============================== */
+if (user.activities.length > 0) {
 
     const activityList =
         document.getElementById(
@@ -940,64 +1052,102 @@ function updateDashboard() {
         );
 
 
-    if (activities.length === 0) {
-
-        activityList.innerHTML = `
-
-            <div class="text-[28px] opacity-40">
-                📋
-            </div>
-
-            <p class="text-[12px] text-white/50 mt-3">
-                No recent activity yet.
-            </p>
-
-            <p class="text-[10px] text-white/30 mt-1">
-                Complete a survey to start earning compensation.
-            </p>
-
-        `;
-
-        return;
-
-    }
+    activityList.innerHTML =
+        "";
 
 
-    activityList.innerHTML = "";
-
-
-    activities
+    user.activities
         .slice()
         .reverse()
         .slice(0, 5)
-        .forEach(activity => {
+        .forEach(
+            activity => {
 
-            const row =
-                document.createElement("div");
+                activityList.innerHTML += `
+
+                    <div class="flex items-center justify-between py-4 border-b border-white/5 text-left">
+
+                        <div class="flex gap-3 items-center">
+
+                            <div class="w-10 h-10 bg-[#0f9d58]/10 rounded-xl grid place-items-center">
+
+                                📋
+
+                            </div>
+
+                            <div>
+
+                                <p class="text-[12px] font-semibold">
+
+                                    ${activity.title || "Survey completed"}
+
+                                </p>
+
+                                <p class="text-[10px] text-white/40 mt-1">
+
+                                    ${activity.date || ""}
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <span class="text-[#0f9d58] text-[12px] font-bold">
+
+                            +KSh ${
+                                Number(
+                                    activity.amount || 0
+                                ).toFixed(2)
+                            }
+
+                        </span>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+}
 
 
-            row.className =
-                "flex items-center justify-between py-4 border-b border-white/5 text-left";
+
+/* ==============================
+   DROPDOWN
+============================== */
+
+function toggleDropdown() {
+
+    document
+        .getElementById(
+            "dropdown"
+        )
+        .classList
+        .toggle("hidden");
+
+}
 
 
-            const left =
-                document.createElement("div");
+
+/* ==============================
+   MOBILE SIDEBAR
+============================== */
+
+function openSidebar() {
+
+    document
+        .getElementById(
+            "sidebar"
+        )
+        .classList
+        .add("open");
 
 
-            left.className =
-                "flex gap-3 items-center";
-
-
-            const icon =
-                document.createElement("div");
-
-
-            icon.className =
-                "w-10 h-10 bg-[#0f9d58]/10 rounded-xl grid place-items-center";
-
-
-            icon.textContent = "📋";
-
-
-            const info =
-                document.createElement("
+    document
+        .getElementById(
+            "overlay"
+        )
+        .classList
+        .rem
