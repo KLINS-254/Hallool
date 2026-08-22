@@ -32,62 +32,6 @@
             transform: translateX(0);
         }
     }
-
-    /* ==============================
-       WITHDRAWAL NOTIFICATION
-    ============================== */
-
-    #withdrawNotification {
-        position: fixed;
-        top: 22px;
-        right: 20px;
-        width: 310px;
-        max-width: calc(100vw - 40px);
-        background: #132016;
-        border: 1px solid #1f3522;
-        border-left: 4px solid #0f9d58;
-        border-radius: 14px;
-        padding: 14px 16px;
-        z-index: 9999;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.45);
-
-        transform: translateX(130%);
-        opacity: 0;
-
-        transition:
-            transform 0.45s ease,
-            opacity 0.45s ease;
-
-        pointer-events: none;
-    }
-
-    #withdrawNotification.show {
-        transform: translateX(0);
-        opacity: 1;
-    }
-
-    #withdrawNotification.hide {
-        transform: translateX(130%);
-        opacity: 0;
-    }
-
-    .notification-title {
-        font-size: 11px;
-        color: rgba(255,255,255,0.45);
-        margin-bottom: 5px;
-    }
-
-    .notification-main {
-        font-size: 12px;
-        font-weight: 700;
-        color: white;
-        line-height: 1.5;
-    }
-
-    .notification-amount {
-        color: #0f9d58;
-        font-weight: 800;
-    }
 </style>
 </head>
 
@@ -99,25 +43,6 @@
     id="overlay"
     onclick="closeSidebar()"
     class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden">
-</div>
-
-
-<!-- ==============================
-     WITHDRAWAL NOTIFICATION
-============================== -->
-
-<div id="withdrawNotification">
-
-    <div class="notification-title">
-        Recent Withdrawal
-    </div>
-
-    <div
-        id="withdrawNotificationText"
-        class="notification-main">
-        Irine 0714***342 — Withdraw KSh 2,500
-    </div>
-
 </div>
 
 
@@ -179,7 +104,6 @@
 
             <span>📄</span>
             Research Surveys
-
             <span
                 id="surveyCount"
                 class="ml-auto text-[10px] text-white/30">
@@ -688,38 +612,14 @@ localStorage.setItem(
    USER NAME
 ============================== */
 
-const fullName =
+const firstName =
     user.fullName
-        ? user.fullName.trim()
+        ? user.fullName.split(" ")[0]
         : "Participant";
 
 
-/* ==============================
-   TIME-BASED GREETING
-============================== */
-
-const currentHour =
-    new Date().getHours();
-
-let greeting =
-    "Good morning";
-
-
-if (currentHour >= 12 && currentHour < 17) {
-
-    greeting =
-        "Good afternoon";
-
-} else if (currentHour >= 17) {
-
-    greeting =
-        "Good evening";
-
-}
-
-
 document.getElementById("welcomeName").textContent =
-    greeting + ", " + fullName + "!";
+    "Good morning, " + firstName + "!";
 
 
 /* ==============================
@@ -752,20 +652,12 @@ document.getElementById("remainingSurveys").textContent =
 
 
 /* ==============================
-   SURVEY COUNT
-============================== */
-
-document.getElementById("surveyCount").textContent =
-    "(" + Number(user.remainingSurveys) + ")";
-
-
-/* ==============================
    PROGRESS
 ============================== */
 
 const totalSurveys =
-    Number(user.completedSurveys) +
-    Number(user.remainingSurveys);
+    user.completedSurveys +
+    user.remainingSurveys;
 
 
 document.getElementById("progressText").textContent =
@@ -781,7 +673,7 @@ let progress = 0;
 if (totalSurveys > 0) {
 
     progress =
-        (Number(user.completedSurveys) / totalSurveys) * 100;
+        (user.completedSurveys / totalSurveys) * 100;
 
 }
 
@@ -854,10 +746,10 @@ if (user.activities.length > 0) {
 
 function toggleDropdown() {
 
-    const dropdown =
-        document.getElementById("dropdown");
-
-    dropdown.classList.toggle("hidden");
+    document
+        .getElementById("dropdown")
+        .classList
+        .toggle("hidden");
 
 }
 
@@ -914,101 +806,493 @@ function logout() {
 
 }
 
+</script>
 
-/* ==================================================
-   RANDOM WITHDRAWAL NOTIFICATIONS
-================================================== */
+</body>
+</html>
+<!-- =========================================================
+     KENYASURVEY RANDOM WITHDRAWAL NOTIFICATIONS
+     Paste this entire block at the very bottom of the file
+========================================================= -->
 
-const withdrawalNames = [
+<style>
 
-    "Irine",
-    "Mercy",
-    "Brian",
-    "Kevin",
-    "Sharon",
-    "Diana",
-    "Collins",
-    "Faith",
-    "Victor",
-    "Ann",
-    "Dennis",
-    "Brenda",
-    "Martin",
-    "Joy",
-    "Daniel",
-    "Lydia",
-    "Samuel",
-    "Caroline",
-    "George",
-    "Esther"
+#ksWithdrawalNotification {
+    position: fixed;
 
-];
+    top: 20px;
+    right: 18px;
 
+    width: min(340px, calc(100vw - 36px));
 
-const withdrawalNumbers = [
+    background: #132016;
 
-    "0714***342",
-    "0721***518",
-    "0798***624",
-    "0703***815",
-    "0718***296",
-    "0745***731",
-    "0727***409",
-    "0791***563",
-    "0708***247",
-    "0712***896",
-    "0724***351",
-    "0796***724",
-    "0701***438",
-    "0715***682",
-    "0742***519"
+    border: 1px solid #1f3522;
 
-];
+    border-left: 4px solid #0f9d58;
 
+    border-radius: 14px;
 
-const withdrawalAmounts = [
+    padding: 13px 15px;
 
-    350,
-    500,
-    750,
-    1000,
-    1250,
-    1500,
-    1800,
-    2000,
-    2500,
-    3000,
-    3500,
-    4000,
-    4500,
-    5000
+    z-index: 999999;
 
-];
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.45);
+
+    transform: translateX(
+        calc(100% + 60px)
+    );
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        transform 0.55s cubic-bezier(.22,.61,.36,1),
+        opacity 0.4s ease,
+        visibility 0.4s ease;
+}
 
 
-let lastWithdrawalIndex = -1;
+/* SLIDE IN */
 
+#ksWithdrawalNotification.ks-show {
 
-/* ==============================
-   RANDOM ITEM
-============================== */
+    transform: translateX(0);
 
-function getRandomItem(array) {
+    opacity: 1;
 
-    return array[
-        Math.floor(
-            Math.random() * array.length
-        )
-    ];
+    visibility: visible;
 
 }
 
 
-/* ==============================
-   SHOW NOTIFICATION
-============================== */
+/* SLIDE OUT */
 
-function showWithdrawalNotification() {
+#ksWithdrawalNotification.ks-hide {
 
-    const notification =
-        docume
+    transform: translateX(
+        calc(100% + 60px)
+    );
+
+    opacity: 0;
+
+    visibility: hidden;
+
+}
+
+
+/* ICON */
+
+.ks-notification-icon {
+
+    width: 38px;
+
+    height: 38px;
+
+    min-width: 38px;
+
+    border-radius: 10px;
+
+    background: rgba(15,157,88,0.12);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 18px;
+
+}
+
+
+/* NAME */
+
+.ks-notification-name {
+
+    color: #ffffff;
+
+    font-weight: 700;
+
+}
+
+
+/* PHONE */
+
+.ks-notification-phone {
+
+    color: rgba(255,255,255,0.65);
+
+}
+
+
+/* AMOUNT */
+
+.ks-notification-amount {
+
+    color: #0f9d58;
+
+    font-weight: 800;
+
+}
+
+
+/* SMALL TEXT */
+
+.ks-notification-small {
+
+    color: rgba(255,255,255,0.35);
+
+    font-size: 9px;
+
+    margin-top: 2px;
+
+}
+
+
+@media (max-width: 480px) {
+
+    #ksWithdrawalNotification {
+
+        top: 14px;
+
+        right: 12px;
+
+        width: calc(100vw - 24px);
+
+    }
+
+}
+
+</style>
+
+
+<script>
+
+(function () {
+
+    /* =====================================================
+       RANDOM NAMES
+    ===================================================== */
+
+    const ksNames = [
+
+        "Irine",
+        "Mercy",
+        "Brian",
+        "Sharon",
+        "Kevin",
+        "Ann",
+        "Brenda",
+        "Victor",
+        "Faith",
+        "Derrick",
+        "Lydia",
+        "Collins",
+        "Miriam",
+        "Dennis",
+        "Esther",
+        "Ian",
+        "Purity",
+        "Martin",
+        "Diana",
+        "Samuel",
+        "Cynthia",
+        "Clinton",
+        "Naomi",
+        "Mark",
+        "Beatrice",
+        "Joan",
+        "Daniel",
+        "Lucy",
+        "Mike",
+        "Stacy",
+        "Kelvin",
+        "Sheila",
+        "Edwin",
+        "Caroline",
+        "George",
+        "Mary",
+        "Allan",
+        "Jackline",
+        "Joseph",
+        "Nancy"
+
+    ];
+
+
+    /* =====================================================
+       RANDOM WITHDRAWAL AMOUNTS
+    ===================================================== */
+
+    const ksAmounts = [
+
+        250,
+        350,
+        450,
+        500,
+        650,
+        750,
+        850,
+        1000,
+        1200,
+        1500,
+        1800,
+        2000,
+        2500,
+        3000,
+        3500,
+        4000,
+        5000
+
+    ];
+
+
+    /* =====================================================
+       CREATE NOTIFICATION
+    ===================================================== */
+
+    const ksNotification =
+        document.createElement("div");
+
+
+    ksNotification.id =
+        "ksWithdrawalNotification";
+
+
+    ksNotification.innerHTML = `
+
+        <div
+            style="
+                display:flex;
+                align-items:center;
+                gap:12px;
+            "
+        >
+
+            <div class="ks-notification-icon">
+                💰
+            </div>
+
+
+            <div
+                style="
+                    min-width:0;
+                    flex:1;
+                "
+            >
+
+                <div
+                    id="ksNotificationMessage"
+                    style="
+                        font-size:11px;
+                        line-height:18px;
+                        color:rgba(255,255,255,0.9);
+                    "
+                ></div>
+
+
+                <div class="ks-notification-small">
+
+                    Recent withdrawal
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    document.body.appendChild(
+        ksNotification
+    );
+
+
+    /* =====================================================
+       RANDOM ARRAY ITEM
+    ===================================================== */
+
+    function ksRandom(array) {
+
+        return array[
+            Math.floor(
+                Math.random() * array.length
+            )
+        ];
+
+    }
+
+
+    /* =====================================================
+       GENERATE PHONE
+       
+       Example:
+       0714***342
+    ===================================================== */
+
+    function ksGeneratePhone() {
+
+        const firstPart =
+            "07" +
+            Math.floor(
+                10 + Math.random() * 90
+            );
+
+
+        const lastPart =
+            Math.floor(
+                100 + Math.random() * 900
+            );
+
+
+        return (
+            firstPart +
+            "***" +
+            lastPart
+        );
+
+    }
+
+
+    /* =====================================================
+       SHOW NOTIFICATION
+    ===================================================== */
+
+    function ksShowNotification() {
+
+        const name =
+            ksRandom(ksNames);
+
+
+        const amount =
+            ksRandom(ksAmounts);
+
+
+        const phone =
+            ksGeneratePhone();
+
+
+        const message =
+            document.getElementById(
+                "ksNotificationMessage"
+            );
+
+
+        if (!message) {
+
+            return;
+
+        }
+
+
+        message.innerHTML =
+
+            '<span class="ks-notification-name">' +
+            name +
+            '</span> ' +
+
+            '<span class="ks-notification-phone">' +
+            phone +
+            '</span> ' +
+
+            ' — Withdraw ' +
+
+            '<span class="ks-notification-amount">' +
+            'KSh ' +
+            Number(amount).toLocaleString() +
+            '</span>';
+
+
+        /* Remove previous animation */
+
+        ksNotification.classList.remove(
+            "ks-show"
+        );
+
+        ksNotification.classList.remove(
+            "ks-hide"
+        );
+
+
+        /* Force browser to restart animation */
+
+        void ksNotification.offsetWidth;
+
+
+        /* Slide in */
+
+        ksNotification.classList.add(
+            "ks-show"
+        );
+
+
+        /* Stay visible for 2 seconds */
+
+        setTimeout(function () {
+
+            ksNotification.classList.remove(
+                "ks-show"
+            );
+
+            ksNotification.classList.add(
+                "ks-hide"
+            );
+
+        }, 2000);
+
+    }
+
+
+    /* =====================================================
+       SCHEDULE NEXT NOTIFICATION
+    ===================================================== */
+
+    function ksScheduleNext() {
+
+        /*
+            Wait a random 3–6 seconds
+            after the previous notification.
+        */
+
+        const delay =
+            3000 +
+            Math.floor(
+                Math.random() * 3000
+            );
+
+
+        setTimeout(function () {
+
+            ksShowNotification();
+
+            ksScheduleNext();
+
+        }, delay);
+
+    }
+
+
+    /* =====================================================
+       FIRST NOTIFICATION
+       
+       Appears about 2.5 seconds after page opens.
+    ===================================================== */
+
+    setTimeout(function () {
+
+        ksShowNotification();
+
+        ksScheduleNext();
+
+    }, 2500);
+
+
+})();
+
+</script>
