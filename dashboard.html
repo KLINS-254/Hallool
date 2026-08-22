@@ -6,1074 +6,519 @@
 
 <title>KenyaSurvey Dashboard</title>
 
+<script src="https://cdn.tailwindcss.com"></script>
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Inter,Arial,sans-serif;
+* {
+    font-family: Inter, Arial, sans-serif;
 }
 
-body{
-    background:#08120a;
-    color:#ffffff;
-    min-height:100vh;
+body {
+    background: #08120a;
 }
 
-
-/* ================================
-   SIDEBAR
-================================ */
-
-.sidebar{
-    width:230px;
-    background:#0d1a0f;
-    border-right:1px solid #1a2e1e;
-
-    padding:16px;
-
-    position:fixed;
-    left:0;
-    top:0;
-
-    height:100vh;
-
-    z-index:100;
-
-    transition:.3s ease;
+.sidebar {
+    transition: transform 0.3s ease;
 }
 
-.logo{
-    display:flex;
-    align-items:center;
-    gap:8px;
-
-    padding:12px 8px;
-    margin-bottom:14px;
+/* WITHDRAWAL POPUP */
+.withdraw-popup {
+    position: fixed;
+    top: 90px;
+    right: 16px;
+    z-index: 100;
+    width: min(330px, calc(100vw - 32px));
+    background: #132016;
+    border: 1px solid #1f5c35;
+    border-radius: 14px;
+    padding: 12px 14px;
+    box-shadow: 0 15px 40px rgba(0,0,0,.35);
+    transform: translateX(calc(100% + 30px));
+    opacity: 0;
+    transition: transform .45s ease, opacity .45s ease;
+    pointer-events: none;
 }
 
-.logo-icon{
-    width:30px;
-    height:30px;
-
-    background:#0f9d58;
-
-    border-radius:8px;
-
-    display:grid;
-    place-items:center;
-
-    font-size:15px;
+.withdraw-popup.show {
+    transform: translateX(0);
+    opacity: 1;
 }
 
-.logo-text{
-    font-size:14px;
-    font-weight:800;
-}
-
-.logo-text span{
-    color:#0f9d58;
-}
-
-
-/* BALANCE */
-
-.balance-card{
-    background:linear-gradient(
-        135deg,
-        #0f6b3b,
-        #0f9d58
-    );
-
-    border-radius:12px;
-
-    padding:14px;
-}
-
-.balance-card small{
-    display:block;
-
-    font-size:9px;
-    font-weight:800;
-
-    letter-spacing:.8px;
-
-    color:rgba(255,255,255,.65);
-}
-
-.balance-card h2{
-    margin-top:5px;
-
-    font-size:19px;
-    font-weight:900;
-}
-
-.balance-total{
-    margin-top:4px !important;
-
-    font-size:9px !important;
-    letter-spacing:0 !important;
-    font-weight:500 !important;
-}
-
-
-/* NAVIGATION */
-
-.nav-menu{
-    margin-top:18px;
-}
-
-.nav-item{
-    width:100%;
-
-    display:flex;
-    align-items:center;
-
-    gap:10px;
-
-    padding:11px 12px;
-
-    margin-bottom:5px;
-
-    border-radius:10px;
-
-    color:rgba(255,255,255,.55);
-
-    font-size:11px;
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:.2s;
-}
-
-.nav-item:hover{
-    background:#132016;
-    color:#ffffff;
-}
-
-.nav-item.active{
-    background:#132016;
-    color:#0f9d58;
-}
-
-.nav-count{
-    margin-left:auto;
-
-    background:#0f9d58;
-    color:#ffffff;
-
-    padding:2px 6px;
-
-    border-radius:6px;
-
-    font-size:8px;
-    font-weight:800;
-}
-
-
-/* ================================
-   MAIN
-================================ */
-
-.main{
-    margin-left:230px;
-
-    padding:24px;
-
-    max-width:1250px;
-}
-
-
-/* TOP HEADER */
-
-.top-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    gap:15px;
-}
-
-.top-header h1{
-    font-size:20px;
-    font-weight:800;
-}
-
-.top-header p{
-    margin-top:5px;
-
-    font-size:11px;
-
-    color:rgba(255,255,255,.48);
-}
-
-.menu-btn{
-    display:none;
-
-    width:40px;
-    height:40px;
-
-    background:#132016;
-
-    border:1px solid #1f3522;
-
-    border-radius:10px;
-
-    color:#ffffff;
-
-    font-size:18px;
-
-    cursor:pointer;
-}
-
-
-/* ================================
-   CARDS
-================================ */
-
-.card{
-    background:#132016;
-
-    border:1px solid #1f3522;
-
-    border-radius:16px;
-
-    padding:18px;
-
-    margin-top:16px;
-}
-
-
-/* READY CARD */
-
-.action-card{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    gap:20px;
-}
-
-.action-content{
-    display:flex;
-    align-items:flex-start;
-
-    gap:14px;
-}
-
-.action-icon{
-    width:44px;
-    height:44px;
-
-    flex-shrink:0;
-
-    background:#0f9d5820;
-
-    border:1px solid #0f9d5835;
-
-    border-radius:12px;
-
-    display:grid;
-    place-items:center;
-
-    font-size:18px;
-}
-
-.action-text h3{
-    font-size:13px;
-}
-
-.action-text p{
-    margin-top:5px;
-
-    max-width:520px;
-
-    font-size:10px;
-    line-height:16px;
-
-    color:rgba(255,255,255,.52);
-}
-
-
-/* BUTTON */
-
-.green-btn{
-    min-width:150px;
-    height:44px;
-
-    margin-top:12px;
-
-    background:#0f9d58;
-
-    border:none;
-
-    border-radius:11px;
-
-    color:#ffffff;
-
-    font-size:11px;
-    font-weight:800;
-
-    cursor:pointer;
-
-    transition:.2s;
-
-    box-shadow:0 5px 18px rgba(15,157,88,.18);
-}
-
-.green-btn:hover{
-    transform:translateY(-1px);
-    background:#11ad62;
-}
-
-
-/* WITHDRAW CARD */
-
-.withdraw-card{
-    background:#0d2515;
-    border-color:#146b3d;
-}
-
-
-/* ================================
-   STATS
-================================ */
-
-.stats{
-    display:grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
-    gap:12px;
-
-    margin-top:16px;
-}
-
-.stat{
-    min-height:95px;
-
-    background:#132016;
-
-    border:1px solid #1f3522;
-
-    border-radius:14px;
-
-    padding:15px;
-
-    display:flex;
-    align-items:center;
-
-    gap:11px;
-}
-
-.stat-icon{
-    width:36px;
-    height:36px;
-
-    border-radius:10px;
-
-    background:#0f9d5820;
-
-    display:grid;
-    place-items:center;
-
-    font-size:15px;
-}
-
-.stat-info b{
-    display:block;
-
-    font-size:15px;
-    font-weight:900;
-}
-
-.stat-info small{
-    display:block;
-
-    margin-top:4px;
-
-    font-size:9px;
-    line-height:12px;
-
-    color:rgba(255,255,255,.48);
-}
-
-
-/* ================================
-   PROGRESS
-================================ */
-
-.progress-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.progress-header b{
-    font-size:11px;
-}
-
-.progress-header span{
-    font-size:10px;
-    color:rgba(255,255,255,.45);
-}
-
-.progress{
-    width:100%;
-    height:7px;
-
-    background:#071009;
-
-    border-radius:99px;
-
-    margin-top:13px;
-
-    overflow:hidden;
-}
-
-.progress div{
-    height:100%;
-    width:0%;
-
-    background:#0f9d58;
-
-    border-radius:99px;
-
-    transition:.4s;
-}
-
-
-/* ================================
-   INFO BOX
-================================ */
-
-.info-card{
-    background:#0d1820;
-
-    border-color:#1d3545;
-
-    display:flex;
-
-    align-items:flex-start;
-
-    gap:10px;
-}
-
-.info-icon{
-    color:#60a5fa;
-
-    font-size:15px;
-}
-
-.info-card p{
-    font-size:10px;
-
-    line-height:16px;
-
-    color:rgba(255,255,255,.55);
-}
-
-
-/* ================================
-   RECENT ACTIVITY
-================================ */
-
-.activity-title{
-    margin-top:22px;
-
-    display:flex;
-    align-items:center;
-
-    gap:7px;
-
-    font-size:13px;
-    font-weight:800;
-}
-
-.activity-title span{
-    color:#0f9d58;
-}
-
-.empty-activity{
-    margin-top:12px;
-
-    background:#132016;
-
-    border:1px solid #1f3522;
-
-    border-radius:14px;
-
-    padding:35px 20px;
-
-    text-align:center;
-}
-
-.empty-activity .empty-icon{
-    font-size:24px;
-
-    opacity:.45;
-}
-
-.empty-activity h3{
-    margin-top:9px;
-
-    font-size:12px;
-}
-
-.empty-activity p{
-    margin-top:5px;
-
-    font-size:10px;
-    line-height:16px;
-
-    color:rgba(255,255,255,.45);
-}
-
-
-/* ================================
-   LIVE WITHDRAWAL TOAST
-================================ */
-
-.withdraw-toast{
-    position:fixed;
-
-    top:95px;
-    right:-340px;
-
-    width:270px;
-    min-height:62px;
-
-    background:#12301d;
-
-    border:1px solid #1b6a3d;
-
-    border-radius:11px;
-
-    padding:10px 12px;
-
-    display:flex;
-    align-items:center;
-
-    gap:10px;
-
-    z-index:999;
-
-    box-shadow:
-        0 12px 30px rgba(0,0,0,.35),
-        0 0 20px rgba(15,157,88,.08);
-
-    transition:
-        right .55s cubic-bezier(.2,.8,.2,1);
-}
-
-.withdraw-toast.show{
-    right:18px;
-}
-
-.withdraw-avatar{
-    width:32px;
-    height:32px;
-
-    flex-shrink:0;
-
-    border-radius:50%;
-
-    background:#167044;
-
-    color:#b8ffd4;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:9px;
-    font-weight:800;
-}
-
-.withdraw-info{
-    flex:1;
-
-    min-width:0;
-}
-
-.withdraw-top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    gap:7px;
-}
-
-.withdraw-user{
-    color:#ffffff;
-
-    font-size:10px;
-    font-weight:700;
-
-    white-space:nowrap;
-}
-
-.withdraw-time{
-    color:rgba(255,255,255,.38);
-
-    font-size:8px;
-
-    white-space:nowrap;
-}
-
-.withdraw-amount{
-    color:#00c56a;
-
-    margin-top:4px;
-
-    font-size:9px;
-    font-weight:800;
-
-    letter-spacing:.3px;
-}
-
-
-/* ================================
-   MOBILE OVERLAY
-================================ */
-
-.sidebar-overlay{
-    display:none;
-
-    position:fixed;
-
-    inset:0;
-
-    background:rgba(0,0,0,.55);
-
-    z-index:90;
-}
-
-.sidebar-overlay.show{
-    display:block;
-}
-
-
-/* ================================
-   MOBILE
-================================ */
-
-@media(max-width:900px){
-
-    .sidebar{
-        transform:translateX(-100%);
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
     }
 
-    .sidebar.open{
-        transform:translateX(0);
+    .sidebar.open {
+        transform: translateX(0);
     }
 
-    .main{
-        margin-left:0;
-        padding:18px;
+    .withdraw-popup {
+        top: 75px;
+        right: 10px;
+        width: min(310px, calc(100vw - 20px));
     }
-
-    .menu-btn{
-        display:block;
-    }
-
-    .stats{
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
-    .action-card{
-        align-items:flex-start;
-        flex-direction:column;
-    }
-
-    .action-card .green-btn{
-        width:100%;
-        margin-top:0;
-    }
-
-    .withdraw-toast{
-        top:75px;
-        width:255px;
-    }
-
-    .withdraw-toast.show{
-        right:10px;
-    }
-
 }
-
-
-@media(max-width:500px){
-
-    .main{
-        padding:15px;
-    }
-
-    .top-header h1{
-        font-size:17px;
-    }
-
-    .stats{
-        grid-template-columns:
-            1fr 1fr;
-    }
-
-    .stat{
-        min-height:85px;
-        padding:11px;
-    }
-
-    .stat-info b{
-        font-size:13px;
-    }
-
-    .action-content{
-        gap:10px;
-    }
-
-    .card{
-        padding:15px;
-    }
-
-}
-
 </style>
 </head>
 
-<body>
+<body class="bg-[#08120a] text-white min-h-screen">
 
 
-<!-- ================================
-     MOBILE OVERLAY
-================================ -->
+<!-- RANDOM WITHDRAWAL POPUP -->
+<div id="withdrawPopup" class="withdraw-popup">
 
-<div
-    class="sidebar-overlay"
-    id="sidebarOverlay"
-    onclick="closeSidebar()">
+    <div class="flex items-center gap-3">
+
+        <!-- USER ICON -->
+        <div class="w-10 h-10 shrink-0 rounded-full bg-[#0f9d58]/20 text-[#0f9d58] grid place-items-center text-[12px] font-bold">
+            <span id="popupInitials">MK</span>
+        </div>
+
+        <div class="min-w-0 flex-1">
+
+            <div class="flex items-center justify-between gap-3">
+
+                <p class="text-[11px] font-bold truncate">
+                    <span id="popupName">Mercy</span>
+                    <span id="popupPhone" class="text-white/40 font-normal">
+                        0741***234
+                    </span>
+                </p>
+
+                <span id="popupTime" class="text-[9px] text-white/40 whitespace-nowrap">
+                    2m ago
+                </span>
+
+            </div>
+
+            <p class="text-[11px] text-[#0f9d58] font-bold mt-1">
+                Withdrew KSh
+                <span id="popupAmount">4,500</span>
+            </p>
+
+        </div>
+
+    </div>
+
 </div>
 
 
-<!-- ================================
-     SIDEBAR
-================================ -->
+<!-- MOBILE OVERLAY -->
+<div
+    id="overlay"
+    onclick="closeSidebar()"
+    class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden">
+</div>
 
-<aside class="sidebar" id="sidebar">
 
+<!-- SIDEBAR -->
+<aside
+    id="sidebar"
+    class="sidebar fixed top-0 left-0 z-50 w-[250px] h-screen bg-[#0d1a0f] border-r border-[#1a2e1e] p-4">
 
-    <div class="logo">
+    <!-- LOGO -->
+    <div class="flex items-center gap-2.5 px-2 py-3">
 
-        <div class="logo-icon">
+        <div class="w-8 h-8 bg-[#0f9d58] rounded-lg grid place-items-center">
             🎓
         </div>
 
-        <div class="logo-text">
-            Kenya<span>Survey</span>
-        </div>
+        <p class="font-bold text-[14px]">
+            Kenya<span class="text-[#0f9d58]">Survey</span>
+        </p>
 
     </div>
 
 
     <!-- BALANCE -->
+    <div class="mt-4 bg-[#0f9d58] rounded-xl p-4">
 
-    <div class="balance-card">
-
-        <small>
+        <p class="text-[9px] tracking-[0.12em] font-bold text-white/70">
             AVAILABLE COMPENSATION
-        </small>
+        </p>
 
-        <h2>
+        <h2
+            id="sidebarBalance"
+            class="text-[22px] font-black mt-1">
             KSh 0.00
         </h2>
 
-        <small class="balance-total">
-            Total: KSh 0.00
-        </small>
+        <p class="text-[10px] text-white/70 mt-1">
+            Total: KSh <span id="sidebarTotal">0.00</span>
+        </p>
 
     </div>
 
 
-    <!-- NAVIGATION -->
+    <!-- MENU -->
+    <nav class="mt-6 space-y-1 text-[12px]">
 
-    <div class="nav-menu">
+        <a
+            href="dashboard.html"
+            class="flex items-center gap-3 bg-[#132016] text-[#0f9d58] px-4 py-3 rounded-xl font-semibold">
 
-        <div class="nav-item active">
             <span>⊞</span>
             Dashboard
-        </div>
+
+        </a>
 
 
-        <div class="nav-item">
+        <a
+            href="surveys.html"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-[#132016] hover:text-white transition">
 
             <span>📄</span>
-
             Research Surveys
 
-            <span class="nav-count">
-                0
+            <span
+                id="surveyCount"
+                class="ml-auto text-[10px] text-white/30">
+                (0)
             </span>
 
-        </div>
+        </a>
 
 
-        <div class="nav-item">
+        <a
+            href="withdraw.html"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-[#132016] hover:text-white transition">
 
             <span>↗</span>
-
             Participant Compensation
 
-        </div>
+        </a>
 
 
-        <div class="nav-item">
+        <a
+            href="history.html"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-[#132016] hover:text-white transition">
 
             <span>↻</span>
-
             Compensation History
 
-        </div>
+        </a>
 
-    </div>
+    </nav>
 
+
+    <!-- LOGOUT -->
+    <button
+        onclick="logout()"
+        class="absolute bottom-5 left-4 right-4 flex items-center gap-3 px-4 py-3 rounded-xl border border-[#1e3a24] text-[12px] text-white/50 hover:text-red-400 hover:border-red-500/30 transition">
+
+        <span>↪</span>
+        Log Out
+
+    </button>
 
 </aside>
 
 
 
-<!-- ================================
-     MAIN CONTENT
-================================ -->
-
-<main class="main">
+<!-- MAIN -->
+<main class="lg:ml-[250px] min-h-screen px-4 py-5 md:px-8 md:py-7">
 
 
     <!-- HEADER -->
-
-    <div class="top-header">
+    <div class="flex items-start justify-between gap-4">
 
         <div>
 
-            <h1>
-                Good morning, Klins woo!
+            <h1
+                id="welcomeName"
+                class="text-[20px] md:text-[24px] font-extrabold">
+
+                Good morning!
+
             </h1>
 
-            <p>
+            <p class="text-[11px] md:text-[12px] text-white/50 mt-1">
+
                 Track your research participation activity and compensation.
+
             </p>
 
         </div>
 
 
-        <button
-            class="menu-btn"
-            onclick="toggleSidebar()">
+        <!-- DROPDOWN ON OPPOSITE SIDE -->
+        <div class="relative">
 
-            ☰
+            <button
+                onclick="toggleDropdown()"
+                class="w-11 h-11 rounded-xl bg-[#132016] border border-[#1f3522] flex items-center justify-center text-white text-[18px]">
 
-        </button>
+                ☰
+
+            </button>
+
+
+            <!-- DROPDOWN -->
+            <div
+                id="dropdown"
+                class="hidden absolute right-0 top-[50px] w-[190px] bg-[#132016] border border-[#1f3522] rounded-xl shadow-2xl overflow-hidden z-30">
+
+                <a
+                    href="dashboard.html"
+                    class="block px-4 py-3 text-[12px] text-[#0f9d58] bg-[#0f9d58]/5">
+
+                    ⊞ Dashboard
+
+                </a>
+
+                <a
+                    href="surveys.html"
+                    class="block px-4 py-3 text-[12px] text-white/60 border-t border-white/5">
+
+                    📄 Research Surveys
+
+                </a>
+
+                <a
+                    href="withdraw.html"
+                    class="block px-4 py-3 text-[12px] text-white/60 border-t border-white/5">
+
+                    ↗ Withdraw Earnings
+
+                </a>
+
+                <a
+                    href="history.html"
+                    class="block px-4 py-3 text-[12px] text-white/60 border-t border-white/5">
+
+                    ↻ Payment History
+
+                </a>
+
+                <button
+                    onclick="logout()"
+                    class="w-full text-left px-4 py-3 text-[12px] text-red-400 border-t border-white/5">
+
+                    ↪ Log Out
+
+                </button>
+
+            </div>
+
+        </div>
 
     </div>
 
 
 
     <!-- READY TO PARTICIPATE -->
+    <section class="mt-6 bg-[#132016] border border-[#1f3522] rounded-2xl p-5">
 
-    <section class="card action-card">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-5">
 
+            <div class="flex gap-4">
 
-        <div class="action-content">
+                <div class="w-12 h-12 shrink-0 bg-[#0f9d58]/10 rounded-xl grid place-items-center text-[20px]">
+                    📋
+                </div>
 
-            <div class="action-icon">
-                📋
+                <div>
+
+                    <h2 class="font-bold text-[14px]">
+                        Ready to Participate?
+                    </h2>
+
+                    <p class="text-[11px] text-white/50 leading-5 mt-1 max-w-[520px]">
+
+                        Access available research surveys and receive compensation based on eligible responses.
+
+                    </p>
+
+                </div>
+
             </div>
 
 
-            <div class="action-text">
+            <button
+                onclick="window.location.href='surveys.html'"
+                class="w-full sm:w-auto px-7 h-[48px] bg-[#0f9d58] hover:bg-[#0c874a] rounded-xl text-[13px] font-bold transition">
 
-                <h3>
-                    Ready to Participate?
-                </h3>
+                Start Surveys
 
-                <p>
-                    Access available research surveys and receive compensation based on eligible responses.
-                </p>
-
-            </div>
+            </button>
 
         </div>
-
-
-        <button class="green-btn">
-
-            ▶ Start Surveys
-
-        </button>
-
 
     </section>
 
 
 
     <!-- WITHDRAW -->
+    <section class="mt-4 bg-[#132016] border border-[#1f3522] rounded-2xl p-5">
 
-    <section class="card action-card withdraw-card">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-5">
 
+            <div class="flex gap-4">
 
-        <div class="action-content">
+                <div class="w-12 h-12 shrink-0 bg-[#0f9d58]/10 rounded-xl grid place-items-center text-[20px]">
+                    💰
+                </div>
 
-            <div class="action-icon">
-                💸
+                <div>
+
+                    <h2 class="font-bold text-[14px]">
+                        Withdraw Your Earnings
+                    </h2>
+
+                    <p class="text-[11px] text-white/50 leading-5 mt-1">
+
+                        Get your rewards now. Minimum withdrawal is KSh 150.
+
+                    </p>
+
+                </div>
+
             </div>
 
 
-            <div class="action-text">
+            <button
+                onclick="window.location.href='withdraw.html'"
+                class="w-full sm:w-auto px-7 h-[48px] bg-[#0f9d58] hover:bg-[#0c874a] rounded-xl text-[13px] font-bold transition">
 
-                <h3>
-                    Withdraw Your Earnings
-                </h3>
+                Withdraw Now
 
-                <p>
-                    Get your rewards now. Minimum withdrawal is KSh 150. A one-time account verification is required before your first withdrawal.
-                </p>
-
-            </div>
+            </button>
 
         </div>
-
-
-        <button class="green-btn">
-
-            🛡 Withdraw Now
-
-        </button>
-
 
     </section>
 
 
 
-    <!-- STATISTICS -->
-
-    <section class="stats">
-
-
-        <div class="stat">
-
-            <div class="stat-icon">
-                💰
-            </div>
-
-            <div class="stat-info">
-
-                <b>
-                    0.00
-                </b>
-
-                <small>
-                    Available Compensation (KSh)
-                </small>
-
-            </div>
-
-        </div>
+    <!-- STATS -->
+    <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-5">
 
 
+        <!-- AVAILABLE -->
+        <div class="bg-[#132016] border border-[#1f3522] rounded-2xl p-4">
 
-        <div class="stat">
+            <div class="text-[20px]">💰</div>
 
-            <div class="stat-icon">
-                📈
-            </div>
+            <p
+                id="availableBalance"
+                class="font-bold text-[18px] mt-3">
 
-            <div class="stat-info">
+                0.00
 
-                <b>
-                    0.00
-                </b>
+            </p>
 
-                <small>
-                    Total Compensation (KSh)
-                </small>
+            <p class="text-[10px] text-white/40 mt-1">
 
-            </div>
+                Available Compensation (KSh)
+
+            </p>
 
         </div>
 
 
 
-        <div class="stat">
+        <!-- TOTAL -->
+        <div class="bg-[#132016] border border-[#1f3522] rounded-2xl p-4">
 
-            <div class="stat-icon">
-                📋
-            </div>
+            <div class="text-[20px]">📈</div>
 
-            <div class="stat-info">
+            <p
+                id="totalBalance"
+                class="font-bold text-[18px] mt-3">
 
-                <b>
-                    0
-                </b>
+                0.00
 
-                <small>
-                    Surveys Completed
-                </small>
+            </p>
 
-            </div>
+            <p class="text-[10px] text-white/40 mt-1">
+
+                Total Compensation (KSh)
+
+            </p>
+
+        </div>
+
+
+
+        <!-- COMPLETED -->
+        <div class="bg-[#132016] border border-[#1f3522] rounded-2xl p-4">
+
+            <div class="text-[20px]">📄</div>
+
+            <p
+                id="completedSurveys"
+                class="font-bold text-[18px] mt-3">
+
+                0
+
+            </p>
+
+            <p class="text-[10px] text-white/40 mt-1">
+
+                Surveys Completed
+
+            </p>
 
         </div>
 
 
 
-        <div class="stat">
+        <!-- REMAINING -->
+        <div class="bg-[#132016] border border-[#1f3522] rounded-2xl p-4">
 
-            <div class="stat-icon">
-                ☰
-            </div>
+            <div class="text-[20px]">☰</div>
 
-            <div class="stat-info">
+            <p
+                id="remainingSurveys"
+                class="font-bold text-[18px] mt-3">
 
-                <b>
-                    0
-                </b>
+                0
 
-                <small>
-                    Surveys Remaining
-                </small>
+            </p>
 
-            </div>
+            <p class="text-[10px] text-white/40 mt-1">
+
+                Surveys Remaining
+
+            </p>
 
         </div>
-
 
     </section>
 
 
 
-    <!-- PROGRESS -->
+    <!-- PARTICIPATION PROGRESS -->
+    <section class="mt-4 bg-[#132016] border border-[#1f3522] rounded-2xl p-5">
 
-    <section class="card">
+        <div class="flex justify-between items-center gap-4">
 
-        <div class="progress-header">
-
-            <b>
+            <h3 class="text-[13px] font-bold">
                 📊 Participation Progress
-            </b>
+            </h3>
 
-            <span>
+            <span
+                id="progressText"
+                class="text-[11px] text-white/50">
+
                 0 / 0 completed
+
             </span>
 
         </div>
 
 
-        <div class="progress">
+        <div class="h-[7px] bg-black/50 rounded-full overflow-hidden mt-4">
 
-            <div id="progressBar"></div>
+            <div
+                id="progressBar"
+                class="h-full bg-[#0f9d58] rounded-full transition-all"
+                style="width:0%">
+
+            </div>
 
         </div>
 
@@ -1082,16 +527,18 @@ body{
 
 
     <!-- INFORMATION -->
+    <section class="mt-4 bg-[#0f1e2a]/60 border border-[#1e2f40] rounded-2xl p-4 flex gap-3">
 
-    <section class="card info-card">
-
-        <div class="info-icon">
+        <span class="text-[#60a5fa]">
             ⓘ
-        </div>
+        </span>
 
+        <p class="text-[10px] md:text-[11px] text-white/50 leading-5">
 
-        <p>
-            Compensation is subject to survey eligibility and project availability. KenyaSurvey does not guarantee a specific income level. A 4% processing fee applies to all payment requests.
+            Compensation is subject to survey eligibility and project availability.
+            KenyaSurvey does not guarantee a specific income level.
+            A 4% processing fee applies to all payment requests.
+
         </p>
 
     </section>
@@ -1099,199 +546,307 @@ body{
 
 
     <!-- RECENT ACTIVITY -->
+    <section class="mt-5 bg-[#132016] border border-[#1f3522] rounded-2xl p-5">
 
-    <div class="activity-title">
-
-        <span>
-            ▣
-        </span>
-
-        Recent Activity
-
-    </div>
-
-
-
-    <!-- EMPTY ACTIVITY -->
-
-    <div class="empty-activity">
-
-        <div class="empty-icon">
-            📋
-        </div>
-
-
-        <h3>
-            No Recent Activity
+        <h3 class="font-bold text-[14px]">
+            Recent Activity
         </h3>
 
 
-        <p>
-            Your completed surveys and compensation activity will appear here.
-        </p>
+        <div
+            id="activityList"
+            class="mt-4 text-center py-8">
 
-    </div>
+            <div class="text-[28px] opacity-40">
+                📋
+            </div>
+
+            <p class="text-[12px] text-white/50 mt-3">
+
+                No recent activity yet.
+
+            </p>
+
+            <p class="text-[10px] text-white/30 mt-1">
+
+                Complete a survey to start earning compensation.
+
+            </p>
+
+        </div>
+
+    </section>
 
 
 </main>
 
 
 
-<!-- ================================
-     LIVE WITHDRAWAL NOTIFICATION
-================================ -->
-
-<div
-    id="withdrawToast"
-    class="withdraw-toast">
-
-
-    <div
-        id="withdrawInitials"
-        class="withdraw-avatar">
-
-        ME
-
-    </div>
-
-
-
-    <div class="withdraw-info">
-
-
-        <div class="withdraw-top">
-
-
-            <div
-                id="withdrawUser"
-                class="withdraw-user">
-
-                Mercy 0741***234
-
-            </div>
-
-
-            <div
-                id="withdrawTime"
-                class="withdraw-time">
-
-                2m ago
-
-            </div>
-
-
-        </div>
-
-
-
-        <div
-            id="withdrawAmount"
-            class="withdraw-amount">
-
-            Withdraw KSh 4,500
-
-        </div>
-
-
-    </div>
-
-
-</div>
-
-
-
 <script>
 
+/* ==============================
+   CHECK LOGGED IN USER
+============================== */
 
-/* ================================
-   SIDEBAR
-================================ */
-
-function toggleSidebar(){
-
-    document
-        .getElementById("sidebar")
-        .classList
-        .toggle("open");
+const currentUser =
+    localStorage.getItem("kenyaSurveyCurrentUser");
 
 
-    document
-        .getElementById("sidebarOverlay")
-        .classList
-        .toggle("show");
+if (!currentUser) {
+
+    window.location.href = "register.html";
 
 }
 
 
-function closeSidebar(){
+/* ==============================
+   LOAD MEMBERS
+============================== */
 
-    document
-        .getElementById("sidebar")
-        .classList
-        .remove("open");
+const members =
+    JSON.parse(
+        localStorage.getItem("kenyaSurveyMembers")
+    ) || {};
 
 
-    document
-        .getElementById("sidebarOverlay")
-        .classList
-        .remove("show");
+const user = members[currentUser];
+
+
+/* ==============================
+   ACCOUNT SAFETY
+============================== */
+
+if (!user) {
+
+    localStorage.removeItem(
+        "kenyaSurveyCurrentUser"
+    );
+
+    window.location.href = "register.html";
 
 }
 
 
+/* ==============================
+   INITIALISE NEW CUSTOMER DATA
+============================== */
 
-/* ================================
-   RANDOM WITHDRAWAL NAMES
-================================ */
+if (user.availableBalance === undefined) {
 
-const withdrawalNames = [
+    user.availableBalance = 0;
+
+}
+
+
+if (user.totalCompensation === undefined) {
+
+    user.totalCompensation = 0;
+
+}
+
+
+if (user.completedSurveys === undefined) {
+
+    user.completedSurveys = 0;
+
+}
+
+
+if (user.remainingSurveys === undefined) {
+
+    user.remainingSurveys = 0;
+
+}
+
+
+if (!user.activities) {
+
+    user.activities = [];
+
+}
+
+
+/* SAVE DEFAULT DATA */
+
+members[currentUser] = user;
+
+
+localStorage.setItem(
+    "kenyaSurveyMembers",
+    JSON.stringify(members)
+);
+
+
+/* ==============================
+   USER NAME
+============================== */
+
+const firstName =
+    user.fullName
+        ? user.fullName.split(" ")[0]
+        : "Participant";
+
+
+document.getElementById("welcomeName").textContent =
+    "Good morning, " + firstName + "!";
+
+
+/* ==============================
+   BALANCES
+============================== */
+
+document.getElementById("sidebarBalance").textContent =
+    "KSh " +
+    Number(user.availableBalance).toFixed(2);
+
+
+document.getElementById("sidebarTotal").textContent =
+    Number(user.totalCompensation).toFixed(2);
+
+
+document.getElementById("availableBalance").textContent =
+    Number(user.availableBalance).toFixed(2);
+
+
+document.getElementById("totalBalance").textContent =
+    Number(user.totalCompensation).toFixed(2);
+
+
+document.getElementById("completedSurveys").textContent =
+    user.completedSurveys;
+
+
+document.getElementById("remainingSurveys").textContent =
+    user.remainingSurveys;
+
+
+document.getElementById("surveyCount").textContent =
+    "(" + user.remainingSurveys + ")";
+
+
+/* ==============================
+   PROGRESS
+============================== */
+
+const totalSurveys =
+    user.completedSurveys +
+    user.remainingSurveys;
+
+
+document.getElementById("progressText").textContent =
+    user.completedSurveys +
+    " / " +
+    totalSurveys +
+    " completed";
+
+
+let progress = 0;
+
+
+if (totalSurveys > 0) {
+
+    progress =
+        (user.completedSurveys / totalSurveys) * 100;
+
+}
+
+
+document.getElementById("progressBar").style.width =
+    progress + "%";
+
+
+/* ==============================
+   RECENT ACTIVITY
+============================== */
+
+if (user.activities.length > 0) {
+
+    const activityList =
+        document.getElementById("activityList");
+
+
+    activityList.innerHTML = "";
+
+
+    user.activities
+        .slice()
+        .reverse()
+        .slice(0, 5)
+        .forEach(activity => {
+
+            activityList.innerHTML += `
+
+                <div class="flex items-center justify-between py-4 border-b border-white/5 text-left">
+
+                    <div class="flex gap-3 items-center">
+
+                        <div class="w-10 h-10 bg-[#0f9d58]/10 rounded-xl grid place-items-center">
+                            📋
+                        </div>
+
+                        <div>
+
+                            <p class="text-[12px] font-semibold">
+                                ${activity.title}
+                            </p>
+
+                            <p class="text-[10px] text-white/40 mt-1">
+                                ${activity.date}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <span class="text-[#0f9d58] text-[12px] font-bold">
+
+                        +KSh ${Number(activity.amount || 0).toFixed(2)}
+
+                    </span>
+
+                </div>
+
+            `;
+
+        });
+
+}
+
+
+/* ==============================
+   RANDOM WITHDRAWAL NOTIFICATIONS
+============================== */
+
+const randomNames = [
 
     "Mercy",
     "Irene",
     "Brian",
     "Kevin",
     "Faith",
-    "Dennis",
-    "Brenda",
-    "Collins",
-    "Joy",
-    "Samuel",
-    "Cynthia",
-    "Victor",
-    "Ann",
-    "James",
-    "Sharon",
-    "Peter",
-    "Lucy",
-    "Michael",
-    "Wanjiku",
-    "Akinyi",
-    "Otieno",
-    "Chebet",
-    "Mwangi",
-    "Carol",
-    "Kelvin",
-    "Diana",
-    "Evans",
-    "Mary",
-    "Allan",
     "Grace",
-    "Stacy",
+    "James",
+    "Mary",
+    "Brenda",
+    "Dennis",
+    "Sharon",
+    "John",
+    "Joy",
+    "Evans",
+    "Aisha",
+    "Victor",
+    "Caroline",
+    "Peter",
+    "Lilian",
     "Allan",
-    "Purity",
-    "Oscar",
-    "Sheila",
-    "George",
-    "Esther",
-    "Martin"
+    "Diana",
+    "Eric",
+    "Nancy",
+    "Joseph",
+    "Esther"
 
 ];
 
-
-
-/* ================================
-   RANDOM WITHDRAWAL AMOUNTS
-================================ */
 
 const withdrawalAmounts = [
 
@@ -1309,196 +864,155 @@ const withdrawalAmounts = [
     1000,
     1200,
     1500,
-    1800,
     2000,
     2500,
     3000,
     3500,
-    4000,
     4500,
     5000,
-    5500,
     6000,
     7500
 
 ];
 
 
+const withdrawalTimes = [
 
-/* ================================
-   GET RANDOM ARRAY ITEM
-================================ */
+    "Just now",
+    "1m ago",
+    "2m ago",
+    "3m ago",
+    "4m ago",
+    "5m ago"
 
-function randomItem(array){
+];
+
+
+function getRandomItem(array) {
 
     return array[
-        Math.floor(
-            Math.random() * array.length
-        )
+        Math.floor(Math.random() * array.length)
     ];
 
 }
 
 
+/* CREATE KENYAN MASKED PHONE
+   Example: 0741***234
+*/
 
-/* ================================
-   GENERATE PHONE NUMBER
-
-   FORMAT:
-
-   0741***234
-
-   First 4 visible
-   Middle 3 hidden
-   Last 3 visible
-================================ */
-
-function generateHiddenPhone(){
-
+function generateMaskedPhone() {
 
     const prefixes = [
 
-        "070",
-        "071",
-        "072",
-        "074",
-        "075",
-        "076",
-        "078",
-        "079"
+        "0700",
+        "0701",
+        "0702",
+        "0703",
+        "0704",
+        "0705",
+        "0706",
+        "0707",
+        "0708",
+        "0710",
+        "0711",
+        "0712",
+        "0713",
+        "0714",
+        "0715",
+        "0716",
+        "0717",
+        "0720",
+        "0721",
+        "0722",
+        "0723",
+        "0724",
+        "0725",
+        "0726",
+        "0727",
+        "0728",
+        "0729",
+        "0730",
+        "0731",
+        "0732",
+        "0733",
+        "0734",
+        "0735",
+        "0736",
+        "0737",
+        "0738",
+        "0739",
+        "0740",
+        "0741",
+        "0742",
+        "0743",
+        "0744",
+        "0745",
+        "0750",
+        "0751",
+        "0752",
+        "0753",
+        "0754",
+        "0755",
+        "0756",
+        "0757",
+        "0758",
+        "0759",
+        "0790",
+        "0791",
+        "0792",
+        "0793",
+        "0794",
+        "0795",
+        "0796",
+        "0797",
+        "0798",
+        "0799"
 
     ];
 
 
     const prefix =
-        randomItem(prefixes);
+        getRandomItem(prefixes);
 
 
-    const fourthDigit =
+    const lastThree =
         Math.floor(
-            Math.random() * 10
+            100 + Math.random() * 900
         );
-
-
-    const lastThreeDigits =
-        String(
-            Math.floor(
-                Math.random() * 1000
-            )
-        ).padStart(3,"0");
 
 
     return prefix +
-        fourthDigit +
         "***" +
-        lastThreeDigits;
+        lastThree;
 
 }
 
 
+/* SHOW RANDOM WITHDRAWAL */
 
-/* ================================
-   SHOW RANDOM WITHDRAWAL
-================================ */
-
-function showRandomWithdrawal(){
-
-
-    const toast =
-        document.getElementById(
-            "withdrawToast"
-        );
-
+function showWithdrawalPopup() {
 
     const name =
-        randomItem(
-            withdrawalNames
-        );
-
-
-    const amount =
-        randomItem(
-            withdrawalAmounts
-        );
+        getRandomItem(randomNames);
 
 
     const phone =
-        generateHiddenPhone();
+        generateMaskedPhone();
 
 
-    const minutes =
-        Math.floor(
-            Math.random() * 10
-        ) + 1;
+    const amount =
+        getRandomItem(withdrawalAmounts);
 
 
-    /* RANDOM INITIALS */
+    const time =
+        getRandomItem(withdrawalTimes);
 
-    document
-        .getElementById(
-            "withdrawInitials"
-        )
-        .textContent =
+
+    const initials =
         name
-        .substring(0,2)
-        .toUpperCase();
+            .substring(0, 2)
+            .toUpperCase();
 
 
-    /* NAME + PHONE */
-
-    document
-        .getElementById(
-            "withdrawUser"
-        )
-        .textContent =
-        name + " " + phone;
-
-
-    /* RANDOM TIME */
-
-    document
-        .getElementById(
-            "withdrawTime"
-        )
-        .textContent =
-        minutes + "m ago";
-
-
-    /* WITHDRAWAL AMOUNT */
-
-    document
-        .getElementById(
-            "withdrawAmount"
-        )
-        .textContent =
-        "Withdraw KSh " +
-        amount.toLocaleString();
-
-
-    /* SLIDE IN FROM RIGHT */
-
-    toast
-        .classList
-        .add("show");
-
-
-    /* STAY FOR 2 SECONDS */
-
-    setTimeout(()=>{
-
-        toast
-            .classList
-            .remove("show");
-
-    },2000);
-
-}
-
-
-
-/* ================================
-   START RANDOM NOTIFICATIONS
-================================ */
-
-
-/* First notific
+    do
