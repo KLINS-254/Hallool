@@ -1,48 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KenyaSurvey - Dashboard</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KenyaSurvey Dashboard</title>
 <style>
-body{font-family:Inter,sans-serif;background:#08120a}
-.card{background:#132016;border:1px solid #1f3522}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial,sans-serif}
+body{background:#08120a;color:#fff;display:flex;min-height:100vh}
+.sidebar{width:230px;background:#0d1a0f;border-right:1px solid #1a2e1e;padding:16px;position:fixed;height:100vh;z-index:50;transition:.3s}
+.main{flex:1;margin-left:230px;padding:24px}
+.card{background:#132016;border:1px solid #1f3522;border-radius:14px;padding:16px;margin-top:12px}
+.green{background:#0f9d58;color:#fff;border:none;border-radius:999px;padding:9px 18px;font-weight:700;font-size:11px;cursor:pointer}
+.bal{background:#0f9d58;border-radius:12px;padding:12px;color:#fff}
+.bal small{font-size:9px;letter-spacing:1px;opacity:.7;font-weight:700}
+.bal h2{font-size:16px;font-weight:900}
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:16px}
+.stat{background:#132016;border:1px solid #1f3522;border-radius:14px;padding:14px;display:flex;gap:10px;align-items:center}
+.progress{height:6px;background:#000;border-radius:99px;margin-top:10px}
+.progress div{height:6px;background:#0f9d58;border-radius:99px;width:5%}
+.activity{margin-top:8px;background:#132016;border:1px solid #1f3522;border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center}
+@media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.stats{grid-template-columns:1fr 1fr}}
 </style>
 </head>
-<body class="bg-[#08120a] text-white">
+<body>
 
-<div class="flex min-h-screen max-w-[1600px] mx-auto">
-<!-- SIDEBAR -->
-<aside id="sidebar" class="fixed lg:sticky top-0 z-50 w-[230px] h-screen bg-[#0d1a0f] border-r border-[#1a2e1e] -translate-x-full lg:translate-x-0 transition-all duration-300">
-<div class="p-3">
-<div class="flex items-center gap-2 px-2 py-3">
-<div class="w-7 h-7 bg-[#0f9d58] rounded-lg grid place-items-center">🎓</div>
-<span class="font-bold text-[13px]">Kenya<span class="text-[#0f9d58]">Survey</span></span>
+<div class="sidebar" id="sidebar">
+<div style="display:flex;align-items:center;gap:8px;padding:12px 8px"><div style="width:28px;height:28px;background:#0f9d58;border-radius:8px;display:grid;place-items:center">🎓</div><b style="font-size:13px">Kenya<span style="color:#0f9d58">Survey</span></b></div>
+<div class="bal"><small>AVAILABLE COMPENSATION</small><h2>KSh 225.00</h2><small style="opacity:.7;text-transform:none;letter-spacing:0">Total: KSh 175.00</small></div>
+<div style="margin-top:16px;font-size:11px;line-height:32px;color:#ffffff80">
+<div style="background:#132016;color:#0f9d58;padding:6px 12px;border-radius:10px">⊞ Dashboard</div>
+<div style="padding:6px 12px">📄 Research Surveys (114)</div>
+<div style="padding:6px 12px">↗ Participant Compensation</div>
+<div style="padding:6px 12px">↻ Compensation History</div>
+</div>
 </div>
 
-<div class="bg-[#0f9d58] rounded-[12px] p-3 mt-2">
-<p class="text-[9px] font-bold tracking-widest text-black/60">AVAILABLE COMPENSATION</p>
-<p class="text-[16px] font-black text-white mt-0.5">KSh 225.00</p>
-<p class="text-[10px] text-black/70">Total compensation: KSh 175.00</p>
+<div class="main">
+<div style="display:flex;justify-content:space-between">
+<div><h1 style="font-size:18px">Good morning, Klins woo!</h1><p style="font-size:11px;color:#ffffff80">Track your research participation activity and compensation.</p></div>
+<button onclick="document.getElementById('sidebar').classList.toggle('open')" style="background:none;border:1px solid #1a2e1e;color:#fff;border-radius:8px;padding:6px 10px">☰</button>
 </div>
 
-<nav class="mt-4 space-y-1">
-<a class="flex items-center gap-2.5 px-3 py-2.5 rounded-[10px] bg-[#132016] text-[#0f9d58] text-[11px] font-semibold"><span>⊞</span> Dashboard</a>
-<a class="flex items-center gap-2.5 px-3 py-2.5 rounded-[10px] text-white/50 text-[11px] hover:bg-white/5"><span>📄</span> Research Surveys <span class="ml-auto bg-[#132016] border border-[#1f3522] text-[#0f9d58] text-[9px] px-2 py-0.5 rounded-full">114</span></a>
-<a class="flex items-center gap-2.5 px-3 py-2.5 rounded-[10px] text-white/50 text-[11px] hover:bg-white/5"><span>↗</span> Participant Compensation</a>
-<a class="flex items-center gap-2.5 px-3 py-2.5 rounded-[10px] text-white/50 text-[11px] hover:bg-white/5"><span>↻</span> Compensation History</a>
-</nav>
+<div class="card" style="display:flex;justify-content:space-between">
+<div style="display:flex;gap:12px"><div style="width:40px;height:40px;background:#0f9d5820;border-radius:10px;display:grid;place-items:center">📋</div><div><b style="font-size:12px">Ready to Participate?</b><p style="font-size:11px;color:#ffffff80;margin-top:4px">Access available research surveys and receive compensation based on eligible responses.</p><button class="green" style="margin-top:10px">◉ Start Surveys</button></div></div>
 </div>
-</aside>
 
-<!-- OVERLAY MOBILE -->
-<div id="overlay" onclick="toggleSide()" class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden"></div>
+<div class="card" style="display:flex;justify-content:space-between">
+<div style="display:flex;gap:12px"><div style="width:40px;height:40px;background:#0f9d5820;border-radius:10px;display:grid;place-items:center">↗</div><div><b style="font-size:12px">Withdraw Your Earnings</b><p style="font-size:9px;color:#ffffff60;margin-top:4px">A one-time account verification is required before your first withdrawal.</p></div></div>
+<div><button class="green">🛡️ Withdraw Now</button></div>
+</div>
 
-<!-- MAIN -->
-<main class="flex-1 min-w-0">
-<!-- TOP MOBILE BAR -->
-<div class="lg:hidden h-[56px] flex items-center justify-between px-4 border-b border-[#1a2e1e] bg-[#0d1a0f]">
-<button onclick="toggleSide()" class="text-xl">☰</button>
-<div class="flex items-center gap-
+<div class="stats">
+<div class="stat"><div>💰</div><div><b>225.00</b><br><small style="font-size:9px;color:#ffffff60">Available Compensation (KSh)</small></div></div>
+<div class="stat"><div>📈</div><div><b>175.00</b><br><small style="font-size:9px;color:#ffffff60">Total Compensation (KSh)</small></div></div>
+<div class="stat"><div>📄</div><div><b>6</b><br><small style="font-size:9px;color:#ffffff60">Surveys Completed</small></div></div>
+</div>
+<div class="stat" style="margin-top:12px;max-width:33%"><div>☰</div><div><b>114</b><br><small style="font-size:9px;color:#ffffff60">Surveys Remaining</small></div></div>
+
+<div class="card"><div style="display:flex;justify-content:space-between;font-size:11px"><b>📊 Participation Progress</b><span style="color:#ffffff80">6 / 120 completed</span></div><div class="progress"><div></div></div></div>
+
+<div class="card" style="background:#0f1e2a60;border-color:#1e2f40;display:flex;gap:8px"><span style="color:#60a5fa">ⓘ</span><p style="font-size:10px;color:#ffffff80;line-height:14
