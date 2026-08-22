@@ -33,141 +33,65 @@
         }
     }
 
-
     /* ==============================
-       RANDOM WITHDRAWAL NOTIFICATION
+       WITHDRAWAL NOTIFICATION
     ============================== */
 
-    .withdraw-popup {
+    #withdrawNotification {
         position: fixed;
         top: 22px;
-        right: 18px;
-        width: min(330px, calc(100vw - 30px));
+        right: 20px;
+        width: 310px;
+        max-width: calc(100vw - 40px);
         background: #132016;
         border: 1px solid #1f3522;
         border-left: 4px solid #0f9d58;
         border-radius: 14px;
-        padding: 13px 15px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.45);
+        padding: 14px 16px;
         z-index: 9999;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.45);
 
-        transform: translateX(calc(100% + 40px));
+        transform: translateX(130%);
         opacity: 0;
 
         transition:
             transform 0.45s ease,
             opacity 0.45s ease;
+
+        pointer-events: none;
     }
 
-    .withdraw-popup.show {
+    #withdrawNotification.show {
         transform: translateX(0);
         opacity: 1;
     }
 
-    .withdraw-popup.hide {
-        transform: translateX(calc(100% + 40px));
+    #withdrawNotification.hide {
+        transform: translateX(130%);
         opacity: 0;
     }
 
-    .withdraw-popup-content {
-        display: flex;
-        align-items: center;
-        gap: 12px;
+    .notification-title {
+        font-size: 11px;
+        color: rgba(255,255,255,0.45);
+        margin-bottom: 5px;
     }
 
-    .withdraw-popup-icon {
-        width: 38px;
-        height: 38px;
-        flex-shrink: 0;
-        border-radius: 10px;
-        background: rgba(15,157,88,0.12);
-        display: grid;
-        place-items: center;
-        font-size: 18px;
-    }
-
-    .withdraw-popup-name {
+    .notification-main {
         font-size: 12px;
         font-weight: 700;
         color: white;
+        line-height: 1.5;
     }
 
-    .withdraw-popup-number {
-        font-size: 11px;
-        color: rgba(255,255,255,0.45);
-        margin-left: 4px;
-    }
-
-    .withdraw-popup-text {
-        font-size: 11px;
-        color: rgba(255,255,255,0.55);
-        margin-top: 4px;
-    }
-
-    .withdraw-popup-amount {
+    .notification-amount {
         color: #0f9d58;
         font-weight: 800;
     }
-
 </style>
 </head>
 
 <body class="bg-[#08120a] text-white min-h-screen">
-
-
-<!-- RANDOM WITHDRAWAL POPUP -->
-
-<div
-    id="withdrawPopup"
-    class="withdraw-popup">
-
-    <div class="withdraw-popup-content">
-
-        <div class="withdraw-popup-icon">
-            💰
-        </div>
-
-        <div>
-
-            <div>
-
-                <span
-                    id="withdrawPopupName"
-                    class="withdraw-popup-name">
-
-                    Irine
-
-                </span>
-
-                <span
-                    id="withdrawPopupNumber"
-                    class="withdraw-popup-number">
-
-                    0714***342
-
-                </span>
-
-            </div>
-
-            <p class="withdraw-popup-text">
-
-                Withdraw
-
-                <span
-                    id="withdrawPopupAmount"
-                    class="withdraw-popup-amount">
-
-                    KSh 2,500
-
-                </span>
-
-            </p>
-
-        </div>
-
-    </div>
-
-</div>
 
 
 <!-- MOBILE OVERLAY -->
@@ -175,6 +99,25 @@
     id="overlay"
     onclick="closeSidebar()"
     class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden">
+</div>
+
+
+<!-- ==============================
+     WITHDRAWAL NOTIFICATION
+============================== -->
+
+<div id="withdrawNotification">
+
+    <div class="notification-title">
+        Recent Withdrawal
+    </div>
+
+    <div
+        id="withdrawNotificationText"
+        class="notification-main">
+        Irine 0714***342 — Withdraw KSh 2,500
+    </div>
+
 </div>
 
 
@@ -240,9 +183,7 @@
             <span
                 id="surveyCount"
                 class="ml-auto text-[10px] text-white/30">
-
                 (0)
-
             </span>
 
         </a>
@@ -747,14 +688,38 @@ localStorage.setItem(
    USER NAME
 ============================== */
 
-const firstName =
+const fullName =
     user.fullName
-        ? user.fullName.split(" ")[0]
+        ? user.fullName.trim()
         : "Participant";
 
 
+/* ==============================
+   TIME-BASED GREETING
+============================== */
+
+const currentHour =
+    new Date().getHours();
+
+let greeting =
+    "Good morning";
+
+
+if (currentHour >= 12 && currentHour < 17) {
+
+    greeting =
+        "Good afternoon";
+
+} else if (currentHour >= 17) {
+
+    greeting =
+        "Good evening";
+
+}
+
+
 document.getElementById("welcomeName").textContent =
-    "Good morning, " + firstName + "!";
+    greeting + ", " + fullName + "!";
 
 
 /* ==============================
@@ -787,12 +752,20 @@ document.getElementById("remainingSurveys").textContent =
 
 
 /* ==============================
+   SURVEY COUNT
+============================== */
+
+document.getElementById("surveyCount").textContent =
+    "(" + Number(user.remainingSurveys) + ")";
+
+
+/* ==============================
    PROGRESS
 ============================== */
 
 const totalSurveys =
-    user.completedSurveys +
-    user.remainingSurveys;
+    Number(user.completedSurveys) +
+    Number(user.remainingSurveys);
 
 
 document.getElementById("progressText").textContent =
@@ -808,7 +781,7 @@ let progress = 0;
 if (totalSurveys > 0) {
 
     progress =
-        (user.completedSurveys / totalSurveys) * 100;
+        (Number(user.completedSurveys) / totalSurveys) * 100;
 
 }
 
@@ -881,10 +854,10 @@ if (user.activities.length > 0) {
 
 function toggleDropdown() {
 
-    document
-        .getElementById("dropdown")
-        .classList
-        .toggle("hidden");
+    const dropdown =
+        document.getElementById("dropdown");
+
+    dropdown.classList.toggle("hidden");
 
 }
 
@@ -942,10 +915,9 @@ function logout() {
 }
 
 
-
-/* ==============================
-   RANDOM WITHDRAWAL POPUPS
-============================== */
+/* ==================================================
+   RANDOM WITHDRAWAL NOTIFICATIONS
+================================================== */
 
 const withdrawalNames = [
 
@@ -953,51 +925,54 @@ const withdrawalNames = [
     "Mercy",
     "Brian",
     "Kevin",
-    "Faith",
     "Sharon",
     "Diana",
+    "Collins",
+    "Faith",
     "Victor",
     "Ann",
-    "Mary",
-    "John",
-    "Brenda",
-    "Collins",
-    "Linda",
     "Dennis",
-    "Cynthia",
-    "Mark",
-    "Esther",
-    "Alex",
-    "Caroline",
+    "Brenda",
     "Martin",
-    "Grace",
+    "Joy",
     "Daniel",
-    "Purity",
-    "David",
-    "Naomi",
+    "Lydia",
     "Samuel",
-    "Wendy",
-    "Allan",
-    "Beatrice"
+    "Caroline",
+    "George",
+    "Esther"
+
+];
+
+
+const withdrawalNumbers = [
+
+    "0714***342",
+    "0721***518",
+    "0798***624",
+    "0703***815",
+    "0718***296",
+    "0745***731",
+    "0727***409",
+    "0791***563",
+    "0708***247",
+    "0712***896",
+    "0724***351",
+    "0796***724",
+    "0701***438",
+    "0715***682",
+    "0742***519"
 
 ];
 
 
 const withdrawalAmounts = [
 
-    150,
-    200,
-    250,
-    300,
     350,
-    400,
-    450,
     500,
-    600,
     750,
-    800,
     1000,
-    1200,
+    1250,
     1500,
     1800,
     2000,
@@ -1005,12 +980,20 @@ const withdrawalAmounts = [
     3000,
     3500,
     4000,
+    4500,
     5000
 
 ];
 
 
-function randomWithdrawalItem(array) {
+let lastWithdrawalIndex = -1;
+
+
+/* ==============================
+   RANDOM ITEM
+============================== */
+
+function getRandomItem(array) {
 
     return array[
         Math.floor(
@@ -1021,4 +1004,11 @@ function randomWithdrawalItem(array) {
 }
 
 
-function ge
+/* ==============================
+   SHOW NOTIFICATION
+============================== */
+
+function showWithdrawalNotification() {
+
+    const notification =
+        docume
