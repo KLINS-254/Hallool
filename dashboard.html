@@ -11,99 +11,31 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-* {
-    font-family: Inter, Arial, sans-serif;
-}
+    * {
+        font-family: Inter, Arial, sans-serif;
+    }
 
-body {
-    background: #08120a;
-}
+    body {
+        background: #08120a;
+    }
 
-.sidebar {
-    transition: transform 0.3s ease;
-}
-
-/* WITHDRAWAL POPUP */
-.withdraw-popup {
-    position: fixed;
-    top: 90px;
-    right: 16px;
-    z-index: 100;
-    width: min(330px, calc(100vw - 32px));
-    background: #132016;
-    border: 1px solid #1f5c35;
-    border-radius: 14px;
-    padding: 12px 14px;
-    box-shadow: 0 15px 40px rgba(0,0,0,.35);
-    transform: translateX(calc(100% + 30px));
-    opacity: 0;
-    transition: transform .45s ease, opacity .45s ease;
-    pointer-events: none;
-}
-
-.withdraw-popup.show {
-    transform: translateX(0);
-    opacity: 1;
-}
-
-@media (max-width: 768px) {
     .sidebar {
-        transform: translateX(-100%);
+        transition: transform 0.3s ease;
     }
 
-    .sidebar.open {
-        transform: translateX(0);
-    }
+    @media (max-width: 768px) {
+        .sidebar {
+            transform: translateX(-100%);
+        }
 
-    .withdraw-popup {
-        top: 75px;
-        right: 10px;
-        width: min(310px, calc(100vw - 20px));
+        .sidebar.open {
+            transform: translateX(0);
+        }
     }
-}
 </style>
 </head>
 
 <body class="bg-[#08120a] text-white min-h-screen">
-
-
-<!-- RANDOM WITHDRAWAL POPUP -->
-<div id="withdrawPopup" class="withdraw-popup">
-
-    <div class="flex items-center gap-3">
-
-        <!-- USER ICON -->
-        <div class="w-10 h-10 shrink-0 rounded-full bg-[#0f9d58]/20 text-[#0f9d58] grid place-items-center text-[12px] font-bold">
-            <span id="popupInitials">MK</span>
-        </div>
-
-        <div class="min-w-0 flex-1">
-
-            <div class="flex items-center justify-between gap-3">
-
-                <p class="text-[11px] font-bold truncate">
-                    <span id="popupName">Mercy</span>
-                    <span id="popupPhone" class="text-white/40 font-normal">
-                        0741***234
-                    </span>
-                </p>
-
-                <span id="popupTime" class="text-[9px] text-white/40 whitespace-nowrap">
-                    2m ago
-                </span>
-
-            </div>
-
-            <p class="text-[11px] text-[#0f9d58] font-bold mt-1">
-                Withdrew KSh
-                <span id="popupAmount">4,500</span>
-            </p>
-
-        </div>
-
-    </div>
-
-</div>
 
 
 <!-- MOBILE OVERLAY -->
@@ -158,6 +90,7 @@ body {
 
         <a
             href="dashboard.html"
+            onclick="closeSidebar()"
             class="flex items-center gap-3 bg-[#132016] text-[#0f9d58] px-4 py-3 rounded-xl font-semibold">
 
             <span>⊞</span>
@@ -168,6 +101,7 @@ body {
 
         <a
             href="surveys.html"
+            onclick="closeSidebar()"
             class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-[#132016] hover:text-white transition">
 
             <span>📄</span>
@@ -184,6 +118,7 @@ body {
 
         <a
             href="withdraw.html"
+            onclick="closeSidebar()"
             class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-[#132016] hover:text-white transition">
 
             <span>↗</span>
@@ -194,6 +129,7 @@ body {
 
         <a
             href="history.html"
+            onclick="closeSidebar()"
             class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-[#132016] hover:text-white transition">
 
             <span>↻</span>
@@ -248,6 +184,7 @@ body {
         <div class="relative">
 
             <button
+                id="menuButton"
                 onclick="toggleDropdown()"
                 class="w-11 h-11 rounded-xl bg-[#132016] border border-[#1f3522] flex items-center justify-center text-white text-[18px]">
 
@@ -596,423 +533,357 @@ if (!currentUser) {
 
     window.location.href = "register.html";
 
-}
+} else {
 
+    /* ==============================
+       LOAD MEMBERS
+    ============================== */
 
-/* ==============================
-   LOAD MEMBERS
-============================== */
+    const members =
+        JSON.parse(
+            localStorage.getItem("kenyaSurveyMembers")
+        ) || {};
 
-const members =
-    JSON.parse(
-        localStorage.getItem("kenyaSurveyMembers")
-    ) || {};
 
+    const user = members[currentUser];
 
-const user = members[currentUser];
 
+    /* ==============================
+       ACCOUNT SAFETY
+    ============================== */
 
-/* ==============================
-   ACCOUNT SAFETY
-============================== */
+    if (!user) {
 
-if (!user) {
+        localStorage.removeItem(
+            "kenyaSurveyCurrentUser"
+        );
 
-    localStorage.removeItem(
-        "kenyaSurveyCurrentUser"
-    );
+        window.location.href = "register.html";
 
-    window.location.href = "register.html";
+    } else {
 
-}
 
+        /* ==============================
+           INITIALISE NEW CUSTOMER DATA
+        ============================== */
 
-/* ==============================
-   INITIALISE NEW CUSTOMER DATA
-============================== */
+        if (user.availableBalance === undefined) {
+            user.availableBalance = 0;
+        }
 
-if (user.availableBalance === undefined) {
 
-    user.availableBalance = 0;
+        if (user.totalCompensation === undefined) {
+            user.totalCompensation = 0;
+        }
 
-}
 
+        if (user.completedSurveys === undefined) {
+            user.completedSurveys = 0;
+        }
 
-if (user.totalCompensation === undefined) {
 
-    user.totalCompensation = 0;
+        if (user.remainingSurveys === undefined) {
+            user.remainingSurveys = 0;
+        }
 
-}
 
+        if (!Array.isArray(user.activities)) {
+            user.activities = [];
+        }
 
-if (user.completedSurveys === undefined) {
 
-    user.completedSurveys = 0;
+        /* ==============================
+           SAVE DEFAULT DATA
+        ============================== */
 
-}
+        members[currentUser] = user;
 
-
-if (user.remainingSurveys === undefined) {
-
-    user.remainingSurveys = 0;
-
-}
-
-
-if (!user.activities) {
-
-    user.activities = [];
-
-}
-
-
-/* SAVE DEFAULT DATA */
-
-members[currentUser] = user;
-
-
-localStorage.setItem(
-    "kenyaSurveyMembers",
-    JSON.stringify(members)
-);
-
-
-/* ==============================
-   USER NAME
-============================== */
-
-const firstName =
-    user.fullName
-        ? user.fullName.split(" ")[0]
-        : "Participant";
-
-
-document.getElementById("welcomeName").textContent =
-    "Good morning, " + firstName + "!";
-
-
-/* ==============================
-   BALANCES
-============================== */
-
-document.getElementById("sidebarBalance").textContent =
-    "KSh " +
-    Number(user.availableBalance).toFixed(2);
-
-
-document.getElementById("sidebarTotal").textContent =
-    Number(user.totalCompensation).toFixed(2);
-
-
-document.getElementById("availableBalance").textContent =
-    Number(user.availableBalance).toFixed(2);
-
-
-document.getElementById("totalBalance").textContent =
-    Number(user.totalCompensation).toFixed(2);
-
-
-document.getElementById("completedSurveys").textContent =
-    user.completedSurveys;
-
-
-document.getElementById("remainingSurveys").textContent =
-    user.remainingSurveys;
-
-
-document.getElementById("surveyCount").textContent =
-    "(" + user.remainingSurveys + ")";
-
-
-/* ==============================
-   PROGRESS
-============================== */
-
-const totalSurveys =
-    user.completedSurveys +
-    user.remainingSurveys;
-
-
-document.getElementById("progressText").textContent =
-    user.completedSurveys +
-    " / " +
-    totalSurveys +
-    " completed";
-
-
-let progress = 0;
-
-
-if (totalSurveys > 0) {
-
-    progress =
-        (user.completedSurveys / totalSurveys) * 100;
-
-}
-
-
-document.getElementById("progressBar").style.width =
-    progress + "%";
-
-
-/* ==============================
-   RECENT ACTIVITY
-============================== */
-
-if (user.activities.length > 0) {
-
-    const activityList =
-        document.getElementById("activityList");
-
-
-    activityList.innerHTML = "";
-
-
-    user.activities
-        .slice()
-        .reverse()
-        .slice(0, 5)
-        .forEach(activity => {
-
-            activityList.innerHTML += `
-
-                <div class="flex items-center justify-between py-4 border-b border-white/5 text-left">
-
-                    <div class="flex gap-3 items-center">
-
-                        <div class="w-10 h-10 bg-[#0f9d58]/10 rounded-xl grid place-items-center">
-                            📋
-                        </div>
-
-                        <div>
-
-                            <p class="text-[12px] font-semibold">
-                                ${activity.title}
-                            </p>
-
-                            <p class="text-[10px] text-white/40 mt-1">
-                                ${activity.date}
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                    <span class="text-[#0f9d58] text-[12px] font-bold">
-
-                        +KSh ${Number(activity.amount || 0).toFixed(2)}
-
-                    </span>
-
-                </div>
-
-            `;
-
-        });
-
-}
-
-
-/* ==============================
-   RANDOM WITHDRAWAL NOTIFICATIONS
-============================== */
-
-const randomNames = [
-
-    "Mercy",
-    "Irene",
-    "Brian",
-    "Kevin",
-    "Faith",
-    "Grace",
-    "James",
-    "Mary",
-    "Brenda",
-    "Dennis",
-    "Sharon",
-    "John",
-    "Joy",
-    "Evans",
-    "Aisha",
-    "Victor",
-    "Caroline",
-    "Peter",
-    "Lilian",
-    "Allan",
-    "Diana",
-    "Eric",
-    "Nancy",
-    "Joseph",
-    "Esther"
-
-];
-
-
-const withdrawalAmounts = [
-
-    150,
-    200,
-    250,
-    300,
-    350,
-    400,
-    450,
-    500,
-    600,
-    750,
-    800,
-    1000,
-    1200,
-    1500,
-    2000,
-    2500,
-    3000,
-    3500,
-    4500,
-    5000,
-    6000,
-    7500
-
-];
-
-
-const withdrawalTimes = [
-
-    "Just now",
-    "1m ago",
-    "2m ago",
-    "3m ago",
-    "4m ago",
-    "5m ago"
-
-];
-
-
-function getRandomItem(array) {
-
-    return array[
-        Math.floor(Math.random() * array.length)
-    ];
-
-}
-
-
-/* CREATE KENYAN MASKED PHONE
-   Example: 0741***234
-*/
-
-function generateMaskedPhone() {
-
-    const prefixes = [
-
-        "0700",
-        "0701",
-        "0702",
-        "0703",
-        "0704",
-        "0705",
-        "0706",
-        "0707",
-        "0708",
-        "0710",
-        "0711",
-        "0712",
-        "0713",
-        "0714",
-        "0715",
-        "0716",
-        "0717",
-        "0720",
-        "0721",
-        "0722",
-        "0723",
-        "0724",
-        "0725",
-        "0726",
-        "0727",
-        "0728",
-        "0729",
-        "0730",
-        "0731",
-        "0732",
-        "0733",
-        "0734",
-        "0735",
-        "0736",
-        "0737",
-        "0738",
-        "0739",
-        "0740",
-        "0741",
-        "0742",
-        "0743",
-        "0744",
-        "0745",
-        "0750",
-        "0751",
-        "0752",
-        "0753",
-        "0754",
-        "0755",
-        "0756",
-        "0757",
-        "0758",
-        "0759",
-        "0790",
-        "0791",
-        "0792",
-        "0793",
-        "0794",
-        "0795",
-        "0796",
-        "0797",
-        "0798",
-        "0799"
-
-    ];
-
-
-    const prefix =
-        getRandomItem(prefixes);
-
-
-    const lastThree =
-        Math.floor(
-            100 + Math.random() * 900
+        localStorage.setItem(
+            "kenyaSurveyMembers",
+            JSON.stringify(members)
         );
 
 
-    return prefix +
-        "***" +
-        lastThree;
+        /* ==============================
+           USER NAME
+        ============================== */
 
-}
-
-
-/* SHOW RANDOM WITHDRAWAL */
-
-function showWithdrawalPopup() {
-
-    const name =
-        getRandomItem(randomNames);
+        const firstName =
+            user.fullName
+                ? user.fullName.trim().split(/\s+/)[0]
+                : "Participant";
 
 
-    const phone =
-        generateMaskedPhone();
+        /* ==============================
+           TIME BASED GREETING
+        ============================== */
+
+        function getGreeting() {
+
+            const hour = new Date().getHours();
+
+            if (hour >= 5 && hour < 12) {
+                return "Good morning";
+            }
+
+            if (hour >= 12 && hour < 17) {
+                return "Good afternoon";
+            }
+
+            if (hour >= 17 && hour < 21) {
+                return "Good evening";
+            }
+
+            return "Good night";
+
+        }
 
 
-    const amount =
-        getRandomItem(withdrawalAmounts);
+        document.getElementById("welcomeName").textContent =
+            getGreeting() + ", " + firstName + "!";
 
 
-    const time =
-        getRandomItem(withdrawalTimes);
+        /* ==============================
+           UPDATE DASHBOARD
+        ============================== */
+
+        function updateDashboard() {
+
+            /* Reload latest stored members */
+
+            const latestMembers =
+                JSON.parse(
+                    localStorage.getItem("kenyaSurveyMembers")
+                ) || {};
 
 
-    const initials =
-        name
-            .substring(0, 2)
-            .toUpperCase();
+            const latestUser =
+                latestMembers[currentUser];
 
 
-    do
+            if (!latestUser) {
+                return;
+            }
+
+
+            /* Make sure values exist */
+
+            const available =
+                Number(latestUser.availableBalance || 0);
+
+            const total =
+                Number(latestUser.totalCompensation || 0);
+
+            const completed =
+                Number(latestUser.completedSurveys || 0);
+
+            const remaining =
+                Number(latestUser.remainingSurveys || 0);
+
+            const activities =
+                Array.isArray(latestUser.activities)
+                    ? latestUser.activities
+                    : [];
+
+
+            /* ==============================
+               BALANCES
+            ============================== */
+
+            document.getElementById("sidebarBalance").textContent =
+                "KSh " + available.toFixed(2);
+
+
+            document.getElementById("sidebarTotal").textContent =
+                total.toFixed(2);
+
+
+            document.getElementById("availableBalance").textContent =
+                available.toFixed(2);
+
+
+            document.getElementById("totalBalance").textContent =
+                total.toFixed(2);
+
+
+            /* ==============================
+               SURVEYS
+            ============================== */
+
+            document.getElementById("completedSurveys").textContent =
+                completed;
+
+
+            document.getElementById("remainingSurveys").textContent =
+                remaining;
+
+
+            /* Research Surveys menu count */
+
+            document.getElementById("surveyCount").textContent =
+                "(" + remaining + ")";
+
+
+            /* ==============================
+               PROGRESS
+            ============================== */
+
+            const totalSurveys =
+                completed + remaining;
+
+
+            document.getElementById("progressText").textContent =
+                completed +
+                " / " +
+                totalSurveys +
+                " completed";
+
+
+            let progress = 0;
+
+
+            if (totalSurveys > 0) {
+
+                progress =
+                    (completed / totalSurveys) * 100;
+
+            }
+
+
+            document.getElementById("progressBar").style.width =
+                Math.min(progress, 100) + "%";
+
+
+            /* ==============================
+               RECENT ACTIVITY
+            ============================== */
+
+            const activityList =
+                document.getElementById("activityList");
+
+
+            if (activities.length === 0) {
+
+                activityList.innerHTML = `
+
+                    <div class="text-[28px] opacity-40">
+                        📋
+                    </div>
+
+                    <p class="text-[12px] text-white/50 mt-3">
+                        No recent activity yet.
+                    </p>
+
+                    <p class="text-[10px] text-white/30 mt-1">
+                        Complete a survey to start earning compensation.
+                    </p>
+
+                `;
+
+                return;
+
+            }
+
+
+            activityList.innerHTML = "";
+
+
+            activities
+                .slice()
+                .reverse()
+                .slice(0, 5)
+                .forEach(activity => {
+
+                    const row =
+                        document.createElement("div");
+
+
+                    row.className =
+                        "flex items-center justify-between py-4 border-b border-white/5 text-left";
+
+
+                    const left =
+                        document.createElement("div");
+
+
+                    left.className =
+                        "flex gap-3 items-center";
+
+
+                    const icon =
+                        document.createElement("div");
+
+
+                    icon.className =
+                        "w-10 h-10 bg-[#0f9d58]/10 rounded-xl grid place-items-center";
+
+
+                    icon.textContent = "📋";
+
+
+                    const info =
+                        document.createElement("div");
+
+
+                    const title =
+                        document.createElement("p");
+
+
+                    title.className =
+                        "text-[12px] font-semibold";
+
+
+                    title.textContent =
+                        activity.title || "Survey completed";
+
+
+                    const date =
+                        document.createElement("p");
+
+
+                    date.className =
+                        "text-[10px] text-white/40 mt-1";
+
+
+                    date.textContent =
+                        activity.date || "";
+
+
+                    info.appendChild(title);
+                    info.appendChild(date);
+
+
+                    left.appendChild(icon);
+                    left.appendChild(info);
+
+
+                    const amount =
+                        document.createElement("span");
+
+
+                    amount.className =
+                        "text-[#0f9d58] text-[12px] font-bold";
+
+
+                    amount.textContent =
+                        "+KSh " +
+                        Number(activity.amount || 0).toFixed(2);
+
+
+                    row.appendChild(left);
+                    row.appendChild(amount);
+
+
+                    activityList.appendChild(row);
+
+                });
+
+        }
+
+
+        /* Initial dashboard load */
+
+        updateDashboard();
+
+
+    
