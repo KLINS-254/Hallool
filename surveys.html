@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>KenyaSurvey - Research Surveys</title>
+<title>Research Surveys</title>
 
 <style>
 
@@ -12,7 +13,7 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Inter,system-ui,sans-serif;
+    font-family:Inter,system-ui,sans-serif
 }
 
 body{
@@ -21,14 +22,6 @@ body{
     min-height:100vh;
 }
 
-button{
-    font-family:inherit;
-}
-
-/* =========================
-   TOP BAR
-========================= */
-
 .top{
     position:sticky;
     top:0;
@@ -36,255 +29,125 @@ button{
     background:#0a1a0d;
     border-bottom:1px solid #14301a;
     height:56px;
-
     display:flex;
     align-items:center;
     justify-content:space-between;
-
     padding:0 14px;
-}
-
-.top-left{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.menu-btn{
-    width:36px;
-    height:36px;
-    border:0;
-    background:transparent;
-    color:#fff;
-    font-size:22px;
-    cursor:pointer;
 }
 
 .balance{
     display:flex;
     align-items:center;
-    gap:7px;
-
+    gap:8px;
     background:#112416;
     border:1px solid #1d3d23;
     border-radius:12px;
-
     padding:6px 14px;
-
     color:#12c46b;
     font-weight:900;
     font-size:17px;
 }
 
-.logout-btn{
-    background:transparent;
-    border:0;
-    color:#4a6a4e;
-    font-size:20px;
-    cursor:pointer;
-}
-
-/* =========================
-   PAGE
-========================= */
-
-.container{
-    width:100%;
-    max-width:760px;
-    margin:auto;
-    padding-bottom:50px;
-}
-
-/* =========================
-   HEADER
-========================= */
-
-.header{
-    margin:16px 12px;
-}
-
-.header h1{
-    font-size:22px;
-    color:#fff;
-}
-
-.header p{
-    margin-top:6px;
-    color:#78917d;
-    font-size:12px;
-    line-height:1.6;
-}
-
-/* =========================
-   NOTICE
-========================= */
-
-.info{
+.toast{
     margin:12px;
-
-    background:#111d12;
-    border:1px solid #1a2f1e;
-    border-radius:16px;
-
-    padding:16px;
-}
-
-.info-title{
-    font-size:14px;
-    font-weight:800;
-    color:#fff;
-    margin-bottom:6px;
-}
-
-.info-text{
-    color:#78917d;
-    font-size:11px;
-    line-height:1.7;
-}
-
-/* =========================
-   PROGRESS
-========================= */
-
-.progress-card{
-    margin:12px;
-
-    background:#111d12;
-    border:1px solid #1a2f1e;
-    border-radius:16px;
-
-    padding:14px;
-}
-
-.progress-top{
+    background:#152a18;
+    border:1px solid #234429;
+    border-left:3px solid #12c46b;
+    border-radius:14px;
+    padding:10px 12px;
     display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    font-size:11px;
-}
-
-.progress-label{
-    color:#9bb39f;
-}
-
-.progress-number{
-    color:#12c46b;
-    font-weight:800;
-}
-
-.progress-track{
-    width:100%;
-    height:7px;
-    margin-top:10px;
-
-    background:#071008;
-    border-radius:20px;
-    overflow:hidden;
-}
-
-.progress-bar{
-    height:100%;
-    width:0%;
-
-    background:#12c46b;
-
-    border-radius:20px;
-
-    transition:width .35s ease;
-}
-
-/* =========================
-   QUESTION CARD
-========================= */
-
-.question-card{
-    margin:12px;
-
-    background:#132816;
-    border:1px solid #1d3d23;
-    border-radius:20px;
-
-    padding:16px;
-
-    position:relative;
-}
-
-.question-top{
-    display:flex;
-    justify-content:space-between;
     align-items:center;
     gap:10px;
 }
 
-.chapter{
+.av{
+    width:40px;
+    height:40px;
+    background:#0f6d3a;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    font-weight:800;
+}
+
+.info{
+    margin:12px;
+    background:#111d12;
+    border:1px solid #1a2f1e;
+    border-radius:16px;
+    padding:16px;
+}
+
+.info h1{
+    font-size:20px;
+    color:#fff;
+    margin-bottom:8px;
+}
+
+.info p{
+    color:#829287;
+    font-size:12px;
+    line-height:1.6;
+}
+
+.card{
+    margin:12px;
+    background:#132816;
+    border:1px solid #1d3d23;
+    border-radius:20px;
+    padding:16px;
+    position:relative;
+    transition:.25s;
+}
+
+.card.completed{
+    opacity:.55;
+}
+
+.card-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.pill{
     font-size:10px;
     font-weight:800;
-
     letter-spacing:.8px;
-
     background:#0e2814;
     color:#12c46b;
-
     border:1px solid #1d3d23;
-
-    padding:5px 9px;
-
+    padding:4px 10px;
     border-radius:999px;
 }
 
 .reward{
     color:#f5b400;
-    font-weight:900;
+    font-weight:800;
     font-size:14px;
+    white-space:nowrap;
 }
 
-.question-number{
-    color:#718873;
-    font-size:10px;
-    margin-top:12px;
-}
-
-.question{
+.q{
     font-size:17px;
     font-weight:700;
-
-    margin:9px 0 16px;
-
-    line-height:1.45;
-
+    margin:14px 0;
+    line-height:1.35;
     color:#fff;
-}
-
-/* =========================
-   ANSWERS
-========================= */
-
-.options{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
 }
 
 .opt{
     width:100%;
-
     text-align:left;
-
     background:#0a1a0d;
-
     border:1px solid #1f3d26;
-
     border-radius:14px;
-
     padding:14px 16px;
-
+    margin-top:10px;
     font-size:14px;
-
-    color:#a1b5a5;
-
+    color:#8aa08e;
     cursor:pointer;
-
     transition:.2s;
 }
 
@@ -294,409 +157,296 @@ button{
 }
 
 .opt:active{
-    transform:scale(.985);
+    transform:scale(.98);
 }
 
 .opt.correct{
-    background:#12c46b !important;
-    color:#000 !important;
-    border-color:#12c46b !important;
-    font-weight:800;
+    background:#12c46b!important;
+    color:#000!important;
+    border-color:#12c46b!important;
+    font-weight:700;
 }
 
 .opt.wrong{
-    background:#4a1e1e !important;
-    border-color:#9b3030 !important;
-    color:#fff !important;
+    background:#4a1e1e!important;
+    border-color:#7a2a2a!important;
+    color:#fff!important;
 }
 
-.opt.disabled{
+.opt:disabled{
     cursor:default;
 }
 
-.answer-result{
-    display:none;
-
-    margin-top:14px;
-
-    padding:11px 13px;
-
-    border-radius:12px;
-
+.explanation{
+    margin-top:12px;
+    padding:10px 12px;
+    border-radius:10px;
+    background:#0b160d;
+    border:1px solid #203c25;
+    color:#91a194;
     font-size:11px;
-
-    line-height:1.6;
+    line-height:1.5;
 }
 
-.answer-result.correct-result{
-    display:block;
-
-    background:#0d3b23;
-
-    border:1px solid #126b3b;
-
-    color:#7af0ae;
+.pagination{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:20px 12px 35px;
 }
 
-.answer-result.wrong-result{
-    display:block;
-
-    background:#321616;
-
-    border:1px solid #6d2727;
-
-    color:#ffaaaa;
-}
-
-/* =========================
-   NEXT BUTTON
-========================= */
-
-.next-area{
-    margin:12px;
-    display:none;
-}
-
-.next-btn{
-    width:100%;
-
-    height:50px;
-
-    border:0;
-
-    border-radius:14px;
-
-    background:#0f9d58;
-
+.page-btn{
+    border:none;
+    background:#132816;
+    border:1px solid #1d3d23;
     color:#fff;
-
-    font-size:13px;
-
-    font-weight:800;
-
+    border-radius:12px;
+    padding:11px 18px;
+    font-weight:700;
     cursor:pointer;
 }
 
-.next-btn:hover{
-    background:#0c874a;
+.page-btn:hover{
+    border-color:#12c46b;
 }
 
-/* =========================
-   EMPTY / COMPLETE
-========================= */
+.page-btn:disabled{
+    opacity:.35;
+    cursor:not-allowed;
+}
 
-.complete-card{
-    display:none;
-
-    margin:12px;
-
-    background:#132816;
-
-    border:1px solid #1d3d23;
-
-    border-radius:20px;
-
-    padding:30px 20px;
-
+.page-number{
+    color:#7d8c80;
+    font-size:12px;
+    min-width:110px;
     text-align:center;
 }
 
-.complete-icon{
+.empty{
+    margin:12px;
+    padding:40px 20px;
+    background:#111d12;
+    border:1px solid #1a2f1e;
+    border-radius:18px;
+    text-align:center;
+}
+
+.empty-icon{
     font-size:42px;
+    margin-bottom:12px;
 }
 
-.complete-title{
-    margin-top:12px;
-
-    font-size:18px;
-
-    font-weight:800;
-
+.empty h2{
+    font-size:17px;
     color:#fff;
+    margin-bottom:7px;
 }
 
-.complete-text{
-    margin-top:8px;
-
+.empty p{
+    color:#718075;
     font-size:12px;
-
-    color:#78917d;
-
-    line-height:1.7;
+    line-height:1.6;
 }
 
-.back-btn{
-    margin-top:18px;
-
-    width:100%;
-
-    height:46px;
-
-    border:1px solid #1d3d23;
-
-    border-radius:12px;
-
-    background:#0e2814;
-
-    color:#12c46b;
-
-    font-weight:800;
-
-    cursor:pointer;
-}
-
-/* =========================
-   TOAST
-========================= */
-
-.toast{
-    position:fixed;
-
-    right:16px;
-    bottom:18px;
-
-    z-index:999;
-
-    background:#132816;
-
-    border:1px solid #1d3d23;
-
-    border-left:3px solid #12c46b;
-
+.progress-wrap{
+    margin:12px;
+    background:#111d12;
+    border:1px solid #1a2f1e;
     border-radius:14px;
-
-    padding:11px 14px;
-
-    max-width:300px;
-
-    box-shadow:0 15px 40px rgba(0,0,0,.45);
-
-    transform:translateX(130%);
-
-    opacity:0;
-
-    transition:.4s ease;
-
-    font-size:11px;
+    padding:12px;
 }
 
-.toast.show{
-    transform:translateX(0);
-    opacity:1;
+.progress-top{
+    display:flex;
+    justify-content:space-between;
+    font-size:10px;
+    color:#819083;
+    margin-bottom:8px;
 }
 
-/* =========================
-   MOBILE
-========================= */
+.progress-bg{
+    height:6px;
+    background:#071008;
+    border-radius:999px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+    background:#12c46b;
+    width:0%;
+    transition:.3s;
+}
 
 @media(max-width:480px){
 
-    .container{
-        padding-bottom:30px;
-    }
-
-    .question{
+    .q{
         font-size:16px;
     }
 
     .opt{
         font-size:13px;
-        padding:14px;
+        padding:13px 14px;
+    }
+
+    .reward{
+        font-size:13px;
     }
 
 }
 
 </style>
+
 </head>
 
 <body>
 
-<!-- =========================
+
+<!-- =====================================================
      TOP BAR
-========================= -->
+===================================================== -->
 
 <div class="top">
 
-    <div class="top-left">
+    <div style="display:flex;align-items:center;gap:10px">
 
-        <button
-            class="menu-btn"
-            onclick="window.location.href='dashboard.html'">
-
-            ☰
-
-        </button>
+        <span style="font-size:22px">☰</span>
 
         <div class="balance">
-
             ⌂ KSh
-
-            <span id="bal">
-                0.00
-            </span>
-
+            <span id="bal">0.00</span>
         </div>
 
     </div>
 
+    <span
+        onclick="goDashboard()"
+        style="
+            font-size:20px;
+            color:#4a6a4e;
+            cursor:pointer;
+        "
+    >
+        ⏻
+    </span>
+
+</div>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<div class="toast">
+
+    <div class="av" id="avatar">
+        YU
+    </div>
+
+    <div style="line-height:1.4">
+
+        <strong
+            id="participantName"
+            style="font-size:13px;color:#fff"
+        >
+            Research Participant
+        </strong>
+
+        <div
+            style="
+                color:#718075;
+                font-size:10px;
+            "
+        >
+            KenyaSurvey Research Panel
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="info">
+
+    <h1>
+        Research Surveys
+    </h1>
+
+    <p>
+        Answer research questions honestly. Research depends on accurate participant responses.
+        Please answer all questions honestly. Research quality depends on accurate responses.
+        False or inconsistent responses may affect your eligibility for future surveys.
+    </p>
+
+</div>
+
+
+<!-- =====================================================
+     PROGRESS
+===================================================== -->
+
+<div class="progress-wrap">
+
+    <div class="progress-top">
+
+        <span>
+            Survey Progress
+        </span>
+
+        <span id="progressText">
+            0 / 250 answered
+        </span>
+
+    </div>
+
+    <div class="progress-bg">
+
+        <div
+            id="progressFill"
+            class="progress-fill"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     QUESTIONS
+===================================================== -->
+
+<div id="questionsContainer"></div>
+
+
+<!-- =====================================================
+     PAGINATION
+===================================================== -->
+
+<div class="pagination">
 
     <button
-        class="logout-btn"
-        onclick="logout()">
-
-        ⏻
-
+        id="previousBtn"
+        class="page-btn"
+        onclick="previousPage()"
+    >
+        Previous
     </button>
 
-</div>
-
-
-<div class="container">
-
-    <!-- =========================
-         HEADER
-    ========================= -->
-
-    <div class="header">
-
-        <h1>
-            Research Surveys
-        </h1>
-
-        <p>
-            Answer research questions honestly.
-            Research depends on accurate participant responses.
-        </p>
-
-    </div>
-
-
-    <!-- =========================
-         INFORMATION
-    ========================= -->
-
-    <div class="info">
-
-        <div class="info-title">
-            📋 Participation Information
-        </div>
-
-        <div class="info-text">
-
-            Please answer all questions honestly.
-            Research quality depends on accurate responses.
-            False or inconsistent responses may affect your eligibility
-            for future surveys.
-
-        </div>
-
-    </div>
-
-
-    <!-- =========================
-         PROGRESS
-    ========================= -->
-
     <div
-        class="progress-card"
-        id="progressCard">
-
-        <div class="progress-top">
-
-            <span class="progress-label">
-                Current survey
-            </span>
-
-            <span
-                class="progress-number"
-                id="progressNumber">
-
-                0 / 10
-
-            </span>
-
-        </div>
-
-        <div class="progress-track">
-
-            <div
-                class="progress-bar"
-                id="progressBar">
-            </div>
-
-        </div>
-
+        id="pageNumber"
+        class="page-number"
+    >
+        Page 1 of 25
     </div>
 
-
-    <!-- =========================
-         QUESTIONS
-    ========================= -->
-
-    <div id="questionsContainer"></div>
-
-
-    <!-- =========================
-         NEXT BUTTON
-    ========================= -->
-
-    <div
-        class="next-area"
-        id="nextArea">
-
-        <button
-            class="next-btn"
-            id="nextButton"
-            onclick="nextQuestion()">
-
-            Next Question
-
-        </button>
-
-    </div>
-
-
-    <!-- =========================
-         COMPLETE
-    ========================= -->
-
-    <div
-        class="complete-card"
-        id="completeCard">
-
-        <div class="complete-icon">
-            🎉
-        </div>
-
-        <div class="complete-title">
-            Survey Completed
-        </div>
-
-        <div class="complete-text">
-            You have completed all currently available questions.
-            New research questions may become available later.
-        </div>
-
-        <button
-            class="back-btn"
-            onclick="window.location.href='dashboard.html'">
-
-            Return to Dashboard
-
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- =========================
-     TOAST
-========================= -->
-
-<div
-    id="toast"
-    class="toast">
+    <button
+        id="nextBtn"
+        class="page-btn"
+        onclick="nextPage()"
+    >
+        Next
+    </button>
 
 </div>
 
@@ -704,7 +454,7 @@ button{
 <script>
 
 /* =========================================================
-   LOGIN
+   USER / ACCOUNT
 ========================================================= */
 
 const currentUser =
@@ -720,10 +470,6 @@ if(!currentUser){
 
 }
 
-
-/* =========================================================
-   MEMBERS
-========================================================= */
 
 const members =
     JSON.parse(
@@ -750,7 +496,7 @@ if(!user){
 
 
 /* =========================================================
-   DEFAULT USER DATA
+   INITIAL ACCOUNT DATA
 ========================================================= */
 
 if(user.availableBalance === undefined){
@@ -773,7 +519,7 @@ if(user.completedSurveys === undefined){
 
 if(user.remainingSurveys === undefined){
 
-    user.remainingSurveys = 0;
+    user.remainingSurveys = 250;
 
 }
 
@@ -785,450 +531,571 @@ if(!Array.isArray(user.activities)){
 
 
 /* =========================================================
-   SURVEY STORAGE
+   PERMANENT ANSWERED QUESTION STORAGE
 ========================================================= */
 
-if(!Array.isArray(user.answeredQuestions)){
+if(!Array.isArray(user.answeredSurveyQuestions)){
 
-    user.answeredQuestions = [];
+    user.answeredSurveyQuestions = [];
 
 }
 
 
-members[currentUser] = user;
-
-saveUser();
-
-
 /* =========================================================
-   250 QUESTIONS
+   250 KENYA QUESTIONS
 ========================================================= */
 
 const questions = [
 
-/* =========================================================
-   CHAPTER 1 — KENYA GEOGRAPHY
-========================================================= */
+/* =========================
+   GEOGRAPHY
+========================= */
 
 {
+category:"Geography",
+difficulty:"easy",
+reward:35,
 q:"How many counties does Kenya have?",
 a:["42 counties","47 counties","46 counties","50 counties"],
-c:1,
-r:35,
-chapter:"GEOGRAPHY"
+correct:1
 },
 
 {
+category:"Geography",
+difficulty:"medium",
+reward:45,
 q:"Which is the largest county by area in Kenya?",
 a:["Nairobi","Turkana","Marsabit","Mandera"],
-c:1,
-r:45,
-chapter:"GEOGRAPHY"
+correct:1
 },
 
 {
-q:"Which lake is shared by Kenya, Uganda and Tanzania?",
+category:"Geography",
+difficulty:"medium",
+reward:45,
+q:"Which lake is shared between Kenya, Uganda, and Tanzania?",
 a:["Lake Turkana","Lake Naivasha","Lake Victoria","Lake Baringo"],
-c:2,
-r:50,
-chapter:"GEOGRAPHY"
+correct:2
 },
 
 {
+category:"Geography",
+difficulty:"easy",
+reward:40,
 q:"What is the capital city of Kenya?",
 a:["Mombasa","Kisumu","Nairobi","Nakuru"],
-c:2,
-r:35,
-chapter:"GEOGRAPHY"
+correct:2
 },
 
 {
+category:"Geography",
+difficulty:"easy",
+reward:35,
 q:"Which mountain is the highest point in Kenya?",
 a:["Mount Elgon","Aberdare Range","Mount Kenya","Ol Doinyo Lengai"],
-c:2,
-r:45,
-chapter:"GEOGRAPHY"
+correct:2
 },
 
 {
-q:"The Great Rift Valley runs through Kenya mainly in which direction?",
-a:["East to West","North to South","East to South","West to North"],
-c:1,
-r:60,
-chapter:"GEOGRAPHY"
+category:"Geography",
+difficulty:"hard",
+reward:60,
+q:"The Great Rift Valley generally crosses Kenya along which broad direction?",
+a:["East to West","North to South","Northeast to Southwest","Southeast to Northwest"],
+correct:1
 },
 
 {
+category:"Geography",
+difficulty:"medium",
+reward:45,
 q:"Which county contains much of Amboseli National Park?",
-a:["Kajiado","Kiambu","Kericho","Busia"],
-c:0,
-r:35,
-chapter:"GEOGRAPHY"
+a:["Kajiado","Narok","Laikipia","Bomet"],
+correct:0
 },
 
 {
-q:"Which county is famous for Lake Nakuru National Park?",
-a:["Nakuru","Narok","Nyeri","Embu"],
-c:0,
-r:35,
-chapter:"GEOGRAPHY"
+category:"Geography",
+difficulty:"medium",
+reward:45,
+q:"Which county is Mombasa located in?",
+a:["Kilifi","Kwale","Mombasa","Taita-Taveta"],
+correct:2
 },
 
 {
-q:"Which city is located on Kenya's Indian Ocean coast?",
-a:["Eldoret","Mombasa","Nakuru","Kitale"],
-c:1,
-r:35,
-chapter:"GEOGRAPHY"
+category:"Geography",
+difficulty:"easy",
+reward:35,
+q:"Which county is commonly known for the city of Kisumu?",
+a:["Siaya","Kisumu","Homa Bay","Kakamega"],
+correct:1
 },
 
 {
-q:"Which Kenyan county borders Uganda to the west?",
-a:["Busia","Garissa","Lamu","Taita Taveta"],
-c:0,
-r:45,
-chapter:"GEOGRAPHY"
+category:"Geography",
+difficulty:"medium",
+reward:45,
+q:"Which county is the city of Eldoret located in?",
+a:["Uasin Gishu","Nandi","Trans Nzoia","Bungoma"],
+correct:0
 },
 
-/* =========================================================
-   CHAPTER 2 — KENYAN HISTORY
-========================================================= */
+{
+category:"Geography",
+difficulty:"medium",
+reward:45,
+q:"Which county contains Lake Naivasha?",
+a:["Nakuru","Narok","Kiambu","Nyandarua"],
+correct:0
+},
 
 {
-q:"Kenya became independent in which year?",
+category:"Geography",
+difficulty:"hard",
+reward:60,
+q:"Which Kenyan county borders both Uganda and South Sudan?",
+a:["Turkana","West Pokot","Marsabit","Busia"],
+correct:0
+},
+
+{
+category:"Geography",
+difficulty:"medium",
+reward:50,
+q:"Which county is famous for the Maasai Mara National Reserve?",
+a:["Narok","Kajiado","Bomet","Laikipia"],
+correct:0
+},
+
+{
+category:"Geography",
+difficulty:"easy",
+reward:35,
+q:"Which ocean borders Kenya to the southeast?",
+a:["Atlantic Ocean","Indian Ocean","Pacific Ocean","Arctic Ocean"],
+correct:1
+},
+
+{
+category:"Geography",
+difficulty:"medium",
+reward:45,
+q:"Which Kenyan island is historically associated with Lamu County?",
+a:["Lamu Island","Rusinga Island","Mfangano Island","Mombasa Island"],
+correct:0
+},
+
+{
+category:"Geography",
+difficulty:"medium",
+reward:45,
+q:"Which town is commonly associated with Lake Turkana?",
+a:["Lodwar","Garissa","Kericho","Voi"],
+correct:0
+},
+
+{
+category:"Geography",
+difficulty:"easy",
+reward:35,
+q:"Which city is located on Kenya's coast?",
+a:["Nakuru","Mombasa","Eldoret","Nyeri"],
+correct:1
+},
+
+{
+category:"Geography",
+difficulty:"hard",
+reward:60,
+q:"Which Kenyan county is famous for tea-growing areas around Kericho town?",
+a:["Kericho","Baringo","Isiolo","Kitui"],
+correct:0
+},
+
+{
+category:"Geography",
+difficulty:"medium",
+reward:50,
+q:"Which county is known for the town of Malindi?",
+a:["Kilifi","Kwale","Tana River","Lamu"],
+correct:0
+},
+
+{
+category:"Geography",
+difficulty:"medium",
+reward:45,
+q:"Which county is home to Mount Kenya's northern slopes?",
+a:["Laikipia","Mombasa","Migori","Homa Bay"],
+correct:0
+},
+
+/* =========================
+   HISTORY
+========================= */
+
+{
+category:"History",
+difficulty:"easy",
+reward:35,
+q:"In which year did Kenya gain independence?",
 a:["1957","1960","1963","1965"],
-c:2,
-r:35,
-chapter:"HISTORY"
+correct:2
 },
 
 {
-q:"Who became Kenya's first President?",
-a:["Jomo Kenyatta","Daniel Moi","Mwai Kibaki","Uhuru Kenyatta"],
-c:0,
-r:35,
-chapter:"HISTORY"
+category:"History",
+difficulty:"medium",
+reward:45,
+q:"Who became Kenya's first president after independence?",
+a:["Jomo Kenyatta","Daniel arap Moi","Mwai Kibaki","Jaramogi Oginga Odinga"],
+correct:0
 },
 
 {
+category:"History",
+difficulty:"medium",
+reward:45,
 q:"Kenya became a republic in which year?",
 a:["1963","1964","1965","1967"],
-c:1,
-r:45,
-chapter:"HISTORY"
+correct:1
 },
 
 {
-q:"Who was Kenya's second President?",
-a:["Mwai Kibaki","Daniel arap Moi","Jomo Kenyatta","Uhuru Kenyatta"],
-c:1,
-r:35,
-chapter:"HISTORY"
+category:"History",
+difficulty:"easy",
+reward:35,
+q:"Which date is celebrated as Madaraka Day in Kenya?",
+a:["1 June","1 May","20 October","12 December"],
+correct:0
 },
 
 {
-q:"Who was Kenya's third President?",
-a:["Mwai Kibaki","Uhuru Kenyatta","Daniel Moi","Jomo Kenyatta"],
-c:0,
-r:35,
-chapter:"HISTORY"
+category:"History",
+difficulty:"easy",
+reward:35,
+q:"Which date marks Mashujaa Day?",
+a:["1 June","20 October","12 December","26 December"],
+correct:1
 },
 
 {
-q:"Who was Kenya's fourth President?",
-a:["Daniel Moi","Uhuru Kenyatta","Mwai Kibaki","William Ruto"],
-c:1,
-r:35,
-chapter:"HISTORY"
+category:"History",
+difficulty:"easy",
+reward:35,
+q:"Which date marks Jamhuri Day?",
+a:["12 December","20 October","1 June","1 January"],
+correct:0
 },
 
 {
-q:"Who became Kenya's fifth President?",
-a:["Uhuru Kenyatta","Mwai Kibaki","William Ruto","Raila Odinga"],
-c:2,
-r:35,
-chapter:"HISTORY"
+category:"History",
+difficulty:"medium",
+reward:45,
+q:"What was the main purpose of the Lancaster House Conferences?",
+a:["Discuss Kenya's independence arrangements","Create counties","Build railways","Create the East African Community"],
+correct:0
 },
 
 {
-q:"Which movement fought British colonial rule in Kenya during the 1950s?",
-a:["Mau Mau","KANU","KADU","ODM"],
-c:0,
-r:50,
-chapter:"HISTORY"
+category:"History",
+difficulty:"medium",
+reward:50,
+q:"Which movement played a major role in Kenya's struggle against colonial rule?",
+a:["Mau Mau","Maji Maji","ANC","FLN"],
+correct:0
 },
 
 {
-q:"Who was popularly known as the first Prime Minister of independent Kenya?",
-a:["Jomo Kenyatta","Tom Mboya","Oginga Odinga","Mwai Kibaki"],
-c:0,
-r:45,
-chapter:"HISTORY"
+category:"History",
+difficulty:"hard",
+reward:60,
+q:"Dedan Kimathi was strongly associated with which historical movement?",
+a:["Mau Mau","KANU","KADU","East African Community"],
+correct:0
 },
 
 {
-q:"Which railway was historically associated with the development of Kenya during colonial rule?",
-a:["Kenya-Uganda Railway","Kenya-Tanzania Railway","Coastal Railway","Northern Railway"],
-c:0,
-r:45,
-chapter:"HISTORY"
-},
-
-/* =========================================================
-   CHAPTER 3 — GOVERNMENT
-========================================================= */
-
-{
-q:"How many levels of government are established by Kenya's Constitution?",
-a:["One","Two","Three","Four"],
-c:1,
-r:35,
-chapter:"GOVERNMENT"
+category:"History",
+difficulty:"medium",
+reward:45,
+q:"Who was Kenya's second president?",
+a:["Mwai Kibaki","Daniel arap Moi","Uhuru Kenyatta","Jomo Kenyatta"],
+correct:1
 },
 
 {
-q:"What is the national legislature of Kenya called?",
-a:["Parliament","Congress","Assembly of Kenya","National Council"],
-c:0,
-r:35,
-chapter:"GOVERNMENT"
+category:"History",
+difficulty:"medium",
+reward:45,
+q:"Who was Kenya's third president?",
+a:["Mwai Kibaki","Daniel arap Moi","Uhuru Kenyatta","Jomo Kenyatta"],
+correct:0
 },
 
 {
-q:"Which two houses make up Kenya's Parliament?",
-a:["Senate and National Assembly","Senate and County Assembly","National Assembly and Cabinet","Cabinet and Senate"],
-c:0,
-r:35,
-chapter:"GOVERNMENT"
+category:"History",
+difficulty:"medium",
+reward:50,
+q:"Who was Kenya's fourth president?",
+a:["Uhuru Kenyatta","Mwai Kibaki","Daniel arap Moi","Jomo Kenyatta"],
+correct:0
 },
 
 {
-q:"How many senators does each county elect?",
-a:["One","Two","Three","Five"],
-c:0,
-r:35,
-chapter:"GOVERNMENT"
+category:"History",
+difficulty:"medium",
+reward:50,
+q:"Who became Kenya's fifth president?",
+a:["William Ruto","Uhuru Kenyatta","Mwai Kibaki","Raila Odinga"],
+correct:0
 },
 
 {
-q:"Who is the head of a county government?",
-a:["Governor","Senator","Chief","County Speaker"],
-c:0,
-r:35,
-chapter:"GOVERNMENT"
+category:"History",
+difficulty:"hard",
+reward:60,
+q:"Which political party was associated with Jomo Kenyatta at independence?",
+a:["KANU","KADU","FORD-K","DP"],
+correct:0
 },
 
 {
-q:"Who presides over the National Assembly?",
-a:["Chief Justice","Speaker","President","Senate Majority Leader"],
-c:1,
-r:45,
-chapter:"GOVERNMENT"
+category:"History",
+difficulty:"medium",
+reward:45,
+q:"Who was Jaramogi Oginga Odinga?",
+a:["Kenya's first vice president","Kenya's second president","A colonial governor","A chief justice"],
+correct:0
+},
+
+/* =========================
+   GOVERNMENT
+========================= */
+
+{
+category:"Government",
+difficulty:"easy",
+reward:35,
+q:"How many arms of government are recognized under Kenya's Constitution?",
+a:["Two","Three","Four","Five"],
+correct:1
 },
 
 {
-q:"Which institution interprets the Constitution and laws through the courts?",
-a:["Executive","Judiciary","Senate","County Assembly"],
-c:1,
-r:45,
-chapter:"GOVERNMENT"
+category:"Government",
+difficulty:"easy",
+reward:35,
+q:"Which institution makes national laws in Kenya?",
+a:["Parliament","Supreme Court","Cabinet","County Assembly"],
+correct:0
 },
 
 {
-q:"What is the highest court in Kenya?",
-a:["High Court","Court of Appeal","Supreme Court","Magistrates Court"],
-c:2,
-r:35,
-chapter:"GOVERNMENT"
+category:"Government",
+difficulty:"medium",
+reward:45,
+q:"Kenya's Parliament consists of which two houses?",
+a:["Senate and National Assembly","Senate and Cabinet","National Assembly and Judiciary","County Assembly and Senate"],
+correct:0
 },
 
 {
+category:"Government",
+difficulty:"medium",
+reward:45,
+q:"Who is the head of the Kenyan national government?",
+a:["President","Chief Justice","Speaker of Senate","Governor"],
+correct:0
+},
+
+{
+category:"Government",
+difficulty:"medium",
+reward:45,
+q:"Who heads a county executive?",
+a:["Governor","Senator","MP","MCA"],
+correct:0
+},
+
+{
+category:"Government",
+difficulty:"easy",
+reward:35,
+q:"What is the minimum voting age in Kenya?",
+a:["16","17","18","21"],
+correct:2
+},
+
+{
+category:"Government",
+difficulty:"medium",
+reward:50,
+q:"Which body manages elections in Kenya?",
+a:["IEBC","KRA","CRA","KNBS"],
+correct:0
+},
+
+{
+category:"Government",
+difficulty:"medium",
+reward:45,
+q:"What does IEBC stand for?",
+a:["Independent Electoral and Boundaries Commission","International Elections and Budget Commission","Independent Economic and Boundaries Council","Internal Electoral Board of Kenya"],
+correct:0
+},
+
+{
+category:"Government",
+difficulty:"easy",
+reward:35,
+q:"What does MCA commonly stand for in county government?",
+a:["Member of County Assembly","Municipal County Administrator","Member of Central Authority","Minister of County Affairs"],
+correct:0
+},
+
+{
+category:"Government",
+difficulty:"medium",
+reward:50,
+q:"Which house of Parliament represents counties?",
+a:["Senate","National Assembly","Cabinet","Judiciary"],
+correct:0
+},
+
+{
+category:"Government",
+difficulty:"hard",
+reward:60,
+q:"Which institution is the highest court in Kenya?",
+a:["High Court","Court of Appeal","Supreme Court","Magistrates' Court"],
+correct:2
+},
+
+{
+category:"Government",
+difficulty:"medium",
+reward:50,
+q:"Which institution interprets the Constitution through judicial decisions?",
+a:["Judiciary","KRA","IEBC","National Treasury"],
+correct:0
+},
+
+{
+category:"Government",
+difficulty:"easy",
+reward:35,
+q:"How many counties are established under Kenya's Constitution?",
+a:["45","46","47","48"],
+correct:2
+},
+
+{
+category:"Government",
+difficulty:"medium",
+reward:45,
+q:"What is the official residence of Kenya's President in Nairobi commonly called?",
+a:["State House","Parliament House","Uhuru House","Kenya House"],
+correct:0
+},
+
+{
+category:"Government",
+difficulty:"medium",
+reward:45,
 q:"Which document is the supreme law of Kenya?",
-a:["Penal Code","Constitution","Finance Act","County Act"],
-c:1,
-r:35,
-chapter:"GOVERNMENT"
+a:["The Constitution","The Finance Act","The Penal Code","The County Act"],
+correct:0
+},
+
+/* =========================
+   ECONOMY
+========================= */
+
+{
+category:"Economy",
+difficulty:"easy",
+reward:35,
+q:"What is the currency of Kenya?",
+a:["Dollar","Shilling","Rand","Birr"],
+correct:1
 },
 
 {
-q:"County governments are provided for under which Constitution?",
-a:["1963 Constitution","2010 Constitution","1992 Constitution","1969 Constitution"],
-c:1,
-r:50,
-chapter:"GOVERNMENT"
-},
-
-/* =========================================================
-   CHAPTER 4 — KENYAN CULTURE
-========================================================= */
-
-{
-q:"Which language, together with English, is an official language of Kenya?",
-a:["French","Kiswahili","Arabic","German"],
-c:1,
-r:35,
-chapter:"CULTURE"
-},
-
-{
-q:"Which community is traditionally associated with Maasai culture?",
-a:["Maasai","Luo","Kikuyu","Luhya"],
-c:0,
-r:35,
-chapter:"CULTURE"
-},
-
-{
-q:"Which traditional Kenyan food is commonly made from maize flour?",
-a:["Ugali","Samosa","Chapati","Pilau"],
-c:0,
-r:35,
-chapter:"CULTURE"
-},
-
-{
-q:"Which Kenyan coastal dish is strongly associated with Swahili cuisine?",
-a:["Pilau","Githeri","Mukimo","Irio"],
-c:0,
-r:45,
-chapter:"CULTURE"
-},
-
-{
-q:"What is the traditional Maasai jumping dance commonly associated with?",
-a:["Adumu","Isukuti","Ohangla","Mugithi"],
-c:0,
-r:50,
-chapter:"CULTURE"
-},
-
-{
-q:"Which music style is strongly associated with the Luo community?",
-a:["Ohangla","Mugithi","Benga only","Genge"],
-c:0,
-r:45,
-chapter:"CULTURE"
-},
-
-{
-q:"Which dance is particularly associated with the Luhya community?",
-a:["Isukuti","Adumu","Mugithi","Taarab"],
-c:0,
-r:45,
-chapter:"CULTURE"
-},
-
-{
-q:"Mugithi music is strongly associated with which community?",
-a:["Kikuyu","Luo","Maasai","Swahili"],
-c:0,
-r:45,
-chapter:"CULTURE"
-},
-
-{
-q:"Which food combines maize and beans and is common in Kenya?",
-a:["Githeri","Nyama choma","Mandazi","Pilau"],
-c:0,
-r:35,
-chapter:"CULTURE"
-},
-
-{
-q:"What is nyama choma?",
-a:["Roasted meat","Fried fish","Boiled vegetables","Sweet bread"],
-c:0,
-r:35,
-chapter:"CULTURE"
-},
-
-/* =========================================================
-   CHAPTER 5 — KENYAN ECONOMY
-========================================================= */
-
-{
-q:"What is Kenya's official currency?",
-a:["Kenyan shilling","East African dollar","Kenya pound","African franc"],
-c:0,
-r:35,
-chapter:"ECONOMY"
-},
-
-{
+category:"Economy",
+difficulty:"easy",
+reward:35,
 q:"Which institution issues Kenya's currency?",
-a:["KRA","CBK","KNBS","Treasury only"],
-c:1,
-r:45,
-chapter:"ECONOMY"
+a:["Central Bank of Kenya","KRA","KNBS","National Treasury"],
+correct:0
 },
 
 {
+category:"Economy",
+difficulty:"medium",
+reward:45,
 q:"What does KRA stand for?",
-a:["Kenya Revenue Authority","Kenya Reserve Agency","Kenya Revenue Association","Kenya Registration Authority"],
-c:0,
-r:35,
-chapter:"ECONOMY"
+a:["Kenya Revenue Authority","Kenya Retail Association","Kenya Roads Authority","Kenya Regulatory Agency"],
+correct:0
 },
 
 {
-q:"What does CBK stand for?",
-a:["Central Bank of Kenya","Commercial Bank of Kenya","County Bank of Kenya","Central Business Kenya"],
-c:0,
-r:35,
-chapter:"ECONOMY"
+category:"Economy",
+difficulty:"medium",
+reward:45,
+q:"Which crop is one of Kenya's major tea exports?",
+a:["Tea","Wheat","Barley","Sorghum"],
+correct:0
 },
 
 {
-q:"Which sector is particularly important to Kenya's economy?",
-a:["Agriculture","Space mining","Ice fishing","Arctic tourism"],
-c:0,
-r:35,
-chapter:"ECONOMY"
+category:"Economy",
+difficulty:"easy",
+reward:35,
+q:"Which agricultural product is Kenya particularly known for exporting to global markets?",
+a:["Flowers","Cocoa","Rubber","Maple syrup"],
+correct:0
 },
 
 {
-q:"Kenya is especially well known internationally for exporting which agricultural product?",
-a:["Tea","Wheat only","Rice only","Cocoa"],
-c:0,
-r:35,
-chapter:"ECONOMY"
+category:"Economy",
+difficulty:"medium",
+reward:50,
+q:"What is M-PESA primarily used for?",
+a:["Mobile money services","Airline booking only","Weather forecasting","Road construction"],
+correct:0
 },
 
 {
-q:"Which Kenyan product is famous in the international flower market?",
-a:["Cut flowers","Cocoa beans","Olives","Grapes"],
-c:0,
-r:45,
-chapter:"ECONOMY"
+category:"Economy",
+difficulty:"easy",
+reward:35,
+q:"Which company pioneered M-PESA in Kenya?",
+a:["Safaricom","Kenya Power","Equity","KCB"],
+correct:0
 },
 
 {
-q:"Which crop is strongly associated with Kenya's tea-growing highlands?",
-a:["Tea","Coconut","Cocoa","Cotton only"],
-c:0,
-r:35,
-chapter:"ECONOMY"
+category:"Economy",
+difficulty:"medium",
+reward:45,
+q:"Which sector employs many Kenyans in rural areas?",
+a:["Agriculture","Space exploration","Shipbuilding","Oil refining"],
+correct:0
 },
 
 {
-q:"Which institution produces official national statistics in Kenya?",
-a:["KNBS","KRA","CBK","IEBC"],
-c:0,
-r:50,
-chapter:"ECONOMY"
+category:"Economy",
+difficulty:"hard",
+reward:60,
+q:"What does GDP measure?",
+a:["Value of goods and services produced in an economy","Government debt only","Number of citizens","Total imports only"],
+correct:0
 },
 
 {
-q:"What does GDP broadly measure?",
-a:["Total value of goods and services produced","Number of counties","Population only","Government employees"],
-c:0,
-r:60,
-chapter:"ECONOMY"
-},
-
-/* =========================================================
-   CHAPTER 6 — KENYAN WILDLIFE
-========================================================= */
-
-{
-q:"Which animal is known as the largest land
+category:"Economy",
+difficulty:"medium",
+reward:45,
+q:"What is
