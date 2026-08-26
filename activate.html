@@ -1,308 +1,335 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Activate Account - KenyaSurvey</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
-<link
-href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-
-*{
-    font-family:Inter,Arial,sans-serif;
+* {
+    font-family: Inter, Arial, sans-serif;
 }
 
-body{
-    background:#08120a;
+body {
+    background: #08120a;
 }
 
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255,255,255,.25);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+}
 </style>
-
 </head>
 
-
-<body class="min-h-screen text-white flex items-center justify-center p-4">
-
+<body class="bg-[#08120a] text-white min-h-screen flex items-center justify-center p-4">
 
 <div class="w-full max-w-[430px]">
 
-
     <!-- BACK -->
-
     <button
-    onclick="goBack()"
-    class="flex items-center gap-2 text-white/50 hover:text-white mb-6 text-[13px]">
+        onclick="goBack()"
+        id="backButton"
+        class="flex items-center gap-2 text-[12px] text-white/50 hover:text-white transition mb-6">
 
-        ← Back to Dashboard
+        <span class="text-[18px]">←</span>
+        Back to Dashboard
 
     </button>
 
 
-
-    <!-- CARD -->
-
-    <div
-    class="bg-[#132016] border border-[#1f3522] rounded-[24px] p-6 md:p-8">
-
+    <!-- MAIN CARD -->
+    <div class="bg-[#132016] border border-[#1f3522] rounded-[22px] p-6">
 
         <!-- ICON -->
-
-        <div
-        class="w-14 h-14 bg-[#0f9d58] rounded-2xl grid place-items-center text-[26px] mx-auto">
-
-            🛡️
-
+        <div class="w-14 h-14 bg-[#0f9d58]/15 rounded-2xl grid place-items-center text-[26px] mx-auto">
+            🔐
         </div>
 
 
-        <!-- TITLE -->
-
-        <h1
-        class="text-center text-[22px] font-extrabold mt-5">
-
+        <h1 class="text-center text-[22px] font-extrabold mt-5">
             Activate Your Account
-
         </h1>
 
 
-        <p
-        class="text-center text-[12px] text-white/50 leading-5 mt-2">
-
-            Complete a one-time account activation to unlock available KenyaSurvey research opportunities.
-
+        <p class="text-center text-[12px] text-white/50 leading-5 mt-2">
+            Activate your KenyaSurvey participant account to access research surveys.
         </p>
 
 
-
         <!-- ACTIVATION AMOUNT -->
+        <div class="mt-6 bg-[#0f9d58]/10 border border-[#0f9d58]/20 rounded-2xl p-5 text-center">
 
-        <div
-        class="mt-6 bg-[#0a160e] border border-[#1e3a24] rounded-2xl p-5 text-center">
-
-
-            <p
-            class="text-[10px] tracking-[0.14em] text-white/40 font-bold">
-
-                ACCOUNT ACTIVATION
-
+            <p class="text-[10px] text-white/50 uppercase tracking-wider">
+                One-Time Account Activation
             </p>
 
-
-            <p
-            class="text-[32px] font-black text-[#0f9d58] mt-2">
-
+            <p class="text-[30px] font-black text-[#0f9d58] mt-2">
                 KSh 350
-
-            </p>
-
-
-            <p
-            class="text-[10px] text-white/40 mt-2">
-
-                One-time activation payment
-
             </p>
 
         </div>
 
+
+        <!-- ACCOUNT STATUS -->
+        <div
+            id="statusBox"
+            class="mt-5 bg-black/20 border border-white/5 rounded-xl p-4">
+
+            <p class="text-[10px] text-white/40 uppercase tracking-wider">
+                Account Status
+            </p>
+
+            <p
+                id="statusText"
+                class="text-[13px] font-semibold text-yellow-400 mt-1">
+
+                Activation required
+
+            </p>
+
+        </div>
 
 
         <!-- PHONE -->
+        <div class="mt-5">
 
-        <div class="mt-6">
-
-            <label
-            class="text-[12px] font-semibold text-white/70">
-
+            <label class="text-[12px] font-semibold text-white/70">
                 M-Pesa Phone Number
-
             </label>
 
-
-            <div class="relative mt-2">
-
-                <span
-                class="absolute left-4 top-1/2 -translate-y-1/2">
-
-                    📱
-
-                </span>
-
-
-                <input
+            <input
                 id="phoneNumber"
                 type="tel"
-                placeholder="0712 345 678"
-                class="w-full h-[50px] bg-[#0a160e] border border-[#1e3a24] rounded-xl pl-11 pr-4 text-[14px] text-white outline-none focus:border-[#0f9d58]">
-
-            </div>
+                inputmode="numeric"
+                placeholder="0712345678"
+                maxlength="13"
+                class="w-full h-[50px] mt-2 bg-[#08120a] border border-[#1f3522] rounded-xl px-4 text-[14px] text-white outline-none focus:border-[#0f9d58]">
 
         </div>
 
 
+        <!-- MESSAGE -->
+        <div
+            id="messageBox"
+            class="hidden mt-4 rounded-xl px-4 py-3 text-[11px] leading-5">
+        </div>
 
-        <!-- PAYMENT BUTTON -->
 
+        <!-- ACTIVATE BUTTON -->
         <button
-        id="payButton"
-        onclick="startPayment()"
-        class="w-full h-[52px] bg-[#0f9d58] hover:bg-[#0c874a] rounded-xl text-[14px] font-bold mt-5 transition">
+            id="activateButton"
+            onclick="activateAccount()"
+            class="w-full h-[52px] mt-5 bg-[#0f9d58] hover:bg-[#0c874a] rounded-xl font-bold text-[14px] transition flex items-center justify-center gap-2">
 
-            Pay KSh 350
+            Activate for KSh 350
 
         </button>
 
 
+        <p class="text-center text-[10px] text-white/35 leading-5 mt-4">
 
-        <!-- STATUS -->
+            An M-Pesa STK Push will be sent to your phone.
+            Your account will activate automatically after successful payment.
 
-        <div
-        id="paymentStatus"
-        class="hidden mt-5 bg-[#0f9d58]/10 border border-[#0f9d58]/20 rounded-xl p-4 text-center">
-
-            <div
-            class="w-7 h-7 border-2 border-white/20 border-t-[#0f9d58] rounded-full animate-spin mx-auto">
-
-            </div>
-
-
-            <p
-            id="statusText"
-            class="text-[12px] text-white/70 mt-3">
-
-                Sending M-Pesa payment request...
-
-            </p>
-
-        </div>
-
-
-
-        <!-- SECURITY -->
-
-        <div
-        class="mt-5 bg-[#0f1e2a]/60 border border-[#1e2f40] rounded-xl p-4 flex gap-3">
-
-            <span class="text-[#60a5fa]">
-
-                ⓘ
-
-            </span>
-
-
-            <p
-            class="text-[10px] text-white/50 leading-5">
-
-                You will receive an M-Pesa prompt on your phone.
-                Enter your M-Pesa PIN only on the official M-Pesa prompt.
-
-            </p>
-
-        </div>
-
+        </p>
 
     </div>
-
-
-
-    <p
-    class="text-center text-[10px] text-white/30 mt-5 px-6">
-
-        Your account will be activated automatically after successful payment confirmation.
-
-    </p>
-
 
 </div>
 
 
-
 <script>
 
-/* =========================
-   CURRENT USER CHECK
-========================= */
+/* =========================================
+   CURRENT LOGGED-IN USER
+========================================= */
 
 const currentUser =
-localStorage.getItem(
-    "kenyaSurveyCurrentUser"
-);
+    localStorage.getItem(
+        "kenyaSurveyCurrentUser"
+    );
 
 
-if(!currentUser){
+if (!currentUser) {
 
-    window.location.href="register.html";
+    window.location.href =
+        "register.html";
 
 }
 
 
-/* =========================
-   LOAD USER
-========================= */
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const phoneInput =
+    document.getElementById(
+        "phoneNumber"
+    );
+
+
+const activateButton =
+    document.getElementById(
+        "activateButton"
+    );
+
+
+const statusText =
+    document.getElementById(
+        "statusText"
+    );
+
+
+const messageBox =
+    document.getElementById(
+        "messageBox"
+    );
+
+
+let checkingPayment = false;
+
+let checkInterval = null;
+
+
+/* =========================================
+   PREFILL MEMBER PHONE
+========================================= */
 
 const members =
-JSON.parse(
-    localStorage.getItem(
-        "kenyaSurveyMembers"
-    )
-) || {};
+    JSON.parse(
+        localStorage.getItem(
+            "kenyaSurveyMembers"
+        )
+    ) || {};
 
 
 const user =
-members[currentUser];
+    members[currentUser];
 
 
-if(!user){
+if (user && user.phone) {
 
-    window.location.href="register.html";
+    phoneInput.value =
+        user.phone;
 
-}
+} else {
 
-
-/* =========================
-   IF ALREADY ACTIVATED
-========================= */
-
-if(user.accountActivated===true){
-
-    window.location.href="surveys.html";
+    phoneInput.value =
+        currentUser;
 
 }
 
 
-/* =========================
-   FORMAT PHONE NUMBER
-========================= */
+/* =========================================
+   SHOW MESSAGE
+========================================= */
 
-function formatPhone(phone){
+function showMessage(
+    message,
+    type = "error"
+) {
 
-    phone =
-    phone.replace(/\s+/g,"");
+    messageBox.classList.remove(
+        "hidden",
+        "bg-red-500/10",
+        "border-red-500/20",
+        "text-red-300",
+        "bg-green-500/10",
+        "border-green-500/20",
+        "text-green-300",
+        "bg-yellow-500/10",
+        "border-yellow-500/20",
+        "text-yellow-300"
+    );
 
 
-    if(phone.startsWith("0")){
+    if (type === "success") {
 
-        return
-        "254"+
-        phone.substring(1);
+        messageBox.classList.add(
+            "bg-green-500/10",
+            "border",
+            "border-green-500/20",
+            "text-green-300"
+        );
+
+    }
+
+    else if (type === "pending") {
+
+        messageBox.classList.add(
+            "bg-yellow-500/10",
+            "border",
+            "border-yellow-500/20",
+            "text-yellow-300"
+        );
+
+    }
+
+    else {
+
+        messageBox.classList.add(
+            "bg-red-500/10",
+            "border",
+            "border-red-500/20",
+            "text-red-300"
+        );
 
     }
 
 
-    if(phone.startsWith("254")){
+    messageBox.textContent =
+        message;
 
-        return phone;
+}
+
+
+/* =========================================
+   FORMAT PHONE
+========================================= */
+
+function formatPhone(phone) {
+
+    phone =
+        String(phone)
+        .replace(/\s/g, "")
+        .replace("+", "");
+
+
+    if (phone.startsWith("0")) {
+
+        phone =
+            "254" +
+            phone.substring(1);
+
+    }
+
+
+    if (phone.startsWith("7")) {
+
+        phone =
+            "254" + phone;
+
+    }
+
+
+    if (!/^2547\d{8}$/.test(phone)) {
+
+        return null;
 
     }
 
@@ -312,26 +339,22 @@ function formatPhone(phone){
 }
 
 
-/* =========================
-   START PAYMENT
-========================= */
+/* =========================================
+   ACTIVATE ACCOUNT
+========================================= */
 
-async function startPayment(){
+async function activateAccount() {
 
-    const phoneInput =
-    document.getElementById(
-        "phoneNumber"
-    );
-
-
-    let phone =
-    phoneInput.value.trim();
+    const phone =
+        formatPhone(
+            phoneInput.value
+        );
 
 
-    if(!phone){
+    if (!phone) {
 
-        alert(
-            "Enter your M-Pesa phone number."
+        showMessage(
+            "Enter a valid Kenyan M-Pesa phone number."
         );
 
         return;
@@ -339,276 +362,513 @@ async function startPayment(){
     }
 
 
-    phone =
-    formatPhone(phone);
+    /* LOCK BUTTON */
+
+    activateButton.disabled =
+        true;
 
 
-    if(
-        phone.length !== 12 ||
-        !phone.startsWith("254")
-    ){
-
-        alert(
-            "Enter a valid Kenyan phone number."
-        );
-
-        return;
-
-    }
+    activateButton.innerHTML =
+        `<div class="spinner"></div>
+         Sending STK Push...`;
 
 
-    const payButton =
-    document.getElementById(
-        "payButton"
-    );
-
-
-    const statusBox =
-    document.getElementById(
-        "paymentStatus"
-    );
-
-
-    const statusText =
-    document.getElementById(
-        "statusText"
-    );
-
-
-    payButton.disabled=true;
-
-
-    payButton.innerHTML=`
-
-        <div class="flex items-center justify-center gap-2">
-
-            <div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-
-            Processing...
-
-        </div>
-
-    `;
-
-
-    statusBox.classList.remove(
-        "hidden"
-    );
-
-
-    statusText.textContent =
-    "Sending M-Pesa payment request...";
-
-
-    try{
-
-
-        /* =========================
-           SEND TO YOUR BACKEND
-        ========================= */
+    try {
 
         const response =
-        await fetch(
-            "/api/activate",
-            {
-
-                method:"POST",
-
-                headers:{
-                    "Content-Type":
-                    "application/json"
-                },
-
-                body:
-                JSON.stringify({
-
-                    phone:phone,
-
-                    amount:350,
-
-                    userPhone:currentUser
-
-                })
-
-            }
-        );
-
-
-        const data =
-        await response.json();
-
-
-        if(!response.ok){
-
-            throw new Error(
-                data.message ||
-                "Payment request failed."
-            );
-
-        }
-
-
-        statusText.textContent =
-        "STK Push sent. Check your phone and enter your M-Pesa PIN.";
-
-
-        /* START CHECKING PAYMENT */
-
-        checkPaymentStatus();
-
-
-    }catch(error){
-
-
-        statusBox.classList.remove(
-            "hidden"
-        );
-
-
-        statusText.textContent =
-        error.message ||
-        "Unable to send payment request.";
-
-
-        payButton.disabled=false;
-
-
-        payButton.textContent=
-        "Try Again";
-
-    }
-
-}
-
-
-/* =========================
-   CHECK PAYMENT STATUS
-========================= */
-
-let checkingPayment=false;
-
-
-async function checkPaymentStatus(){
-
-    if(checkingPayment){
-        return;
-    }
-
-
-    checkingPayment=true;
-
-
-    const statusText =
-    document.getElementById(
-        "statusText"
-    );
-
-
-    const interval =
-    setInterval(
-    async()=>{
-
-
-        try{
-
-
-            const response =
             await fetch(
-                "/api/check-activation",
+                "/api/activate",
                 {
+                    method: "POST",
 
-                    method:"POST",
-
-                    headers:{
+                    headers: {
                         "Content-Type":
-                        "application/json"
+                            "application/json"
                     },
 
                     body:
-                    JSON.stringify({
+                        JSON.stringify({
 
-                        userPhone:
-                        currentUser
+                            phone:
+                                phone,
 
-                    })
+                            userPhone:
+                                currentUser
+
+                        })
 
                 }
             );
 
 
-            const data =
-            await response.json();
+        /*
+        =====================================
+        IMPORTANT:
+        READ RESPONSE AS TEXT FIRST
+
+        This prevents:
+        Unexpected token 'A'
+        Unexpected token 'T'
+
+        when Vercel returns an HTML or
+        plain-text server error.
+        =====================================
+        */
+
+        const text =
+            await response.text();
 
 
-            if(data.activated===true){
+        console.log(
+            "ACTIVATE API RESPONSE:",
+            text
+        );
 
 
-                clearInterval(
-                    interval
-                );
+        let data;
 
 
-                /* UPDATE LOCAL DATA */
+        try {
 
-                user.accountActivated=true;
+            data =
+                JSON.parse(text);
 
-                user.activationAmount=350;
+        }
 
-                user.activationDate=
-                new Date().toLocaleString();
+        catch (jsonError) {
 
-
-                members[currentUser]=user;
-
-
-                localStorage.setItem(
-                    "kenyaSurveyMembers",
-                    JSON.stringify(members)
-                );
+            console.error(
+                "INVALID SERVER RESPONSE:",
+                text
+            );
 
 
-                statusText.textContent =
-                "Payment confirmed! Your account is activated.";
+            throw new Error(
 
+                text ||
+                "The server returned an invalid response."
 
-                setTimeout(()=>{
-
-                    window.location.href=
-                    "surveys.html";
-
-                },1200);
-
-
-            }
-
-
-        }catch(error){
-
-            console.log(
-                "Waiting for payment confirmation..."
             );
 
         }
 
 
-    },3000);
+        /*
+        =====================================
+        HTTP ERROR
+        =====================================
+        */
+
+        if (!response.ok) {
+
+            throw new Error(
+
+                data.message ||
+                data.error ||
+                "Unable to process activation."
+
+            );
+
+        }
+
+
+        /*
+        =====================================
+        API ERROR
+        =====================================
+        */
+
+        if (!data.success) {
+
+            throw new Error(
+
+                data.message ||
+                "Unable to send the M-Pesa request."
+
+            );
+
+        }
+
+
+        /*
+        =====================================
+        ALREADY ACTIVATED
+        =====================================
+        */
+
+        if (
+            data.activated === true
+        ) {
+
+            statusText.textContent =
+                "Account activated";
+
+
+            statusText.className =
+                "text-[13px] font-semibold text-[#0f9d58] mt-1";
+
+
+            showMessage(
+                "Your account is already activated.",
+                "success"
+            );
+
+
+            setTimeout(
+                () => {
+
+                    window.location.href =
+                        "surveys.html";
+
+                },
+                1000
+            );
+
+
+            return;
+
+        }
+
+
+        /*
+        =====================================
+        STK PUSH SENT
+        =====================================
+        */
+
+        statusText.textContent =
+            "Waiting for M-Pesa payment";
+
+
+        statusText.className =
+            "text-[13px] font-semibold text-yellow-400 mt-1";
+
+
+        showMessage(
+            "STK Push sent. Enter your M-Pesa PIN to complete payment.",
+            "pending"
+        );
+
+
+        activateButton.innerHTML =
+            `<div class="spinner"></div>
+             Waiting for payment...`;
+
+
+        checkingPayment =
+            true;
+
+
+        phoneInput.disabled =
+            true;
+
+
+        /* START CHECKING PAYMENT */
+
+        startPaymentCheck();
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "ACTIVATION ERROR:",
+            error
+        );
+
+
+        showMessage(
+            error.message ||
+            "Unable to connect to the activation server."
+        );
+
+
+        activateButton.disabled =
+            false;
+
+
+        activateButton.innerHTML =
+            "Activate for KSh 350";
+
+    }
 
 }
 
 
-/* =========================
-   BACK
-========================= */
+/* =========================================
+   CHECK ACTIVATION STATUS
+========================================= */
 
-function goBack(){
+function startPaymentCheck() {
 
-    window.location.href=
-    "dashboard.html";
+    if (checkInterval) {
+
+        clearInterval(
+            checkInterval
+        );
+
+    }
+
+
+    checkInterval =
+        setInterval(
+            checkPaymentStatus,
+            3000
+        );
+
+
+    checkPaymentStatus();
+
+}
+
+
+/* =========================================
+   CHECK PAYMENT
+========================================= */
+
+async function checkPaymentStatus() {
+
+    if (!checkingPayment) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/check-activation",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            userPhone:
+                                currentUser
+
+                        })
+
+                }
+            );
+
+
+        /*
+        READ AS TEXT FIRST
+        */
+
+        const text =
+            await response.text();
+
+
+        console.log(
+            "CHECK ACTIVATION RESPONSE:",
+            text
+        );
+
+
+        let data;
+
+
+        try {
+
+            data =
+                JSON.parse(text);
+
+        }
+
+        catch (jsonError) {
+
+            console.error(
+                "INVALID STATUS RESPONSE:",
+                text
+            );
+
+            return;
+
+        }
+
+
+        /*
+        PAYMENT SUCCESS
+        */
+
+        if (
+            data.activated === true
+        ) {
+
+            checkingPayment =
+                false;
+
+
+            clearInterval(
+                checkInterval
+            );
+
+
+            statusText.textContent =
+                "Account activated";
+
+
+            statusText.className =
+                "text-[13px] font-semibold text-[#0f9d58] mt-1";
+
+
+            showMessage(
+                "Payment confirmed successfully. Your account is now activated.",
+                "success"
+            );
+
+
+            activateButton.innerHTML =
+                "✓ Account Activated";
+
+
+            /*
+            SAVE ACTIVATION LOCALLY
+            */
+
+            const storedMembers =
+                JSON.parse(
+                    localStorage.getItem(
+                        "kenyaSurveyMembers"
+                    )
+                ) || {};
+
+
+            if (
+                storedMembers[currentUser]
+            ) {
+
+                storedMembers[currentUser]
+                    .activated =
+                    true;
+
+
+                localStorage.setItem(
+
+                    "kenyaSurveyMembers",
+
+                    JSON.stringify(
+                        storedMembers
+                    )
+
+                );
+
+            }
+
+
+            setTimeout(
+                () => {
+
+                    window.location.href =
+                        "surveys.html";
+
+                },
+                1500
+            );
+
+        }
+
+
+        /*
+        PAYMENT FAILED
+        */
+
+        else if (
+            data.status === "FAILED"
+        ) {
+
+            checkingPayment =
+                false;
+
+
+            clearInterval(
+                checkInterval
+            );
+
+
+            phoneInput.disabled =
+                false;
+
+
+            activateButton.disabled =
+                false;
+
+
+            activateButton.innerHTML =
+                "Try Again";
+
+
+            statusText.textContent =
+                "Payment not completed";
+
+
+            statusText.className =
+                "text-[13px] font-semibold text-red-400 mt-1";
+
+
+            showMessage(
+
+                data.message ||
+                "Payment was cancelled or failed. Please try again."
+
+            );
+
+        }
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "STATUS CHECK ERROR:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   BACK BUTTON
+========================================= */
+
+function goBack() {
+
+    if (checkingPayment) {
+
+        const leave =
+            confirm(
+                "A payment request is still pending. Do you want to leave?"
+            );
+
+
+        if (!leave) {
+
+            return;
+
+        }
+
+    }
+
+
+    window.location.href =
+        "dashboard.html";
 
 }
 
 </script>
-
 
 </body>
 </html>
