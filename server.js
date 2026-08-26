@@ -2,520 +2,406 @@ require("dotenv").config();
 
 const express = require("express");
 const axios = require("axios");
-const crypto = require("crypto");
+const cors = require("cors");
 const path = require("path");
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
-
-/*
-=========================================================
-KENYASURVEY SETTINGS
-=========================================================
-*/
-
-const SURVEY_PRICE = 349;
-
-const DARAJA_ENV =
-    process.env.DARAJA_ENV || "sandbox";
-
-const IS_SANDBOX =
-    DARAJA_ENV === "sandbox";
-
-
-/*
-=========================================================
-DARAJA URLS
-=========================================================
-*/
-
-const DARAJA_BASE_URL = IS_SANDBOX
-    ? "https://sandbox.safaricom.co.ke"
-    : "https://api.safaricom.co.ke";
-
-
-/*
-=========================================================
-EXPRESS
-=========================================================
-*/
-
+app.use(cors());
 app.use(express.json());
 
-app.use(
-    express.urlencoded({
-        extended: true
-    })
-);
+app.use(express.static(path.join(__dirname, "public")));
 
 
-/*
-=========================================================
-STATIC WEBSITE
-=========================================================
-*/
+/* =========================================
+   CONFIGURATION
+========================================= */
 
-app.use(
-    express.static(
-        path.join(__dirname, "public")
-    )
-);
+const PORT = process.env.PORT || 3000;
 
+const CONSUMER_KEY = process.env.CONSUMER_KEY;
+const CONSUMER_SECRET = process.env.CONSUMER_SECRET;
 
-/*
-=========================================================
-ENVIRONMENT VARIABLES
-=========================================================
+const BUSINESS_SHORT_CODE = process.env.BUSINESS_SHORT_CODE;
+const PASSKEY = process.env.PASSKEY;
 
-Your .env file should contain:
-
-DARAJA_CONSUMER_KEY=xxxxxxxx
-DARAJA_CONSUMER_SECRET=xxxxxxxx
-DARAJA_SHORTCODE=174379
-DARAJA_PASSKEY=xxxxxxxx
-DARAJA_CALLBACK_URL=https://your-domain.com/api/mpesa/callback
-SURVEY_SECRET=xxxxxxxxxxxxxxxx
-
-=========================================================
-*/
-
-const CONSUMER_KEY =
-    process.env.DARAJA_CONSUMER_KEY;
-
-const CONSUMER_SECRET =
-    process.env.DARAJA_CONSUMER_SECRET;
-
-const SHORTCODE =
-    process.env.DARAJA_SHORTCODE;
-
-const PASSKEY =
-    process.env.DARAJA_PASSKEY;
-
-const CALLBACK_URL =
-    process.env.DARAJA_CALLBACK_URL;
-
-const SURVEY_SECRET =
-    process.env.SURVEY_SECRET;
+const CALLBACK_URL = process.env.CALLBACK_URL;
 
 
-/*
-=========================================================
-CHECK CONFIGURATION
-=========================================================
-*/
+/* =========================================
+   DARAJA URLS
 
-if (!CONSUMER_KEY) {
-    console.warn(
-        "WARNING: DARAJA_CONSUMER_KEY is missing."
-    );
-}
+   SANDBOX:
+   https://sandbox.safaricom.co.ke
 
-if (!CONSUMER_SECRET) {
-    console.warn(
-        "WARNING: DARAJA_CONSUMER_SECRET is missing."
-    );
-}
+   PRODUCTION:
+   https://api.safaricom.co.ke
+========================================= */
 
-if (!SHORTCODE) {
-    console.warn(
-        "WARNING: DARAJA_SHORTCODE is missing."
-    );
-}
-
-if (!PASSKEY) {
-    console.warn(
-        "WARNING: DARAJA_PASSKEY is missing."
-    );
-
-}
-
-if (!CALLBACK_URL) {
-    console.warn(
-        "WARNING: DARAJA_CALLBACK_URL is missing."
-    );
-}
-
-if (!SURVEY_SECRET) {
-    console.warn(
-        "WARNING: SURVEY_SECRET is missing."
-    );
-}
+const BASE_URL =
+    process.env.NODE_ENV === "production"
+        ? "https://api.safaricom.co.ke"
+        : "https://sandbox.safaricom.co.ke";
 
 
-/*
-=========================================================
-TEMPORARY PAYMENT STORAGE
-=========================================================
+/* =========================================
+   TEMPORARY PAYMENT STORAGE
 
-For testing.
+   userPhone is the KenyaSurvey member number.
 
-For production, replace this with MySQL,
-PostgreSQL, MongoDB, etc.
+   In production, replace this with a
+   database such as MongoDB, MySQL, or
+   PostgreSQL.
+========================================= */
 
-=========================================================
-*/
-
-const payments = new Map();
+const activationPayments = {};
 
 
-/*
-=========================================================
-NORMALIZE KENYAN PHONE NUMBER
-=========================================================
-*/
-
-function normalizePhone(phone) {
-
-    let value =
-        String(phone || "")
-            .replace(/\D/g, "");
-
-    if (
-        value.startsWith("07") ||
-        value.startsWith("01")
-    ) {
-
-        value =
-            "254" +
-            value.substring(1);
-
-    }
-
-    if (
-        value.startsWith("+254")
-    ) {
-
-        value =
-            value.substring(1);
-
-    }
-
-    return value;
-}
-
-
-/*
-=========================================================
-VALIDATE PHONE
-=========================================================
-*/
-
-function validKenyanPhone(phone) {
-
-    return /^254(?:7|1)\d{8}$/.test(
-        phone
-    );
-
-}
-
-
-/*
-=========================================================
-GET DARAJA ACCESS TOKEN
-=========================================================
-*/
+/* =========================================
+   CREATE DARAJA ACCESS TOKEN
+========================================= */
 
 async function getAccessToken() {
 
-    const credentials =
-        Buffer.from(
-            `${CONSUMER_KEY}:${CONSUMER_SECRET}`
-        ).toString("base64");
+    try {
+
+        const auth = Buffer
+            .from(
+                `${CONSUMER_KEY}:${CONSUMER_SECRET}`
+            )
+            .toString("base64");
 
 
-    const response =
-        await axios.get(
-            `${DARAJA_BASE_URL}/oauth/v1/generate?grant_type=client_credentials`,
+        const response = await axios.get(
+
+            `${BASE_URL}/oauth/v1/generate?grant_type=client_credentials`,
+
             {
                 headers: {
-                    Authorization:
-                        `Basic ${credentials}`
+                    Authorization: `Basic ${auth}`
                 }
             }
+
         );
 
 
-    return response.data.access_token;
+        return response.data.access_token;
+
+    } catch (error) {
+
+        console.error(
+            "ACCESS TOKEN ERROR:",
+            error.response?.data || error.message
+        );
+
+        throw new Error(
+            "Unable to connect to M-Pesa."
+        );
+
+    }
 
 }
 
 
-/*
-=========================================================
-CREATE STK PASSWORD
-=========================================================
-*/
+/* =========================================
+   CREATE DARAJA PASSWORD
+========================================= */
 
-function createPassword(timestamp) {
+function getTimestamp() {
 
-    return Buffer.from(
-        `${SHORTCODE}${PASSKEY}${timestamp}`
-    ).toString("base64");
+    const now = new Date();
 
-}
+    const year = now.getFullYear();
 
-
-/*
-=========================================================
-INITIATE STK PUSH
-=========================================================
-*/
-
-async function initiateSTKPush(
-    phone,
-    amount,
-    accountReference
-) {
-
-    const accessToken =
-        await getAccessToken();
-
-
-    const now =
-        new Date();
-
-
-    const timestamp =
-        now.getFullYear().toString() +
-
+    const month =
         String(
             now.getMonth() + 1
-        ).padStart(2, "0") +
+        ).padStart(2, "0");
 
+    const day =
         String(
             now.getDate()
-        ).padStart(2, "0") +
+        ).padStart(2, "0");
 
+    const hour =
         String(
             now.getHours()
-        ).padStart(2, "0") +
+        ).padStart(2, "0");
 
+    const minute =
         String(
             now.getMinutes()
-        ).padStart(2, "0") +
+        ).padStart(2, "0");
 
+    const second =
         String(
             now.getSeconds()
         ).padStart(2, "0");
 
 
-    const password =
-        createPassword(
-            timestamp
-        );
-
-
-    const payload = {
-
-        BusinessShortCode:
-            SHORTCODE,
-
-        Password:
-            password,
-
-        Timestamp:
-            timestamp,
-
-        TransactionType:
-            "CustomerPayBillOnline",
-
-        Amount:
-            amount,
-
-        PartyA:
-            phone,
-
-        PartyB:
-            SHORTCODE,
-
-        PhoneNumber:
-            phone,
-
-        CallBackURL:
-            CALLBACK_URL,
-
-        AccountReference:
-            accountReference,
-
-        TransactionDesc:
-            "KenyaSurvey Access"
-
-    };
-
-
-    const response =
-        await axios.post(
-
-            `${DARAJA_BASE_URL}/mpesa/stkpush/v1/processrequest`,
-
-            payload,
-
-            {
-                headers: {
-
-                    Authorization:
-                        `Bearer ${accessToken}`,
-
-                    "Content-Type":
-                        "application/json"
-
-                }
-
-            }
-
-        );
-
-
-    return response.data;
+    return (
+        year +
+        month +
+        day +
+        hour +
+        minute +
+        second
+    );
 
 }
 
 
-/*
-=========================================================
-CREATE PAYMENT
-=========================================================
-*/
+function getPassword(timestamp) {
+
+    return Buffer
+        .from(
+            BUSINESS_SHORT_CODE +
+            PASSKEY +
+            timestamp
+        )
+        .toString("base64");
+
+}
+
+
+/* =========================================
+   FORMAT KENYAN PHONE NUMBER
+========================================= */
+
+function formatPhone(phone) {
+
+    if (!phone) {
+        return null;
+    }
+
+
+    phone =
+        String(phone)
+        .replace(/\s+/g, "")
+        .replace(/\+/g, "");
+
+
+    if (phone.startsWith("0")) {
+
+        phone =
+            "254" +
+            phone.substring(1);
+
+    }
+
+
+    if (phone.startsWith("7")) {
+
+        phone =
+            "254" + phone;
+
+    }
+
+
+    if (!/^2547\d{8}$/.test(phone)) {
+
+        return null;
+
+    }
+
+
+    return phone;
+
+}
+
+
+/* =========================================
+   ACTIVATE ACCOUNT
+
+   POST /api/activate
+
+   Called by activate.html
+========================================= */
 
 app.post(
-    "/api/payment/create",
+    "/api/activate",
+
     async (req, res) => {
 
         try {
 
-            const rawPhone =
-                req.body.phone;
-
-
-            const phone =
-                normalizePhone(
-                    rawPhone
+            const paymentPhone =
+                formatPhone(
+                    req.body.phone
                 );
 
 
-            if (
-                !validKenyanPhone(
-                    phone
-                )
-            ) {
+            const userPhone =
+                req.body.userPhone;
+
+
+            /* FIXED AMOUNT */
+
+            const amount = 350;
+
+
+            if (!paymentPhone) {
 
                 return res.status(400).json({
 
                     success: false,
 
                     message:
-                        "Enter a valid Kenyan phone number."
+                        "Enter a valid Kenyan M-Pesa phone number."
 
                 });
 
             }
 
 
-            /*
-            Unique reference for this payment.
-            */
+            if (!userPhone) {
 
-            const reference =
-                "KS" +
-                Date.now() +
-                crypto
-                    .randomBytes(3)
-                    .toString("hex")
-                    .toUpperCase();
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "User account not found."
+
+                });
+
+            }
 
 
-            /*
-            Save payment BEFORE STK Push.
-            */
+            /* CHECK EXISTING ACTIVATION */
 
-            const payment = {
+            if (
+                activationPayments[userPhone] &&
+                activationPayments[userPhone].activated === true
+            ) {
 
-                reference,
+                return res.json({
 
-                phone,
+                    success: true,
+
+                    activated: true,
+
+                    message:
+                        "Your account is already activated."
+
+                });
+
+            }
+
+
+            /* GET ACCESS TOKEN */
+
+            const accessToken =
+                await getAccessToken();
+
+
+            const timestamp =
+                getTimestamp();
+
+
+            const password =
+                getPassword(timestamp);
+
+
+            /* SEND STK PUSH */
+
+            const stkResponse =
+                await axios.post(
+
+                    `${BASE_URL}/mpesa/stkpush/v1/processrequest`,
+
+                    {
+
+                        BusinessShortCode:
+                            BUSINESS_SHORT_CODE,
+
+                        Password:
+                            password,
+
+                        Timestamp:
+                            timestamp,
+
+                        TransactionType:
+                            "CustomerPayBillOnline",
+
+                        Amount:
+                            amount,
+
+                        PartyA:
+                            paymentPhone,
+
+                        PartyB:
+                            BUSINESS_SHORT_CODE,
+
+                        PhoneNumber:
+                            paymentPhone,
+
+                        CallBackURL:
+                            CALLBACK_URL,
+
+                        AccountReference:
+                            "KenyaSurvey",
+
+                        TransactionDesc:
+                            "KenyaSurvey Account Activation"
+
+                    },
+
+                    {
+
+                        headers: {
+
+                            Authorization:
+                                `Bearer ${accessToken}`,
+
+                            "Content-Type":
+                                "application/json"
+
+                        }
+
+                    }
+
+                );
+
+
+            const data =
+                stkResponse.data;
+
+
+            /* STORE PENDING PAYMENT */
+
+            activationPayments[userPhone] = {
+
+                userPhone:
+                    userPhone,
+
+                paymentPhone:
+                    paymentPhone,
 
                 amount:
-                    SURVEY_PRICE,
+                    amount,
+
+                activated:
+                    false,
 
                 status:
-                    "pending",
-
-                checkoutRequestID:
-                    null,
+                    "PENDING",
 
                 merchantRequestID:
-                    null,
+                    data.MerchantRequestID,
 
-                mpesaReceipt:
-                    null,
-
-                resultCode:
-                    null,
-
-                resultDescription:
-                    null,
+                checkoutRequestID:
+                    data.CheckoutRequestID,
 
                 createdAt:
-                    Date.now(),
-
-                paidAt:
-                    null,
-
-                authorizationToken:
-                    null,
-
-                authorizedAt:
-                    null
+                    new Date().toISOString()
 
             };
 
 
-            /*
-            Send STK Push.
-            */
-
-            const stk =
-                await initiateSTKPush(
-
-                    phone,
-
-                    SURVEY_PRICE,
-
-                    reference
-
-                );
-
-
-            if (
-                stk.ResponseCode !==
-                "0"
-            ) {
-
-                return res.status(400).json({
-
-                    success: false,
-
-                    message:
-                        stk.ResponseDescription ||
-                        "STK Push could not be initiated."
-
-                });
-
-            }
-
-
-            payment.checkoutRequestID =
-                stk.CheckoutRequestID;
-
-
-            payment.merchantRequestID =
-                stk.MerchantRequestID;
-
-
-            payments.set(
-                stk.CheckoutRequestID,
-                payment
+            console.log(
+                "STK PUSH SENT:",
+                activationPayments[userPhone]
             );
 
 
@@ -523,23 +409,21 @@ app.post(
 
                 success: true,
 
+                activated: false,
+
                 message:
-                    "STK Push sent. Check your phone and enter your M-PESA PIN.",
+                    "STK Push sent successfully.",
 
                 checkoutRequestID:
-                    stk.CheckoutRequestID,
-
-                reference
+                    data.CheckoutRequestID
 
             });
-
 
         } catch (error) {
 
             console.error(
-                "STK ERROR:",
-                error.response?.data ||
-                error.message
+                "STK PUSH ERROR:",
+                error.response?.data || error.message
             );
 
 
@@ -548,30 +432,28 @@ app.post(
                 success: false,
 
                 message:
-                    "Unable to initiate M-PESA payment."
+                    error.response?.data?.errorMessage ||
+                    "Unable to send M-Pesa payment request."
 
             });
 
         }
 
     }
+
 );
 
 
-/*
-=========================================================
-M-PESA CALLBACK
-=========================================================
+/* =========================================
+   M-PESA CALLBACK
 
-Safaricom sends the actual payment result here.
-
-The website does NOT decide whether payment succeeded.
-
-=========================================================
-*/
+   Safaricom sends the final payment result
+   here after the customer enters the PIN.
+========================================= */
 
 app.post(
     "/api/mpesa/callback",
+
     (req, res) => {
 
         try {
@@ -589,20 +471,20 @@ app.post(
             );
 
 
-            const callback =
+            const callbackData =
                 req.body
-                    ?.Body
-                    ?.stkCallback;
+                ?.Body
+                ?.stkCallback;
 
 
-            if (!callback) {
+            if (!callbackData) {
 
-                return res.json({
+                return res.status(400).json({
 
-                    ResultCode: 0,
+                    ResultCode: 1,
 
                     ResultDesc:
-                        "Accepted"
+                        "Invalid callback data"
 
                 });
 
@@ -610,31 +492,44 @@ app.post(
 
 
             const checkoutRequestID =
-                callback.CheckoutRequestID;
+                callbackData.CheckoutRequestID;
 
 
             const resultCode =
-                Number(
-                    callback.ResultCode
-                );
+                callbackData.ResultCode;
 
 
-            const resultDescription =
-                callback.ResultDesc;
+            /* FIND PAYMENT */
+
+            let paymentKey = null;
 
 
-            const payment =
-                payments.get(
+            for (
+                const key in activationPayments
+            ) {
+
+                if (
+                    activationPayments[key]
+                    .checkoutRequestID ===
+                    checkoutRequestID
+                ) {
+
+                    paymentKey = key;
+
+                    break;
+
+                }
+
+            }
+
+
+            if (!paymentKey) {
+
+                console.log(
+                    "PAYMENT NOT FOUND:",
                     checkoutRequestID
                 );
 
-
-            if (!payment) {
-
-                console.warn(
-                    "Unknown CheckoutRequestID:",
-                    checkoutRequestID
-                );
 
                 return res.json({
 
@@ -648,56 +543,54 @@ app.post(
             }
 
 
-            payment.resultCode =
-                resultCode;
+            const payment =
+                activationPayments[paymentKey];
 
 
-            payment.resultDescription =
-                resultDescription;
+            /* SUCCESSFUL PAYMENT */
+
+            if (resultCode === 0) {
+
+                payment.status =
+                    "SUCCESS";
 
 
-            /*
-            =================================================
-            SUCCESSFUL PAYMENT
-            =================================================
-            */
-
-            if (
-                resultCode === 0
-            ) {
-
-                const metadata =
-                    callback
-                        .CallbackMetadata
-                        ?.Item || [];
+                payment.activated =
+                    true;
 
 
-                let receipt =
-                    null;
+                payment.activatedAt =
+                    new Date().toISOString();
 
 
-                let amount =
-                    null;
+                /* GET M-PESA RECEIPT */
+
+                const callbackItems =
+                    callbackData
+                    ?.CallbackMetadata
+                    ?.Item || [];
 
 
-                let paidPhone =
-                    null;
-
-
-                for (
-                    const item
-                    of metadata
-                ) {
+                callbackItems.forEach(item => {
 
                     if (
                         item.Name ===
                         "MpesaReceiptNumber"
                     ) {
 
-                        receipt =
-                            String(
-                                item.Value
-                            );
+                        payment.mpesaReceipt =
+                            item.Value;
+
+                    }
+
+
+                    if (
+                        item.Name ===
+                        "TransactionDate"
+                    ) {
+
+                        payment.transactionDate =
+                            item.Value;
 
                     }
 
@@ -707,85 +600,48 @@ app.post(
                         "Amount"
                     ) {
 
-                        amount =
-                            Number(
-                                item.Value
-                            );
+                        payment.paidAmount =
+                            item.Value;
 
                     }
 
-
-                    if (
-                        item.Name ===
-                        "PhoneNumber"
-                    ) {
-
-                        paidPhone =
-                            String(
-                                item.Value
-                            );
-
-                    }
-
-                }
+                });
 
 
-                /*
-                IMPORTANT:
-
-                Never authorize the survey unless
-                the callback amount is exactly KSh 349.
-                */
-
-                if (
-                    amount !==
-                    SURVEY_PRICE
-                ) {
-
-                    payment.status =
-                        "failed";
-
-                    payment.resultDescription =
-                        "Incorrect payment amount.";
-
-                } else {
-
-                    payment.status =
-                        "paid";
-
-
-                    payment.mpesaReceipt =
-                        receipt;
-
-
-                    payment.phone =
-                        paidPhone ||
-                        payment.phone;
-
-
-                    payment.paidAt =
-                        Date.now();
-
-                }
-
-            } else {
-
-                /*
-                User cancelled,
-                insufficient funds,
-                timeout, etc.
-                */
-
-                payment.status =
-                    "failed";
+                console.log(
+                    "ACTIVATION SUCCESSFUL:",
+                    payment
+                );
 
             }
 
 
-            payments.set(
-                checkoutRequestID,
-                payment
-            );
+            /* FAILED OR CANCELLED */
+
+            else {
+
+                payment.status =
+                    "FAILED";
+
+
+                payment.activated =
+                    false;
+
+
+                payment.resultCode =
+                    resultCode;
+
+
+                payment.resultDesc =
+                    callbackData.ResultDesc;
+
+
+                console.log(
+                    "PAYMENT FAILED:",
+                    payment
+                );
+
+            }
 
 
             return res.json({
@@ -793,10 +649,9 @@ app.post(
                 ResultCode: 0,
 
                 ResultDesc:
-                    "Accepted"
+                    "Callback received successfully"
 
             });
-
 
         } catch (error) {
 
@@ -806,10 +661,6 @@ app.post(
             );
 
 
-            /*
-            Always acknowledge the callback.
-            */
-
             return res.json({
 
                 ResultCode: 0,
@@ -822,40 +673,51 @@ app.post(
         }
 
     }
+
 );
 
 
-/*
-=========================================================
-CHECK PAYMENT STATUS
-=========================================================
+/* =========================================
+   CHECK ACTIVATION STATUS
 
-surveys.html uses this while waiting for
-the STK payment.
+   Called every 3 seconds by activate.html
+========================================= */
 
-=========================================================
-*/
+app.post(
+    "/api/check-activation",
 
-app.get(
-    "/api/payment/status/:checkoutRequestID",
     (req, res) => {
 
-        const id =
-            req.params.checkoutRequestID;
+        const userPhone =
+            req.body.userPhone;
+
+
+        if (!userPhone) {
+
+            return res.status(400).json({
+
+                activated: false,
+
+                message:
+                    "User account not found."
+
+            });
+
+        }
 
 
         const payment =
-            payments.get(id);
+            activationPayments[userPhone];
 
 
         if (!payment) {
 
-            return res.status(404).json({
+            return res.json({
 
-                success: false,
+                activated: false,
 
                 status:
-                    "not_found"
+                    "NO_PAYMENT"
 
             });
 
@@ -864,242 +726,62 @@ app.get(
 
         return res.json({
 
-            success: true,
+            activated:
+                payment.activated === true,
 
             status:
                 payment.status,
 
-            amount:
-                payment.amount,
-
-            receipt:
-                payment.mpesaReceipt
+            message:
+                payment.resultDesc || null
 
         });
 
     }
+
 );
 
 
-/*
-=========================================================
-VERIFY M-PESA CONFIRMATION CODE
-=========================================================
-
-The code must match the receipt that came from
-the verified Safaricom callback.
-
-=========================================================
-*/
-
-app.post(
-    "/api/payment/verify",
-    (req, res) => {
-
-        try {
-
-            const {
-                checkoutRequestID,
-                confirmationCode
-            } = req.body;
-
-
-            if (
-                !checkoutRequestID ||
-                !confirmationCode
-            ) {
-
-                return res.status(400).json({
-
-                    success: false,
-
-                    message:
-                        "Payment details are required."
-
-                });
-
-            }
-
-
-            const payment =
-                payments.get(
-                    checkoutRequestID
-                );
-
-
-            if (!payment) {
-
-                return res.status(404).json({
-
-                    success: false,
-
-                    message:
-                        "Payment was not found."
-
-                });
-
-            }
-
-
-            /*
-            Payment must already have been
-            confirmed by Safaricom.
-            */
-
-            if (
-                payment.status !==
-                "paid"
-            ) {
-
-                return res.status(402).json({
-
-                    success: false,
-
-                    message:
-                        "KSh 349 payment has not yet been confirmed."
-
-                });
-
-            }
-
-
-            const submittedCode =
-                String(
-                    confirmationCode
-                )
-                .trim()
-                .toUpperCase();
-
-
-            const realCode =
-                String(
-                    payment.mpesaReceipt ||
-                    ""
-                )
-                .trim()
-                .toUpperCase();
-
-
-            if (
-                !realCode ||
-                submittedCode !==
-                realCode
-            ) {
-
-                return res.status(403).json({
-
-                    success: false,
-
-                    message:
-                        "Invalid M-PESA confirmation code."
-
-                });
-
-            }
-
-
-            /*
-            =================================================
-            CREATE AUTHORIZATION TOKEN
-            =================================================
-            */
-
-            const token =
-                crypto
-                    .randomBytes(48)
-                    .toString("hex");
-
-
-            payment.status =
-                "authorized";
-
-
-            payment.authorizationToken =
-                token;
-
-
-            payment.authorizedAt =
-                Date.now();
-
-
-            payments.set(
-                checkoutRequestID,
-                payment
-            );
-
-
-            return res.json({
-
-                success: true,
-
-                authorizationToken:
-                    token,
-
-                redirect:
-                    "/question.html"
-
-            });
-
-
-        } catch (error) {
-
-            console.error(
-                "VERIFY ERROR:",
-                error
-            );
-
-
-            return res.status(500).json({
-
-                success: false,
-
-                message:
-                    "Unable to verify payment."
-
-            });
-
-        }
-
-    }
-);
-
-
-/*
-=========================================================
-SURVEY AUTHORIZATION CHECK
-=========================================================
-
-question.html calls this before displaying
-questions.
-
-=========================================================
-*/
+/* =========================================
+   HEALTH CHECK
+========================================= */
 
 app.get(
-    "/api/survey/access",
+    "/api/status",
+
     (req, res) => {
 
-        try {
+        res.json({
 
-            const header =
-                req.headers.authorization;
+            success: true,
 
+            message:
+                "KenyaSurvey server is running."
 
-            if (
-                !header ||
-                !header.startsWith(
-                    "Bearer "
-                )
-            ) {
+        });
 
-                return res.status(401).json({
+    }
 
-                    authorized: false
-
-                });
-
-            }
+);
 
 
-            const token =
-                head
+/* =========================================
+   START SERVER
+========================================= */
+
+app.listen(
+    PORT,
+
+    () => {
+
+        console.log(
+            `KenyaSurvey server running on port ${PORT}`
+        );
+
+        console.log(
+            `http://localhost:${PORT}`
+        );
+
+    }
+
+);
