@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Activate Account - KenyaSurvey</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+*{
+    font-family:Inter,Arial,sans-serif;
+}
+
+body{
+    background:#08120a;
+}
+</style>
+
+</head>
+
+<body class="bg-[#08120a] text-white min-h-screen flex items-center justify-center p-4">
+
+
+<div class="w-full max-w-[430px]">
+
+
+    <!-- BACK -->
+    <button
+        onclick="goBack()"
+        class="flex items-center gap-2 text-[12px] text-white/50 hover:text-white mb-5">
+
+        <span class="text-[18px]">←</span>
+        Back to Dashboard
+
+    </button>
+
+
+    <!-- ACTIVATION CARD -->
+    <div class="bg-[#132016] border border-[#1f3522] rounded-[24px] p-6">
+
+
+        <!-- ICON -->
+        <div class="w-14 h-14 bg-[#0f9d58]/15 rounded-2xl grid place-items-center text-[26px]">
+
+            🛡️
+
+        </div>
+
+
+        <h1 class="text-[22px] font-extrabold mt-5">
+
+            Activate Your Account
+
+        </h1>
+
+
+        <p class="text-[12px] text-white/50 leading-5 mt-2">
+
+            Activate your KenyaSurvey participant account to access available research surveys.
+
+        </p>
+
+
+        <!-- ACTIVATION AMOUNT -->
+        <div class="mt-6 bg-[#0a160e] border border-[#1e3a24] rounded-2xl p-5">
+
+            <p class="text-[10px] tracking-[0.12em] text-white/40 font-bold">
+
+                ACCOUNT ACTIVATION FEE
+
+            </p>
+
+
+            <p class="text-[30px] font-black text-[#0f9d58] mt-2">
+
+                KSh 350
+
+            </p>
+
+
+            <p class="text-[10px] text-white/40 mt-2">
+
+                One-time account activation payment.
+
+            </p>
+
+        </div>
+
+
+        <!-- PHONE -->
+        <div class="mt-5">
+
+            <label class="text-[12px] font-semibold text-white/70">
+
+                M-Pesa Phone Number
+
+            </label>
+
+
+            <div class="mt-2 relative">
+
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/30">
+
+                    📱
+
+                </span>
+
+
+                <input
+                    id="phone"
+                    type="tel"
+                    placeholder="0712345678"
+                    class="w-full h-[50px] bg-[#0a160e] border border-[#1e3a24] rounded-xl pl-11 pr-4 text-[13px] text-white outline-none focus:border-[#0f9d58]">
+
+            </div>
+
+        </div>
+
+
+        <!-- ACTIVATE BUTTON -->
+        <button
+            id="activateBtn"
+            onclick="activateAccount()"
+            class="w-full h-[52px] mt-5 bg-[#0f9d58] hover:bg-[#0c874a] rounded-xl text-[14px] font-bold transition">
+
+            Activate Account · KSh 350
+
+        </button>
+
+
+        <!-- STATUS -->
+        <div
+            id="statusBox"
+            class="hidden mt-4 bg-[#0f9d58]/10 border border-[#0f9d58]/20 rounded-xl p-4">
+
+            <p
+                id="statusText"
+                class="text-[11px] text-[#0f9d58] text-center font-semibold">
+
+            </p>
+
+        </div>
+
+
+        <!-- SECURITY NOTE -->
+        <div class="mt-5 pt-5 border-t border-white/5">
+
+            <p class="text-[10px] text-white/35 leading-5 text-center">
+
+                Payment is processed through M-Pesa. KenyaSurvey does not collect or store your M-Pesa PIN.
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+
+/* ==============================
+   CHECK LOGGED IN USER
+============================== */
+
+const currentUser =
+    localStorage.getItem(
+        "kenyaSurveyCurrentUser"
+    );
+
+
+if (!currentUser) {
+
+    window.location.href =
+        "register.html";
+
+}
+
+
+/* ==============================
+   LOAD USER
+============================== */
+
+const members =
+    JSON.parse(
+        localStorage.getItem(
+            "kenyaSurveyMembers"
+        )
+    ) || {};
+
+
+const user =
+    members[currentUser];
+
+
+if (!user) {
+
+    window.location.href =
+        "register.html";
+
+}
+
+
+/* ==============================
+   IF ALREADY ACTIVATED
+============================== */
+
+if (user.accountActivated === true) {
+
+    window.location.href =
+        "surveys.html";
+
+}
+
+
+/* ==============================
+   BACK
+============================== */
+
+function goBack(){
+
+    window.location.href =
+        "dashboard.html";
+
+}
+
+
+/* ==============================
+   ACTIVATE ACCOUNT
+============================== */
+
+async function activateAccount(){
+
+    const phone =
+        document
+        .getElementById("phone")
+        .value
+        .trim();
+
+
+    const button =
+        document
+        .getElementById("activateBtn");
+
+
+    const statusBox =
+        document
+        .getElementById("statusBox");
+
+
+    const statusText =
+        document
+        .getElementById("statusText");
+
+
+    /* PHONE VALIDATION */
+
+    if(
+        !/^0[17]\d{8}$/.test(phone)
+    ){
+
+        statusBox.classList.remove("hidden");
+
+        statusBox.classList.remove(
+            "bg-[#0f9d58]/10",
+            "border-[#0f9d58]/20"
+        );
+
+        statusBox.classList.add(
+            "bg-red-500/10",
+            "border-red-500/20"
+        );
+
+        statusText.classList.remove(
+            "text-[#0f9d58]"
+        );
+
+        statusText.classList.add(
+            "text-red-400"
+        );
+
+
+        statusText.textContent =
+            "Enter a valid Kenyan M-Pesa number.";
+
+        return;
+
+    }
+
+
+    /* LOADING */
+
+    button.disabled = true;
+
+    button.textContent =
+        "Sending M-Pesa Request...";
+
+
+    statusBox.classList.remove("hidden");
+
+    statusText.classList.remove(
+        "text-red-400"
+    );
+
+    statusText.classList.add(
+        "text-[#0f9d58]"
+    );
+
+
+    statusText.textContent =
+        "Please wait while we send the KSh 350 M-Pesa request.";
+
+
+    try{
+
+
+        /*
+        =================================
+
+        CONNECT YOUR STK PUSH API HERE
+
+        POST TO YOUR BACKEND
+
+        =================================
+        */
+
+
+        const response =
+            await fetch(
+                "/api/activate-account",
+                {
+
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                        "application/json"
+                    },
+
+                    body:
+                    JSON.stringify({
+
+                        phone:phone,
+
+                        amount:350,
+
+                        userPhone:currentUser
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            throw new Error(
+                data.message ||
+                "Unable to send payment request."
+            );
+
+        }
+
+
+        button.textContent =
+            "Waiting for M-Pesa Payment...";
+
+
+        statusText.textContent =
+            "An M-Pesa prompt has been sent to your phone. Enter your M-Pesa PIN to complete payment.";
+
+
+        /*
+        PAYMENT STATUS CHECK
+        Backend must confirm payment.
+        Do not activate only from frontend.
+        */
+
+
+        checkPaymentStatus();
+
+
+    }
+
+
+    catch(error){
+
+
+        button.disabled = false;
+
+
+        button.textContent =
+            "Activate Account · KSh 350";
+
+
+        statusBox.classList.remove("hidden");
+
+
+        statusBox.classList.remove(
+            "bg-[#0f9d58]/10",
+            "border-[#0f9d58]/20"
+        );
+
+
+        statusBox.classList.add(
+            "bg-red-500/10",
+            "border-red-500/20"
+        );
+
+
+        statusText.classList.remove(
+            "text-[#0f9d58]"
+        );
+
+
+        statusText.classList.add(
+            "text-red-400"
+        );
+
+
+        statusText.textContent =
+            error.message;
+
+    }
+
+}
+
+
+
+/* ==============================
+   CHECK PAYMENT CONFIRMATION
+============================== */
+
+let checkingPayment = false;
+
+
+function checkPaymentStatus(){
+
+
+    if(checkingPayment){
+
+        return;
+
+    }
+
+
+    checkingPayment = true;
+
+
+    const interval =
+        setInterval(
+            async ()=>{
+
+
+                try{
+
+
+                    const response =
+                        await fetch(
+
+                            "/api/check-activation/" +
+                            encodeURIComponent(
+                                currentUser
+                            )
+
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if(
+                        data.success &&
+                        data.activated === true
+                    ){
+
+
+                        clearInterval(
+                            interval
+                        );
+
+
+                        /*
+                        UPDATE LOCAL STORAGE
+                        FOR DISPLAY PURPOSES
+                        */
+
+                        user.accountActivated =
+                            true;
+
+
+                        members[currentUser] =
+                            user;
+
+
+                        localStorage.setItem(
+
+                            "kenyaSurveyMembers",
+
+                            JSON.stringify(
+                                members
+                            )
+
+                        );
+
+
+                        document
+                        .getElementById(
+                            "statusText"
+                        )
+                        .textContent =
+                            "Payment confirmed. Your account has been activated.";
+
+
+                        setTimeout(
+                            ()=>{
+
+                                window.location.href =
+                                    "surveys.html";
+
+                            },
+                            1500
+                        );
+
+
+                    }
+
+
+                }
+
+
+                catch(error){
+
+                    console.log(
+                        "Checking payment..."
+                    );
+
+                }
+
+
+            },
+
+            3000
+
+        );
+
+}
+
+</script>
+
+
+</body>
+  </html>
