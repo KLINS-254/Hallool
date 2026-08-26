@@ -12,6 +12,9 @@ const PASSKEY = process.env.PASSKEY;
 
 const CALLBACK_URL = process.env.CALLBACK_URL;
 
+const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL;
+const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+
 const BASE_URL =
     process.env.NODE_ENV === "production"
         ? "https://api.safaricom.co.ke"
@@ -49,42 +52,20 @@ function formatPhone(phone) {
 
 
 /* =========================================
-   CREATE TIMESTAMP
+   CREATE DARAJA TIMESTAMP
 ========================================= */
 
 function getTimestamp() {
 
     const now = new Date();
 
-    const year = now.getFullYear();
-
-    const month = String(
-        now.getMonth() + 1
-    ).padStart(2, "0");
-
-    const day = String(
-        now.getDate()
-    ).padStart(2, "0");
-
-    const hour = String(
-        now.getHours()
-    ).padStart(2, "0");
-
-    const minute = String(
-        now.getMinutes()
-    ).padStart(2, "0");
-
-    const second = String(
-        now.getSeconds()
-    ).padStart(2, "0");
-
     return (
-        year +
-        month +
-        day +
-        hour +
-        minute +
-        second
+        now.getFullYear() +
+        String(now.getMonth() + 1).padStart(2, "0") +
+        String(now.getDate()).padStart(2, "0") +
+        String(now.getHours()).padStart(2, "0") +
+        String(now.getMinutes()).padStart(2, "0") +
+        String(now.getSeconds()).padStart(2, "0")
     );
 }
 
@@ -105,7 +86,7 @@ function getPassword(timestamp) {
 
 
 /* =========================================
-   GET ACCESS TOKEN
+   GET DARAJA ACCESS TOKEN
 ========================================= */
 
 async function getAccessToken() {
@@ -116,16 +97,47 @@ async function getAccessToken() {
 
 
     const response = await axios.get(
+
         `${BASE_URL}/oauth/v1/generate?grant_type=client_credentials`,
+
         {
             headers: {
                 Authorization: `Basic ${auth}`
             }
         }
+
     );
 
 
     return response.data.access_token;
+
+}
+
+
+/* =========================================
+   SAVE PENDING PAYMENT TO REDIS
+========================================= */
+
+async function savePayment(
+    checkoutRequestID,
+    paymentData
+) {
+
+    await axios.post(
+
+        `${REDIS_URL}/set/activation:${encodeURIComponent(checkoutRequestID)}`,
+
+        JSON.stringify(paymentData),
+
+        {
+            headers: {
+                Authorization: `Bearer ${REDIS_TOKEN}`,
+                "Content-Type": "application/json"
+            }
+        }
+
+    );
+
 }
 
 
@@ -134,8 +146,6 @@ async function getAccessToken() {
 ========================================= */
 
 module.exports = async (req, res) => {
-
-    /* ONLY ALLOW POST */
 
     if (req.method !== "POST") {
 
@@ -154,13 +164,15 @@ module.exports = async (req, res) => {
 
 
         const userPhone =
-            req.body.userPhone;
+            formatPhone(req.body.userPhone);
 
-
-        /* FIXED ACTIVATION AMOUNT */
 
         const amount = 350;
 
+
+        /* ==============================
+           VALIDATION
+        ============================== */
 
         if (!paymentPhone) {
 
@@ -190,18 +202,18 @@ module.exports = async (req, res) => {
         }
 
 
-        /* CHECK ENVIRONMENT VARIABLES */
-
         if (
             !CONSUMER_KEY ||
             !CONSUMER_SECRET ||
             !BUSINESS_SHORT_CODE ||
             !PASSKEY ||
-            !CALLBACK_URL
+            !CALLBACK_URL ||
+            !REDIS_URL ||
+            !REDIS_TOKEN
         ) {
 
             console.error(
-                "Missing M-Pesa environment variables."
+                "Missing required environment variables."
             );
 
 
@@ -217,13 +229,13 @@ module.exports = async (req, res) => {
         }
 
 
-        /* GET ACCESS TOKEN */
+        /* ==============================
+           GET ACCESS TOKEN
+        ============================== */
 
         const accessToken =
             await getAccessToken();
 
-
-        /* CREATE PASSWORD */
 
         const timestamp =
             getTimestamp();
@@ -233,7 +245,9 @@ module.exports = async (req, res) => {
             getPassword(timestamp);
 
 
-        /* SEND STK PUSH */
+        /* ==============================
+           SEND STK PUSH
+        ============================== */
 
         const stkResponse =
             await axios.post(
@@ -273,7 +287,7 @@ module.exports = async (req, res) => {
                         "KenyaSurvey",
 
                     TransactionDesc:
-                        "KenyaSurvey Account Activation"
+                        "Account Activation"
 
                 },
 
@@ -298,26 +312,64 @@ module.exports = async (req, res) => {
             stkResponse.data;
 
 
-        console.log(
-            "STK PUSH SENT:",
-            data
-        );
+        /* ==============================
+           SAVE PENDING PAYMENT
+        ============================== */
 
+        const paymentData = {
 
-        /* RETURN RESPONSE TO activate.html */
+            userPhone: userPhone,
 
-        return res.status(200).json({
+            paymentPhone: paymentPhone,
 
-            success: true,
-
-            message:
-                "STK Push sent successfully. Enter your M-Pesa PIN to complete payment.",
+            amount: amount,
 
             checkoutRequestID:
                 data.CheckoutRequestID,
 
             merchantRequestID:
                 data.MerchantRequestID,
+
+            status:
+                "PENDING",
+
+            activated:
+                false,
+
+            createdAt:
+                new Date().toISOString()
+
+        };
+
+
+        await savePayment(
+
+            data.CheckoutRequestID,
+
+            paymentData
+
+        );
+
+
+        console.log(
+            "PENDING ACTIVATION SAVED:",
+            paymentData
+        );
+
+
+        /* ==============================
+           RETURN SUCCESS
+        ============================== */
+
+        return res.status(200).json({
+
+            success: true,
+
+            message:
+                "STK Push sent. Enter your M-Pesa PIN to pay KSh 350.",
+
+            checkoutRequestID:
+                data.CheckoutRequestID,
 
             amount:
                 amount
@@ -330,8 +382,9 @@ module.exports = async (req, res) => {
     catch (error) {
 
         console.error(
-            "STK PUSH ERROR:",
-            error.response?.data || error.message
+            "ACTIVATION ERROR:",
+            error.response?.data ||
+            error.message
         );
 
 
