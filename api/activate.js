@@ -12,13 +12,208 @@ const PASSKEY = process.env.PASSKEY;
 
 const CALLBACK_URL = process.env.CALLBACK_URL;
 
-const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL;
-const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+const DARAJA_BASE_URL =
+    process.env.DARAJA_BASE_URL ||
+    "https://sandbox.safaricom.co.ke";
 
-const BASE_URL =
-    process.env.NODE_ENV === "production"
-        ? "https://api.safaricom.co.ke"
-        : "https://sandbox.safaricom.co.ke";
+
+/* =========================================
+   TEMPORARY PAYMENT STORAGE
+
+   NOTE:
+   This storage is temporary and may reset on
+   Vercel. Redis/database storage should be
+   used for production.
+========================================= */
+
+const activationPayments = global.activationPayments || {};
+
+global.activationPayments = activationPayments;
+
+
+/* =========================================
+   VALIDATE ENVIRONMENT VARIABLES
+========================================= */
+
+function validateEnvironment() {
+
+    const required = {
+
+        CONSUMER_KEY,
+        CONSUMER_SECRET,
+        BUSINESS_SHORT_CODE,
+        PASSKEY,
+        CALLBACK_URL
+
+    };
+
+
+    const missing = Object.keys(required)
+        .filter(
+            key =>
+                !required[key] ||
+                String(required[key])
+                    .includes("your_")
+        );
+
+
+    if (missing.length > 0) {
+
+        throw new Error(
+            "Missing environment variables: " +
+            missing.join(", ")
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   CREATE DARAJA ACCESS TOKEN
+========================================= */
+
+async function getAccessToken() {
+
+    const auth = Buffer
+        .from(
+            `${CONSUMER_KEY}:${CONSUMER_SECRET}`
+        )
+        .toString("base64");
+
+
+    try {
+
+        const response = await axios.get(
+
+            `${DARAJA_BASE_URL}/oauth/v1/generate?grant_type=client_credentials`,
+
+            {
+
+                headers: {
+
+                    Authorization:
+                        `Basic ${auth}`
+
+                }
+
+            }
+
+        );
+
+
+        const accessToken =
+            response.data.access_token;
+
+
+        if (!accessToken) {
+
+            throw new Error(
+                "No access token returned by Daraja."
+            );
+
+        }
+
+
+        return accessToken;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "ACCESS TOKEN ERROR:",
+            error.response?.data ||
+            error.message
+        );
+
+
+        throw new Error(
+
+            error.response?.data?.errorMessage ||
+            error.response?.data?.error_description ||
+            "Unable to generate M-Pesa access token."
+
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   GENERATE TIMESTAMP
+
+   Format:
+   YYYYMMDDHHmmss
+========================================= */
+
+function getTimestamp() {
+
+    const now = new Date();
+
+
+    const year =
+        now.getFullYear();
+
+
+    const month =
+        String(
+            now.getMonth() + 1
+        ).padStart(2, "0");
+
+
+    const day =
+        String(
+            now.getDate()
+        ).padStart(2, "0");
+
+
+    const hour =
+        String(
+            now.getHours()
+        ).padStart(2, "0");
+
+
+    const minute =
+        String(
+            now.getMinutes()
+        ).padStart(2, "0");
+
+
+    const second =
+        String(
+            now.getSeconds()
+        ).padStart(2, "0");
+
+
+    return (
+        year +
+        month +
+        day +
+        hour +
+        minute +
+        second
+    );
+
+}
+
+
+/* =========================================
+   GENERATE STK PASSWORD
+========================================= */
+
+function getPassword(timestamp) {
+
+    return Buffer
+        .from(
+            BUSINESS_SHORT_CODE +
+            PASSKEY +
+            timestamp
+        )
+        .toString("base64");
+
+}
 
 
 /* =========================================
@@ -28,130 +223,67 @@ const BASE_URL =
 function formatPhone(phone) {
 
     if (!phone) {
+
         return null;
+
     }
 
-    phone = String(phone)
-        .replace(/\s+/g, "")
-        .replace(/\+/g, "");
+
+    phone =
+        String(phone)
+            .trim()
+            .replace(/\s+/g, "")
+            .replace(/^\+/, "");
+
 
     if (phone.startsWith("0")) {
-        phone = "254" + phone.substring(1);
+
+        phone =
+            "254" +
+            phone.substring(1);
+
     }
 
-    if (phone.startsWith("7")) {
-        phone = "254" + phone;
+
+    else if (phone.startsWith("7")) {
+
+        phone =
+            "254" + phone;
+
     }
+
 
     if (!/^2547\d{8}$/.test(phone)) {
+
         return null;
+
     }
 
+
     return phone;
-}
-
-
-/* =========================================
-   CREATE DARAJA TIMESTAMP
-========================================= */
-
-function getTimestamp() {
-
-    const now = new Date();
-
-    return (
-        now.getFullYear() +
-        String(now.getMonth() + 1).padStart(2, "0") +
-        String(now.getDate()).padStart(2, "0") +
-        String(now.getHours()).padStart(2, "0") +
-        String(now.getMinutes()).padStart(2, "0") +
-        String(now.getSeconds()).padStart(2, "0")
-    );
-}
-
-
-/* =========================================
-   CREATE DARAJA PASSWORD
-========================================= */
-
-function getPassword(timestamp) {
-
-    return Buffer.from(
-        BUSINESS_SHORT_CODE +
-        PASSKEY +
-        timestamp
-    ).toString("base64");
 
 }
 
 
 /* =========================================
-   GET DARAJA ACCESS TOKEN
-========================================= */
+   VERCEL SERVERLESS FUNCTION
 
-async function getAccessToken() {
-
-    const auth = Buffer.from(
-        `${CONSUMER_KEY}:${CONSUMER_SECRET}`
-    ).toString("base64");
-
-
-    const response = await axios.get(
-
-        `${BASE_URL}/oauth/v1/generate?grant_type=client_credentials`,
-
-        {
-            headers: {
-                Authorization: `Basic ${auth}`
-            }
-        }
-
-    );
-
-
-    return response.data.access_token;
-
-}
-
-
-/* =========================================
-   SAVE PENDING PAYMENT TO REDIS
-========================================= */
-
-async function savePayment(
-    checkoutRequestID,
-    paymentData
-) {
-
-    await axios.post(
-
-        `${REDIS_URL}/set/activation:${encodeURIComponent(checkoutRequestID)}`,
-
-        JSON.stringify(paymentData),
-
-        {
-            headers: {
-                Authorization: `Bearer ${REDIS_TOKEN}`,
-                "Content-Type": "application/json"
-            }
-        }
-
-    );
-
-}
-
-
-/* =========================================
    POST /api/activate
 ========================================= */
 
 module.exports = async (req, res) => {
 
+    /* ALLOW POST ONLY */
+
     if (req.method !== "POST") {
 
         return res.status(405).json({
+
             success: false,
-            message: "Method not allowed."
+
+            message:
+                "Method not allowed. Use POST."
+
         });
 
     }
@@ -159,20 +291,23 @@ module.exports = async (req, res) => {
 
     try {
 
+        validateEnvironment();
+
+
         const paymentPhone =
-            formatPhone(req.body.phone);
+            formatPhone(
+                req.body?.phone
+            );
 
 
         const userPhone =
-            formatPhone(req.body.userPhone);
+            req.body?.userPhone;
 
 
         const amount = 350;
 
 
-        /* ==============================
-           VALIDATION
-        ============================== */
+        /* VALIDATE PHONE */
 
         if (!paymentPhone) {
 
@@ -188,6 +323,8 @@ module.exports = async (req, res) => {
         }
 
 
+        /* VALIDATE USER */
+
         if (!userPhone) {
 
             return res.status(400).json({
@@ -202,40 +339,38 @@ module.exports = async (req, res) => {
         }
 
 
+        /* CHECK ACTIVATION */
+
         if (
-            !CONSUMER_KEY ||
-            !CONSUMER_SECRET ||
-            !BUSINESS_SHORT_CODE ||
-            !PASSKEY ||
-            !CALLBACK_URL ||
-            !REDIS_URL ||
-            !REDIS_TOKEN
+
+            activationPayments[userPhone] &&
+
+            activationPayments[userPhone]
+                .activated === true
+
         ) {
 
-            console.error(
-                "Missing required environment variables."
-            );
+            return res.status(200).json({
 
+                success: true,
 
-            return res.status(500).json({
-
-                success: false,
+                activated: true,
 
                 message:
-                    "Payment server configuration is incomplete."
+                    "Your account is already activated."
 
             });
 
         }
 
 
-        /* ==============================
-           GET ACCESS TOKEN
-        ============================== */
+        /* GET ACCESS TOKEN */
 
         const accessToken =
             await getAccessToken();
 
+
+        /* CREATE TIMESTAMP + PASSWORD */
 
         const timestamp =
             getTimestamp();
@@ -245,14 +380,12 @@ module.exports = async (req, res) => {
             getPassword(timestamp);
 
 
-        /* ==============================
-           SEND STK PUSH
-        ============================== */
+        /* SEND STK PUSH */
 
         const stkResponse =
             await axios.post(
 
-                `${BASE_URL}/mpesa/stkpush/v1/processrequest`,
+                `${DARAJA_BASE_URL}/mpesa/stkpush/v1/processrequest`,
 
                 {
 
@@ -312,29 +445,60 @@ module.exports = async (req, res) => {
             stkResponse.data;
 
 
-        /* ==============================
-           SAVE PENDING PAYMENT
-        ============================== */
+        /* CHECK DARAJA RESPONSE */
 
-        const paymentData = {
+        if (
 
-            userPhone: userPhone,
+            !data.CheckoutRequestID ||
 
-            paymentPhone: paymentPhone,
+            String(data.ResponseCode) !== "0"
 
-            amount: amount,
+        ) {
 
-            checkoutRequestID:
-                data.CheckoutRequestID,
+            console.error(
+                "DARAJA STK ERROR:",
+                data
+            );
 
-            merchantRequestID:
-                data.MerchantRequestID,
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    data.ResponseDescription ||
+                    data.CustomerMessage ||
+                    "M-Pesa rejected the payment request."
+
+            });
+
+        }
+
+
+        /* STORE PAYMENT */
+
+        activationPayments[userPhone] = {
+
+            userPhone:
+                userPhone,
+
+            paymentPhone:
+                paymentPhone,
+
+            amount:
+                amount,
+
+            activated:
+                false,
 
             status:
                 "PENDING",
 
-            activated:
-                false,
+            merchantRequestID:
+                data.MerchantRequestID,
+
+            checkoutRequestID:
+                data.CheckoutRequestID,
 
             createdAt:
                 new Date().toISOString()
@@ -342,37 +506,29 @@ module.exports = async (req, res) => {
         };
 
 
-        await savePayment(
-
-            data.CheckoutRequestID,
-
-            paymentData
-
-        );
-
-
         console.log(
-            "PENDING ACTIVATION SAVED:",
-            paymentData
+            "STK PUSH SENT:",
+            activationPayments[userPhone]
         );
 
 
-        /* ==============================
-           RETURN SUCCESS
-        ============================== */
+        /* SUCCESS RESPONSE */
 
         return res.status(200).json({
 
             success: true,
 
+            activated: false,
+
+            status:
+                "PENDING",
+
             message:
-                "STK Push sent. Enter your M-Pesa PIN to pay KSh 350.",
+                data.CustomerMessage ||
+                "STK Push sent successfully.",
 
             checkoutRequestID:
-                data.CheckoutRequestID,
-
-            amount:
-                amount
+                data.CheckoutRequestID
 
         });
 
@@ -382,9 +538,10 @@ module.exports = async (req, res) => {
     catch (error) {
 
         console.error(
-            "ACTIVATION ERROR:",
+            "ACTIVATE ERROR:",
             error.response?.data ||
-            error.message
+            error.message ||
+            error
         );
 
 
@@ -394,17 +551,11 @@ module.exports = async (req, res) => {
 
             message:
 
-                error.response
-                    ?.data
-                    ?.errorMessage
+                error.response?.data?.errorMessage ||
 
-                ||
+                error.response?.data?.ResponseDescription ||
 
-                error.response
-                    ?.data
-                    ?.ResponseDescription
-
-                ||
+                error.message ||
 
                 "Unable to send M-Pesa payment request."
 
