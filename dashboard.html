@@ -11,45 +11,46 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-    * {
-        font-family: Inter, Arial, sans-serif;
+*{
+    font-family:Inter,Arial,sans-serif;
+}
+
+body{
+    background:#08120a;
+}
+
+.sidebar{
+    transition:transform .3s ease;
+}
+
+@media(max-width:768px){
+
+    .sidebar{
+        transform:translateX(-100%);
     }
 
-    body {
-        background: #08120a;
+    .sidebar.open{
+        transform:translateX(0);
     }
 
-    .sidebar {
-        transition: transform 0.3s ease;
-    }
-
-    @media (max-width: 768px) {
-        .sidebar {
-            transform: translateX(-100%);
-        }
-
-        .sidebar.open {
-            transform: translateX(0);
-        }
-    }
+}
 </style>
 </head>
 
 <body class="bg-[#08120a] text-white min-h-screen">
 
-
 <!-- MOBILE OVERLAY -->
 <div
-    id="overlay"
-    onclick="closeSidebar()"
-    class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden">
+id="overlay"
+onclick="closeSidebar()"
+class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden">
 </div>
 
 
 <!-- SIDEBAR -->
 <aside
-    id="sidebar"
-    class="sidebar fixed top-0 left-0 z-50 w-[250px] h-screen bg-[#0d1a0f] border-r border-[#1a2e1e] p-4">
+id="sidebar"
+class="sidebar fixed top-0 left-0 z-50 w-[250px] h-screen bg-[#0d1a0f] border-r border-[#1a2e1e] p-4">
 
     <!-- LOGO -->
     <div class="flex items-center gap-2.5 px-2 py-3">
@@ -72,9 +73,7 @@
             AVAILABLE COMPENSATION
         </p>
 
-        <h2
-            id="sidebarBalance"
-            class="text-[22px] font-black mt-1">
+        <h2 id="sidebarBalance" class="text-[22px] font-black mt-1">
             KSh 0.00
         </h2>
 
@@ -89,8 +88,8 @@
     <nav class="mt-6 space-y-1 text-[12px]">
 
         <a
-            href="dashboard.html"
-            class="flex items-center gap-3 bg-[#132016] text-[#0f9d58] px-4 py-3 rounded-xl font-semibold">
+        href="dashboard.html"
+        class="flex items-center gap-3 bg-[#132016] text-[#0f9d58] px-4 py-3 rounded-xl font-semibold">
 
             <span>⊞</span>
             Dashboard
@@ -99,23 +98,27 @@
 
 
         <a
-            href="activate.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-[#132016] hover:text-white transition">
+        href="activate.html"
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-[#132016] hover:text-white transition">
 
             <span>📄</span>
+
             Research Surveys
+
             <span
-                id="surveyCount"
-                class="ml-auto text-[10px] text-white/30">
+            id="surveyCount"
+            class="ml-auto text-[10px] text-white/30">
+
                 (0)
+
             </span>
 
         </a>
 
 
         <a
-            href="withdraw.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-[#132016] hover:text-white transition">
+        href="withdraw.html"
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-[#132016] hover:text-white transition">
 
             <span>↗</span>
             Participant Compensation
@@ -124,8 +127,8 @@
 
 
         <a
-            href="history.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-[#132016] hover:text-white transition">
+        href="history.html"
+        class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:bg-[#132016] hover:text-white transition">
 
             <span>↻</span>
             Compensation History
@@ -137,8 +140,8 @@
 
     <!-- LOGOUT -->
     <button
-        onclick="logout()"
-        class="absolute bottom-5 left-4 right-4 flex items-center gap-3 px-4 py-3 rounded-xl border border-[#1e3a24] text-[12px] text-white/50 hover:text-red-400 hover:border-red-500/30 transition">
+    onclick="logout()"
+    class="absolute bottom-5 left-4 right-4 flex items-center gap-3 px-4 py-3 rounded-xl border border-[#1e3a24] text-[12px] text-white/50 hover:text-red-400 hover:border-red-500/30 transition">
 
         <span>↪</span>
         Log Out
@@ -148,10 +151,8 @@
 </aside>
 
 
-
 <!-- MAIN -->
 <main class="lg:ml-[250px] min-h-screen px-4 py-5 md:px-8 md:py-7">
-
 
     <!-- HEADER -->
     <div class="flex items-start justify-between gap-4">
@@ -159,8 +160,8 @@
         <div>
 
             <h1
-                id="welcomeName"
-                class="text-[20px] md:text-[24px] font-extrabold">
+            id="welcomeName"
+            class="text-[20px] md:text-[24px] font-extrabold">
 
                 Good morning!
 
@@ -175,72 +176,19 @@
         </div>
 
 
-        <!-- DROPDOWN ON OPPOSITE SIDE -->
-        <div class="relative">
+        <!-- MOBILE MENU -->
+        <button
+        onclick="openSidebar()"
+        class="lg:hidden w-11 h-11 rounded-xl bg-[#132016] border border-[#1f3522] flex items-center justify-center text-[18px]">
 
-            <button
-                onclick="toggleDropdown()"
-                class="w-11 h-11 rounded-xl bg-[#132016] border border-[#1f3522] flex items-center justify-center text-white text-[18px]">
+            ☰
 
-                ☰
-
-            </button>
-
-
-            <!-- DROPDOWN -->
-            <div
-                id="dropdown"
-                class="hidden absolute right-0 top-[50px] w-[190px] bg-[#132016] border border-[#1f3522] rounded-xl shadow-2xl overflow-hidden z-30">
-
-                <a
-                    href="dashboard.html"
-                    class="block px-4 py-3 text-[12px] text-[#0f9d58] bg-[#0f9d58]/5">
-
-                    ⊞ Dashboard
-
-                </a>
-
-                <a
-                    href="surveys.html"
-                    class="block px-4 py-3 text-[12px] text-white/60 border-t border-white/5">
-
-                    📄 Research Surveys
-
-                </a>
-
-                <a
-                    href="withdraw.html"
-                    class="block px-4 py-3 text-[12px] text-white/60 border-t border-white/5">
-
-                    ↗ Withdraw Earnings
-
-                </a>
-
-                <a
-                    href="history.html"
-                    class="block px-4 py-3 text-[12px] text-white/60 border-t border-white/5">
-
-                    ↻ Payment History
-
-                </a>
-
-                <button
-                    onclick="logout()"
-                    class="w-full text-left px-4 py-3 text-[12px] text-red-400 border-t border-white/5">
-
-                    ↪ Log Out
-
-                </button>
-
-            </div>
-
-        </div>
+        </button>
 
     </div>
 
 
-
-    <!-- READY TO PARTICIPATE -->
+    <!-- READY -->
     <section class="mt-6 bg-[#132016] border border-[#1f3522] rounded-2xl p-5">
 
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-5">
@@ -259,7 +207,7 @@
 
                     <p class="text-[11px] text-white/50 leading-5 mt-1 max-w-[520px]">
 
-                        Access available research surveys and receive compensation based on eligible responses.
+                        Activate your account to access available research surveys.
 
                     </p>
 
@@ -269,8 +217,8 @@
 
 
             <button
-                onclick="window.location.href='surveys.html'"
-                class="w-full sm:w-auto px-7 h-[48px] bg-[#0f9d58] hover:bg-[#0c874a] rounded-xl text-[13px] font-bold transition">
+            onclick="openSurveys()"
+            class="w-full sm:w-auto px-7 h-[48px] bg-[#0f9d58] hover:bg-[#0c874a] rounded-xl text-[13px] font-bold transition">
 
                 Start Surveys
 
@@ -279,7 +227,6 @@
         </div>
 
     </section>
-
 
 
     <!-- WITHDRAW -->
@@ -311,8 +258,8 @@
 
 
             <button
-                onclick="window.location.href='withdraw.html'"
-                class="w-full sm:w-auto px-7 h-[48px] bg-[#0f9d58] hover:bg-[#0c874a] rounded-xl text-[13px] font-bold transition">
+            onclick="window.location.href='withdraw.html'"
+            class="w-full sm:w-auto px-7 h-[48px] bg-[#0f9d58] hover:bg-[#0c874a] rounded-xl text-[13px] font-bold transition">
 
                 Withdraw Now
 
@@ -323,97 +270,64 @@
     </section>
 
 
-
     <!-- STATS -->
     <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-5">
 
-
-        <!-- AVAILABLE -->
         <div class="bg-[#132016] border border-[#1f3522] rounded-2xl p-4">
 
             <div class="text-[20px]">💰</div>
 
-            <p
-                id="availableBalance"
-                class="font-bold text-[18px] mt-3">
-
+            <p id="availableBalance" class="font-bold text-[18px] mt-3">
                 0.00
-
             </p>
 
             <p class="text-[10px] text-white/40 mt-1">
-
                 Available Compensation (KSh)
-
             </p>
 
         </div>
 
 
-
-        <!-- TOTAL -->
         <div class="bg-[#132016] border border-[#1f3522] rounded-2xl p-4">
 
             <div class="text-[20px]">📈</div>
 
-            <p
-                id="totalBalance"
-                class="font-bold text-[18px] mt-3">
-
+            <p id="totalBalance" class="font-bold text-[18px] mt-3">
                 0.00
-
             </p>
 
             <p class="text-[10px] text-white/40 mt-1">
-
                 Total Compensation (KSh)
-
             </p>
 
         </div>
 
 
-
-        <!-- COMPLETED -->
         <div class="bg-[#132016] border border-[#1f3522] rounded-2xl p-4">
 
             <div class="text-[20px]">📄</div>
 
-            <p
-                id="completedSurveys"
-                class="font-bold text-[18px] mt-3">
-
+            <p id="completedSurveys" class="font-bold text-[18px] mt-3">
                 0
-
             </p>
 
             <p class="text-[10px] text-white/40 mt-1">
-
                 Surveys Completed
-
             </p>
 
         </div>
 
 
-
-        <!-- REMAINING -->
         <div class="bg-[#132016] border border-[#1f3522] rounded-2xl p-4">
 
             <div class="text-[20px]">☰</div>
 
-            <p
-                id="remainingSurveys"
-                class="font-bold text-[18px] mt-3">
-
+            <p id="remainingSurveys" class="font-bold text-[18px] mt-3">
                 0
-
             </p>
 
             <p class="text-[10px] text-white/40 mt-1">
-
                 Surveys Remaining
-
             </p>
 
         </div>
@@ -421,8 +335,7 @@
     </section>
 
 
-
-    <!-- PARTICIPATION PROGRESS -->
+    <!-- PROGRESS -->
     <section class="mt-4 bg-[#132016] border border-[#1f3522] rounded-2xl p-5">
 
         <div class="flex justify-between items-center gap-4">
@@ -432,8 +345,8 @@
             </h3>
 
             <span
-                id="progressText"
-                class="text-[11px] text-white/50">
+            id="progressText"
+            class="text-[11px] text-white/50">
 
                 0 / 0 completed
 
@@ -445,9 +358,9 @@
         <div class="h-[7px] bg-black/50 rounded-full overflow-hidden mt-4">
 
             <div
-                id="progressBar"
-                class="h-full bg-[#0f9d58] rounded-full transition-all"
-                style="width:0%">
+            id="progressBar"
+            class="h-full bg-[#0f9d58] rounded-full"
+            style="width:0%">
 
             </div>
 
@@ -456,13 +369,10 @@
     </section>
 
 
-
     <!-- INFORMATION -->
     <section class="mt-4 bg-[#0f1e2a]/60 border border-[#1e2f40] rounded-2xl p-4 flex gap-3">
 
-        <span class="text-[#60a5fa]">
-            ⓘ
-        </span>
+        <span class="text-[#60a5fa]">ⓘ</span>
 
         <p class="text-[10px] md:text-[11px] text-white/50 leading-5">
 
@@ -475,7 +385,6 @@
     </section>
 
 
-
     <!-- RECENT ACTIVITY -->
     <section class="mt-5 bg-[#132016] border border-[#1f3522] rounded-2xl p-5">
 
@@ -485,843 +394,229 @@
 
 
         <div
-            id="activityList"
-            class="mt-4 text-center py-8">
+        id="activityList"
+        class="mt-4 text-center py-8">
 
             <div class="text-[28px] opacity-40">
                 📋
             </div>
 
             <p class="text-[12px] text-white/50 mt-3">
-
                 No recent activity yet.
-
             </p>
 
             <p class="text-[10px] text-white/30 mt-1">
-
                 Complete a survey to start earning compensation.
-
             </p>
 
         </div>
 
     </section>
 
-
 </main>
-
 
 
 <script>
 
-/* ==============================
-   CHECK LOGGED IN USER
-============================== */
+/* LOGIN CHECK */
 
 const currentUser =
-    localStorage.getItem("kenyaSurveyCurrentUser");
+localStorage.getItem("kenyaSurveyCurrentUser");
 
-
-if (!currentUser) {
-
-    window.location.href = "register.html";
-
+if(!currentUser){
+    window.location.href="register.html";
 }
 
 
-/* ==============================
-   LOAD MEMBERS
-============================== */
+/* LOAD MEMBERS */
 
 const members =
-    JSON.parse(
-        localStorage.getItem("kenyaSurveyMembers")
-    ) || {};
+JSON.parse(
+localStorage.getItem("kenyaSurveyMembers")
+) || {};
 
 
-const user = members[currentUser];
+const user =
+members[currentUser];
 
 
-/* ==============================
-   ACCOUNT SAFETY
-============================== */
-
-if (!user) {
+if(!user){
 
     localStorage.removeItem(
         "kenyaSurveyCurrentUser"
     );
 
-    window.location.href = "register.html";
+    window.location.href="register.html";
 
 }
 
 
-/* ==============================
-   INITIALISE NEW CUSTOMER DATA
-============================== */
+/* DEFAULT DATA */
 
-if (user.availableBalance === undefined) {
+if(user.availableBalance === undefined){
+    user.availableBalance=0;
+}
 
-    user.availableBalance = 0;
+if(user.totalCompensation === undefined){
+    user.totalCompensation=0;
+}
 
+if(user.completedSurveys === undefined){
+    user.completedSurveys=0;
+}
+
+if(user.remainingSurveys === undefined){
+    user.remainingSurveys=0;
+}
+
+if(!user.activities){
+    user.activities=[];
+}
+
+if(user.accountActivated === undefined){
+    user.accountActivated=false;
 }
 
 
-if (user.totalCompensation === undefined) {
-
-    user.totalCompensation = 0;
-
-}
-
-
-if (user.completedSurveys === undefined) {
-
-    user.completedSurveys = 0;
-
-}
-
-
-if (user.remainingSurveys === undefined) {
-
-    user.remainingSurveys = 0;
-
-}
-
-
-if (!user.activities) {
-
-    user.activities = [];
-
-}
-
-
-/* SAVE DEFAULT DATA */
-
-members[currentUser] = user;
-
+members[currentUser]=user;
 
 localStorage.setItem(
-    "kenyaSurveyMembers",
-    JSON.stringify(members)
+"kenyaSurveyMembers",
+JSON.stringify(members)
 );
 
 
-/* ==============================
-   USER NAME
-============================== */
+/* NAME */
 
 const firstName =
-    user.fullName
-        ? user.fullName.split(" ")[0]
-        : "Participant";
+user.fullName
+? user.fullName.split(" ")[0]
+: "Participant";
 
 
 document.getElementById("welcomeName").textContent =
-    "Good morning, " + firstName + "!";
+"Good morning, " + firstName + "!";
 
 
-/* ==============================
-   BALANCES
-============================== */
+/* BALANCES */
 
 document.getElementById("sidebarBalance").textContent =
-    "KSh " +
-    Number(user.availableBalance).toFixed(2);
+"KSh " +
+Number(user.availableBalance).toFixed(2);
 
 
 document.getElementById("sidebarTotal").textContent =
-    Number(user.totalCompensation).toFixed(2);
+Number(user.totalCompensation).toFixed(2);
 
 
 document.getElementById("availableBalance").textContent =
-    Number(user.availableBalance).toFixed(2);
+Number(user.availableBalance).toFixed(2);
 
 
 document.getElementById("totalBalance").textContent =
-    Number(user.totalCompensation).toFixed(2);
+Number(user.totalCompensation).toFixed(2);
 
 
 document.getElementById("completedSurveys").textContent =
-    user.completedSurveys;
+user.completedSurveys;
 
 
 document.getElementById("remainingSurveys").textContent =
-    user.remainingSurveys;
+user.remainingSurveys;
 
 
-/* ==============================
-   PROGRESS
-============================== */
+/* PROGRESS */
 
 const totalSurveys =
-    user.completedSurveys +
-    user.remainingSurveys;
+user.completedSurveys +
+user.remainingSurveys;
 
 
 document.getElementById("progressText").textContent =
-    user.completedSurveys +
-    " / " +
-    totalSurveys +
-    " completed";
+user.completedSurveys +
+" / " +
+totalSurveys +
+" completed";
 
 
-let progress = 0;
+let progress=0;
 
+if(totalSurveys>0){
 
-if (totalSurveys > 0) {
-
-    progress =
-        (user.completedSurveys / totalSurveys) * 100;
+    progress=
+    (user.completedSurveys/totalSurveys)*100;
 
 }
 
 
 document.getElementById("progressBar").style.width =
-    progress + "%";
+progress+"%";
 
 
-/* ==============================
-   RECENT ACTIVITY
-============================== */
+/* OPEN SURVEYS */
 
-if (user.activities.length > 0) {
+function openSurveys(){
 
-    const activityList =
-        document.getElementById("activityList");
+    if(user.accountActivated===true){
 
+        window.location.href="surveys.html";
 
-    activityList.innerHTML = "";
+    }else{
 
+        window.location.href="activate.html";
 
-    user.activities
-        .slice()
-        .reverse()
-        .slice(0, 5)
-        .forEach(activity => {
-
-            activityList.innerHTML += `
-
-                <div class="flex items-center justify-between py-4 border-b border-white/5 text-left">
-
-                    <div class="flex gap-3 items-center">
-
-                        <div class="w-10 h-10 bg-[#0f9d58]/10 rounded-xl grid place-items-center">
-                            📋
-                        </div>
-
-                        <div>
-
-                            <p class="text-[12px] font-semibold">
-                                ${activity.title}
-                            </p>
-
-                            <p class="text-[10px] text-white/40 mt-1">
-                                ${activity.date}
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                    <span class="text-[#0f9d58] text-[12px] font-bold">
-
-                        +KSh ${Number(activity.amount || 0).toFixed(2)}
-
-                    </span>
-
-                </div>
-
-            `;
-
-        });
+    }
 
 }
 
 
-/* ==============================
-   DROPDOWN
-============================== */
+/* MOBILE SIDEBAR */
 
-function toggleDropdown() {
+function openSidebar(){
 
     document
-        .getElementById("dropdown")
-        .classList
-        .toggle("hidden");
+    .getElementById("sidebar")
+    .classList
+    .add("open");
+
+
+    document
+    .getElementById("overlay")
+    .classList
+    .remove("hidden");
 
 }
 
 
-/* ==============================
-   MOBILE SIDEBAR
-============================== */
-
-function openSidebar() {
+function closeSidebar(){
 
     document
-        .getElementById("sidebar")
-        .classList
-        .add("open");
+    .getElementById("sidebar")
+    .classList
+    .remove("open");
 
 
     document
-        .getElementById("overlay")
-        .classList
-        .remove("hidden");
+    .getElementById("overlay")
+    .classList
+    .add("hidden");
 
 }
 
 
-function closeSidebar() {
+/* LOGOUT */
 
-    document
-        .getElementById("sidebar")
-        .classList
-        .remove("open");
-
-
-    document
-        .getElementById("overlay")
-        .classList
-        .add("hidden");
-
-}
-
-
-/* ==============================
-   LOGOUT
-============================== */
-
-function logout() {
+function logout(){
 
     localStorage.removeItem(
         "kenyaSurveyCurrentUser"
     );
 
-
-    window.location.href =
-        "index.html";
+    window.location.href="index.html";
 
 }
 
 </script>
 
 </body>
-   </html>
-<!-- =========================================================
-     KENYASURVEY RANDOM WITHDRAWAL NOTIFICATIONS
-     UPDATED SMALLER VERSION
-========================================================= -->
-
-<style>
-
-#ksWithdrawalNotification {
-    position: fixed;
-
-    top: 18px;
-    right: 14px;
-
-    /* Smaller — roughly 1/4 of the screen */
-    width: min(280px, 25vw);
-
-    min-width: 230px;
-
-    background: #132016;
-
-    border: 1px solid #1f3522;
-
-    border-left: 3px solid #0f9d58;
-
-    border-radius: 11px;
-
-    padding: 10px 12px;
-
-    z-index: 999999;
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,0.40);
-
-    transform: translateX(
-        calc(100% + 50px)
-    );
-
-    opacity: 0;
-
-    visibility: hidden;
-
-    pointer-events: none;
-
-    transition:
-        transform 0.5s cubic-bezier(.22,.61,.36,1),
-        opacity 0.35s ease,
-        visibility 0.35s ease;
-}
-
-
-/* =========================================================
-   SLIDE IN
-========================================================= */
-
-#ksWithdrawalNotification.ks-show {
-
-    transform: translateX(0);
-
-    opacity: 1;
-
-    visibility: visible;
-
-}
-
-
-/* =========================================================
-   SLIDE OUT
-========================================================= */
-
-#ksWithdrawalNotification.ks-hide {
-
-    transform: translateX(
-        calc(100% + 50px)
-    );
-
-    opacity: 0;
-
-    visibility: hidden;
-
-}
-
-
-/* =========================================================
-   ICON
-========================================================= */
-
-.ks-notification-icon {
-
-    width: 32px;
-
-    height: 32px;
-
-    min-width: 32px;
-
-    border-radius: 8px;
-
-    background: rgba(15,157,88,0.12);
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 15px;
-
-}
-
-
-/* =========================================================
-   NAME
-========================================================= */
-
-.ks-notification-name {
-
-    color: #ffffff;
-
-    font-weight: 700;
-
-}
-
-
-/* =========================================================
-   PHONE
-========================================================= */
-
-.ks-notification-phone {
-
-    color: rgba(255,255,255,0.65);
-
-}
-
-
-/* =========================================================
-   AMOUNT
-========================================================= */
-
-.ks-notification-amount {
-
-    color: #0f9d58;
-
-    font-weight: 800;
-
-}
-
-
-/* =========================================================
-   SMALL TEXT
-========================================================= */
-
-.ks-notification-small {
-
-    color: rgba(255,255,255,0.35);
-
-    font-size: 8px;
-
-    margin-top: 1px;
-
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 600px) {
-
-    #ksWithdrawalNotification {
-
-        width: 250px;
-
-        min-width: 0;
-
-        top: 12px;
-
-        right: 10px;
-
-        padding: 9px 10px;
-
-    }
-
-}
-
-</style>
-
-
-<script>
-
-(function () {
-
-    /* =====================================================
-       RANDOM NAMES
-    ===================================================== */
-
-    const ksNames = [
-
-        "Irine",
-        "Mercy",
-        "Brian",
-        "Sharon",
-        "Kevin",
-        "Ann",
-        "Brenda",
-        "Victor",
-        "Faith",
-        "Derrick",
-        "Lydia",
-        "Collins",
-        "Miriam",
-        "Dennis",
-        "Esther",
-        "Ian",
-        "Purity",
-        "Martin",
-        "Diana",
-        "Samuel",
-        "Cynthia",
-        "Clinton",
-        "Naomi",
-        "Mark",
-        "Beatrice",
-        "Joan",
-        "Daniel",
-        "Lucy",
-        "Mike",
-        "Stacy",
-        "Kelvin",
-        "Sheila",
-        "Edwin",
-        "Caroline",
-        "George",
-        "Mary",
-        "Allan",
-        "Jackline",
-        "Joseph",
-        "Nancy"
-
-    ];
-
-
-    /* =====================================================
-       RANDOM WITHDRAWAL AMOUNTS
-    ===================================================== */
-
-    const ksAmounts = [
-
-        250,
-        350,
-        450,
-        500,
-        650,
-        750,
-        850,
-        1000,
-        1200,
-        1500,
-        1800,
-        2000,
-        2500,
-        3000,
-        3500,
-        4000,
-        5000
-
-    ];
-
-
-    /* =====================================================
-       CREATE NOTIFICATION
-    ===================================================== */
-
-    const ksNotification =
-        document.createElement("div");
-
-
-    ksNotification.id =
-        "ksWithdrawalNotification";
-
-
-    ksNotification.innerHTML = `
-
-        <div
-            style="
-                display:flex;
-                align-items:center;
-                gap:9px;
-            "
-        >
-
-            <div class="ks-notification-icon">
-
-                💰
-
-            </div>
-
-
-            <div
-                style="
-                    min-width:0;
-                    flex:1;
-                "
-            >
-
-                <div
-                    id="ksNotificationMessage"
-                    style="
-                        font-size:10px;
-                        line-height:16px;
-                        color:rgba(255,255,255,0.9);
-                        white-space:normal;
-                    "
-                ></div>
-
-
-                <div class="ks-notification-small">
-
-                    Recent withdrawal
-
-                </div>
-
-            </div>
-
-        </div>
-
-    `;
-
-
-    document.body.appendChild(
-        ksNotification
-    );
-
-
-    /* =====================================================
-       RANDOM ARRAY ITEM
-    ===================================================== */
-
-    function ksRandom(array) {
-
-        return array[
-            Math.floor(
-                Math.random() * array.length
-            )
-        ];
-
-    }
-
-
-    /* =====================================================
-       GENERATE PHONE
-       
-       Example:
-       0714***342
-    ===================================================== */
-
-    function ksGeneratePhone() {
-
-        const firstPart =
-            "07" +
-            Math.floor(
-                10 + Math.random() * 90
-            );
-
-
-        const lastPart =
-            Math.floor(
-                100 + Math.random() * 900
-            );
-
-
-        return (
-            firstPart +
-            "***" +
-            lastPart
-        );
-
-    }
-
-
-    /* =====================================================
-       SHOW NOTIFICATION
-    ===================================================== */
-
-    function ksShowNotification() {
-
-        const name =
-            ksRandom(ksNames);
-
-
-        const amount =
-            ksRandom(ksAmounts);
-
-
-        const phone =
-            ksGeneratePhone();
-
-
-        const message =
-            document.getElementById(
-                "ksNotificationMessage"
-            );
-
-
-        if (!message) {
-
-            return;
-
-        }
-
-
-        message.innerHTML =
-
-            '<span class="ks-notification-name">' +
-            name +
-            '</span> ' +
-
-            '<span class="ks-notification-phone">' +
-            phone +
-            '</span> ' +
-
-            ' — Withdraw ' +
-
-            '<span class="ks-notification-amount">' +
-            'KSh ' +
-            Number(amount).toLocaleString() +
-            '</span>';
-
-
-        /* Remove previous animation */
-
-        ksNotification.classList.remove(
-            "ks-show"
-        );
-
-        ksNotification.classList.remove(
-            "ks-hide"
-        );
-
-
-        /* Force browser to restart animation */
-
-        void ksNotification.offsetWidth;
-
-
-        /* Slide in */
-
-        ksNotification.classList.add(
-            "ks-show"
-        );
-
-
-        /* Stay visible for 2 seconds */
-
-        setTimeout(function () {
-
-            ksNotification.classList.remove(
-                "ks-show"
-            );
-
-            ksNotification.classList.add(
-                "ks-hide"
-            );
-
-        }, 2000);
-
-    }
-
-
-    /* =====================================================
-       SCHEDULE NEXT NOTIFICATION
-    ===================================================== */
-
-    function ksScheduleNext() {
-
-        /*
-            Wait a random 3–6 seconds
-            after the previous notification.
-        */
-
-        const delay =
-            3000 +
-            Math.floor(
-                Math.random() * 3000
-            );
-
-
-        setTimeout(function () {
-
-            ksShowNotification();
-
-            ksScheduleNext();
-
-        }, delay);
-
-    }
-
-
-    /* =====================================================
-       FIRST NOTIFICATION
-       
-       Appears about 2.5 seconds after page opens.
-    ===================================================== */
-
-    setTimeout(function () {
-
-        ksShowNotification();
-
-        ksScheduleNext();
-
-    }, 2500);
-
-
-})();
-
-</script>
-   
+</html>
